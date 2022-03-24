@@ -11,7 +11,7 @@
 	<groupId>com.bookstoreapi</groupId>
 	<artifactId>bookstoreapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Bookstore API - Jackson</name>
+	<name>bookstoreapi</name>
 	<description>Projeto de capacitação; parte 1: criando o monólito</description>
 	<properties>
 		<java.version>11</java.version>
