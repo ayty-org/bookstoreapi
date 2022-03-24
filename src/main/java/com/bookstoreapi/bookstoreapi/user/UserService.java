@@ -12,6 +12,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserFieldsVerification userFieldsVerification;
+
 
     public List<User> findAll(){
         return userRepository.findAll();
@@ -24,6 +27,7 @@ public class UserService {
     }
 
     public User save(User user){
+        userFieldsVerification.userFieldsAreValid(user);
         return userRepository.save(user);
     }
 
@@ -34,6 +38,7 @@ public class UserService {
 
     public User update(Long id, User user){
         User userSaved = this.findById(id);
+        userFieldsVerification.userFieldsAreValid(user);
         BeanUtils.copyProperties(user, userSaved, "id");
         return this.save(userSaved);
     }
