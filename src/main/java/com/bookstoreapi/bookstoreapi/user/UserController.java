@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(User user){
+    public ResponseEntity<User> save(@RequestBody User user){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 

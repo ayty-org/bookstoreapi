@@ -33,6 +33,6 @@ public class UserService {
     public User update(Long id, User user){
         User userSaved = this.findById(id);
         BeanUtils.copyProperties(user, userSaved, "id");
-        return this.save(user);
+        return this.save(userSaved);
     }
 }
