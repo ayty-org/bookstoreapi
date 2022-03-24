@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 
@@ -18,41 +17,32 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<User>> list(){
-        return ResponseEntity.ok(userService.findAll());
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> list(){
+        return userService.findAll();
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> find(@PathVariable Long userId){
-        try{
-            return  ResponseEntity.ok(userService.findById(userId));
-        }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id "+userId+" not found");
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public User find(@PathVariable Long userId){
+        return userService.findById(userId);
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+    @ResponseStatus(HttpStatus.CREATED)
+    public User save(@RequestBody User user){
+        return userService.save(user);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> update(@PathVariable Long userId, @RequestBody User user){
-        try{
-            return ResponseEntity.ok(userService.update(userId,user));
-        }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id "+userId+" not found");
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public User update(@PathVariable Long userId, @RequestBody User user){
+        return userService.update(userId,user);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> delete(@PathVariable Long userId){
-        try{
-            userService.delete(userId);
-            return ResponseEntity.noContent().build();
-        }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id "+userId+" not found");
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long userId){
+        userService.delete(userId);
     }
-
 }
