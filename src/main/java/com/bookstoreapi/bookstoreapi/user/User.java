@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Entity
 public class User {
 
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
