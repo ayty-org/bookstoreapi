@@ -25,4 +25,10 @@ public class CategoryService {
             throw new EntityNotFoundException("Category with id "+id+" not found");
         });
     }
+
+    public Category findByName(String name){
+        return categoryRepository.findByName(name).orElseThrow( () ->{
+            throw new EntityNotFoundException("Category with name "+name+" not found");
+        });
+    }
 }

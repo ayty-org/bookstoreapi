@@ -16,15 +16,22 @@ public class BookController {
     private BookService bookService;
 
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Book> list(){
         return bookService.findAll();
     }
 
     @GetMapping("/{bookId}")
+    @ResponseStatus(HttpStatus.OK)
     public Book find(@PathVariable Long bookId){
         return bookService.findById(bookId);
+    }
+
+    @GetMapping("/categories/{categoryName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Book> findByCategory(@PathVariable String categoryName){
+        return bookService.findAllByCategoriesName(categoryName);
     }
 
     @PostMapping

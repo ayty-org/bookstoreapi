@@ -1,5 +1,7 @@
 package com.bookstoreapi.bookstoreapi.book;
 
+import com.bookstoreapi.bookstoreapi.categories.Category;
+import com.bookstoreapi.bookstoreapi.categories.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,17 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CategoryService categoryService;
 
 
     public List<Book> findAll(){
         return bookRepository.findAll();
+    }
+
+    public List<Book> findAllByCategoriesName(String name){
+        Category category = categoryService.findByName(name);
+        return bookRepository.findAllByCategoriesContaining(category);
     }
 
     public Book findById(Long id){
