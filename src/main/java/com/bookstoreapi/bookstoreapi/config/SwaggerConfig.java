@@ -23,13 +23,13 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bookstoreapi.bookstoreapi"))
-                .paths(regex("/.*"))
+                .paths(regex(".*"))
                 .build()
                 .apiInfo(metaInfo());
     }
 
     private ApiInfo metaInfo(){
-        ApiInfo apiInfo = new ApiInfo(
+        return new ApiInfo(
                 "Bookstore API REST",
                 "REST API to bookstore control.",
                 "1.0",
@@ -37,9 +37,8 @@ public class SwaggerConfig {
                 new Contact("Jackson Anderson", "https://www.linkedin.com/in/jackson-anderson-041132188/",
                         "jackson.gomes@phoebustecnologia.com.br"),
                 "Apache License Version 2.0",
-                "https://www.apache.org/licesen.html",
+                "https://www.apache.org/licenses/LICENSE-2.0",
                 new ArrayList<VendorExtension>()
         );
-        return apiInfo;
     }
 }
