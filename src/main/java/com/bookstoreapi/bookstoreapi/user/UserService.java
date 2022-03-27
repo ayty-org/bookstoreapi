@@ -38,7 +38,6 @@ public class UserService {
 
     public User update(Long id, User user){
         User userSaved = this.findById(id);
-        userFieldsVerification.userFieldsAreValid(user);
         BeanUtils.copyProperties(user, userSaved, "id");
         return this.save(userSaved);
     }
