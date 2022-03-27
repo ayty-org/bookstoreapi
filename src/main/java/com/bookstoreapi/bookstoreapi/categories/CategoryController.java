@@ -31,9 +31,4 @@ public class CategoryController {
     public Category find(@PathVariable Long categoryId){
         return categoryService.findById(categoryId);
     }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<?> entityNotFound(EntityNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
 }
