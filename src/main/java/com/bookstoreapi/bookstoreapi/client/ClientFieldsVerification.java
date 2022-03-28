@@ -1,26 +1,26 @@
-package com.bookstoreapi.bookstoreapi.user;
+package com.bookstoreapi.bookstoreapi.client;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserFieldsVerification {
+public class ClientFieldsVerification {
 
     String[] validGenders = {"Male", "Female","Trans Male", "Trans Female", "Non-binary"};
 
 
-    public void userFieldsVerification(User user){
-        nameIsValid(user);
-        emailIsValid(user);
-        genderIsValid(user);
-        telephoneIsValid(user);
-        ageIsValid(user);
+    public void clientFieldsVerification(Client client){
+        nameIsValid(client);
+        emailIsValid(client);
+        genderIsValid(client);
+        telephoneIsValid(client);
+        ageIsValid(client);
     }
 
-    private void nameIsValid(User user) {
-        if(user.getName() == null){
+    private void nameIsValid(Client client) {
+        if(client.getName() == null){
             throw new IllegalArgumentException("name invalid (cannot be null");
         }
-        String[] names = user.getName().split(" ");
+        String[] names = client.getName().split(" ");
         StringBuilder formatedName = new StringBuilder();
         for (String name : names) {
             if(name.length()>0) {
@@ -34,23 +34,23 @@ public class UserFieldsVerification {
             }
         }
         if(formatedName.length() > 2){
-            user.setName(formatedName.substring(0,formatedName.length()-1));
+            client.setName(formatedName.substring(0,formatedName.length()-1));
             return;
         }
         throw new IllegalArgumentException("name invalid (must contain at least more than 2)");
     }
 
 
-    private void emailIsValid(User user){
-        if(!user.getEmail().contains("@")){
+    private void emailIsValid(Client client){
+        if(!client.getEmail().contains("@")){
             throw new IllegalArgumentException("email invalid");
         }
     }
 
-    private void genderIsValid(User user){
+    private void genderIsValid(Client client){
         for(String validGender: validGenders){
-            if(user.getGender().equalsIgnoreCase(validGender)){
-                user.setGender(validGender);
+            if(client.getGender().equalsIgnoreCase(validGender)){
+                client.setGender(validGender);
                 return;
             }
         }
@@ -58,14 +58,14 @@ public class UserFieldsVerification {
 
     }
 
-    private void telephoneIsValid(User user){
-        String telephone = user.getTelephone();
-        if(user.getTelephone() != null && user.getTelephone().length()==11){
+    private void telephoneIsValid(Client client){
+        String telephone = client.getTelephone();
+        if(client.getTelephone() != null && client.getTelephone().length()==11){
             try {
                 Double.parseDouble(telephone);
                 String formatedTelephone = "(" + telephone.substring(0, 2) + ") " + telephone.substring(2, 7) +
                         "-" + telephone.substring(7);
-                user.setTelephone(formatedTelephone);
+                client.setTelephone(formatedTelephone);
             }catch (NumberFormatException e){
                 throw new IllegalArgumentException("telephone invalid (only numbers are accepted)");
             }
@@ -74,8 +74,8 @@ public class UserFieldsVerification {
             }
     }
 
-    private void ageIsValid(User user){
-        if(user.getAge() < 5 || user.getAge() > 120){
+    private void ageIsValid(Client client){
+        if(client.getAge() < 5 || client.getAge() > 120){
             throw new IllegalArgumentException("age invalid (only integer numbers between 5 and 120)");
         }
     }

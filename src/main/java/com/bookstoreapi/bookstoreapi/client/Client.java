@@ -1,4 +1,4 @@
-package com.bookstoreapi.bookstoreapi.user;
+package com.bookstoreapi.bookstoreapi.client;
 
 
 import lombok.Data;
@@ -6,10 +6,10 @@ import lombok.Data;
 import javax.persistence.*;
 
 
-@Table(name = "users")
+@Table(name = "clients")
 @Data
 @Entity
-public class User {
+public class Client {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
