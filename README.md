@@ -1,2 +1,2 @@
 # bookstoreapi
-Projeto de capacitação, parte 1:
+Projeto de capacitação Phoebus: parte 1 - criando o Monólito
