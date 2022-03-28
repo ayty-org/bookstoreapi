@@ -16,6 +16,8 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private BookFieldsVerification bookFieldsVerification;
 
 
     public List<Book> findAll(){
@@ -34,6 +36,7 @@ public class BookService {
     }
 
     public Book save(Book book){
+        bookFieldsVerification.bookFieldsVerification(book);
         return bookRepository.save(book);
     }
 

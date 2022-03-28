@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public User save(User user){
-        userFieldsVerification.userFieldsAreValid(user);
+        userFieldsVerification.userFieldsVerification(user);
         return userRepository.save(user);
     }
 

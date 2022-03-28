@@ -8,7 +8,7 @@ public class UserFieldsVerification {
     String[] validGenders = {"Male", "Female","Trans Male", "Trans Female", "Non-binary"};
 
 
-    public void userFieldsAreValid(User user){
+    public void userFieldsVerification(User user){
         nameIsValid(user);
         emailIsValid(user);
         genderIsValid(user);
@@ -37,7 +37,7 @@ public class UserFieldsVerification {
             user.setName(formatedName.substring(0,formatedName.length()-1));
             return;
         }
-        throw new IllegalArgumentException("name invalid (must contain most 1 character)");
+        throw new IllegalArgumentException("name invalid (must contain at least more than 2)");
     }
 
 
@@ -60,18 +60,18 @@ public class UserFieldsVerification {
 
     private void telephoneIsValid(User user){
         String telephone = user.getTelephone();
-        try {
-            Double.parseDouble(telephone);
-            if(telephone.length() == 11){
-                String formatedTelephone = "("+telephone.substring(0,2)+") "+telephone.substring(2,7)+"-"
-                        +telephone.substring(7);
+        if(user.getTelephone() != null && user.getTelephone().length()==11){
+            try {
+                Double.parseDouble(telephone);
+                String formatedTelephone = "(" + telephone.substring(0, 2) + ") " + telephone.substring(2, 7) +
+                        "-" + telephone.substring(7);
                 user.setTelephone(formatedTelephone);
-                return;
+            }catch (NumberFormatException e){
+                throw new IllegalArgumentException("telephone invalid (only numbers are accepted)");
             }
+        }else{
             throw new IllegalArgumentException("telephone invalid (must contain 11 numbers)");
-        }catch (NumberFormatException e){
-            throw new IllegalArgumentException("telephone invalid (only numbers are accepted)");
-        }
+            }
     }
 
     private void ageIsValid(User user){
