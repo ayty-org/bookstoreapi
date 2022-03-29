@@ -4,7 +4,7 @@ CREATE TABLE purchases(
     client_id BIGINT NOT NULL,
     amount DOUBLE PRECISION NOT NULL,
     purchase_date TIMESTAMP NOT NULL,
-    status VARCHAR(10) NOT NULL,
+    is_completed BOOLEAN NOT NULL,
 
     FOREIGN KEY(client_id) REFERENCES clients
 );

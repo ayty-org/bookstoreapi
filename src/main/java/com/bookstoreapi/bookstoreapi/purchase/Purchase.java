@@ -2,12 +2,14 @@ package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.client.Client;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Table(name = "purchases")
+@Data
 @Entity
 public class Purchase {
 
@@ -23,7 +25,5 @@ public class Purchase {
 
     private double amount;
     private Date purchaseDate;
-    private String status;
-
-
+    private boolean isCompleted;
 }
