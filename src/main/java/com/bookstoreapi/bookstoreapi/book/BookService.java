@@ -17,7 +17,7 @@ public class BookService {
     @Autowired
     private CategoryService categoryService;
     @Autowired
-    private BookFieldsVerification bookFieldsVerification;
+    private BookFieldsVerifier bookFieldsVerification;
 
 
     public List<Book> findAll(){

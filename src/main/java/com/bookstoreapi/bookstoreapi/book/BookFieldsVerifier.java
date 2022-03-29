@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class BookFieldsVerification {
+public class BookFieldsVerifier {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private BookFieldsFormatter bookFieldsFormatter;
 
 
     public void bookFieldsVerification(Book book){
@@ -23,25 +25,19 @@ public class BookFieldsVerification {
         quantityInStockIsValid(book);
         authorNameIsValid(book);
         categoriesAreValid(book);
+
+        bookFieldsFormatter.fieldsFormatter(book);
     }
 
     private void titleIsValid(Book book){
-        if(book.getTitle() != null && book.getTitle().length() <= 60){
-            String titleUpdated = book.getTitle().substring(0, 1).toUpperCase() +
-                    book.getTitle().substring(1);
-            book.setTitle(titleUpdated);
-        }else{
+        if(book.getTitle() == null || book.getTitle().length() > 60){
             throw new IllegalArgumentException("title invalid " +
                     "(the number of characters must be between 3 and 60)");
         }
     }
 
     private void synopsisIsValid(Book book){
-        if(book.getSynopsis() != null && book.getSynopsis().length() <= 500){
-            String synopsisUpdated = book.getSynopsis().substring(0, 1).toUpperCase() +
-                    book.getSynopsis().substring(1);
-            book.setTitle(synopsisUpdated);
-        }else{
+        if(book.getSynopsis() == null || book.getSynopsis().length() > 500){
             throw new IllegalArgumentException("synopsis invalid " +
                     "(the number of characters must be between 3 and 500)");
         }
@@ -50,11 +46,7 @@ public class BookFieldsVerification {
     private void isbnIsValid(Book book){
         if(book.getIsbn() != null && book.getIsbn().length() == 13){
             try{
-                String isbn = book.getIsbn();
-                Double.parseDouble(isbn);
-                String formatedISBN = isbn.substring(0,3)+"-"+isbn.substring(3,5)+"-"+isbn.substring(5,8)+
-                        "-"+isbn.substring(8,12)+"-"+isbn.substring(12);
-                book.setIsbn(formatedISBN);
+                Double.parseDouble(book.getIsbn());
             }catch (NumberFormatException e){
                 throw new IllegalArgumentException("isbn invalid (must contain only DIGITS)");
             }
