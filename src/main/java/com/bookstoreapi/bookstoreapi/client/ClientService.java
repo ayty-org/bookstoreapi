@@ -13,7 +13,7 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    private ClientFieldsVerification clientFieldsVerification;
+    private ClientFieldsVerifier clientFieldsVerification;
 
 
     public List<Client> findAll(){

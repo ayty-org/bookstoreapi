@@ -1,10 +1,13 @@
 package com.bookstoreapi.bookstoreapi.client;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClientFieldsVerification {
+public class ClientFieldsVerifier {
 
+    @Autowired
+    private ClientFieldsFormatter clientFieldsFormatter;
     String[] validGenders = {"Male", "Female","Trans Male", "Trans Female", "Non-binary"};
 
 
@@ -14,30 +17,18 @@ public class ClientFieldsVerification {
         genderIsValid(client);
         telephoneIsValid(client);
         ageIsValid(client);
+
+        clientFieldsFormatter.fieldsFormatter(client);
     }
 
     private void nameIsValid(Client client) {
         if(client.getName() == null){
             throw new IllegalArgumentException("name invalid (cannot be null");
         }
-        String[] names = client.getName().split(" ");
-        StringBuilder formatedName = new StringBuilder();
-        for (String name : names) {
-            if(name.length()>0) {
-                if (!name.equals("dos") && !name.equals("das")
-                        && !name.equals("do") && !name.equals("da") && !name.equals("de")) {
-                    formatedName.append(name.substring(0, 1).toUpperCase())
-                            .append(name.substring(1)).append(" ");
-                } else {
-                    formatedName.append(name).append(" ");
-                }
-            }
+        String nameWithoutSpaces = client.getName().replace(" ", "");
+        if(nameWithoutSpaces.length() < 3 || nameWithoutSpaces.length() > 50){
+            throw new IllegalArgumentException("name invalid (must contain between 3 and 50 characters)");
         }
-        if(formatedName.length() > 2){
-            client.setName(formatedName.substring(0,formatedName.length()-1));
-            return;
-        }
-        throw new IllegalArgumentException("name invalid (must contain at least more than 2)");
     }
 
 
@@ -50,7 +41,6 @@ public class ClientFieldsVerification {
     private void genderIsValid(Client client){
         for(String validGender: validGenders){
             if(client.getGender().equalsIgnoreCase(validGender)){
-                client.setGender(validGender);
                 return;
             }
         }
@@ -63,15 +53,12 @@ public class ClientFieldsVerification {
         if(client.getTelephone() != null && client.getTelephone().length()==11){
             try {
                 Double.parseDouble(telephone);
-                String formatedTelephone = "(" + telephone.substring(0, 2) + ") " + telephone.substring(2, 7) +
-                        "-" + telephone.substring(7);
-                client.setTelephone(formatedTelephone);
             }catch (NumberFormatException e){
                 throw new IllegalArgumentException("telephone invalid (only numbers are accepted)");
             }
         }else{
             throw new IllegalArgumentException("telephone invalid (must contain 11 numbers)");
-            }
+        }
     }
 
     private void ageIsValid(Client client){
