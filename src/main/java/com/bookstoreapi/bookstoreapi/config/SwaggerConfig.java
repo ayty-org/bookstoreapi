@@ -1,44 +1,40 @@
 package com.bookstoreapi.bookstoreapi.config;
 
+import com.bookstoreapi.bookstoreapi.BookstoreApiJacksonApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.VendorExtension;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
-import static springfox.documentation.builders.PathSelectors.regex;
-
-@Configuration
 @EnableSwagger2
+@Configuration
 public class SwaggerConfig {
 
     @Bean
-    public Docket bookstoreApi(){
+    public Docket swagger(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.bookstoreapi.bookstoreapi"))
-                .paths(regex(".*"))
-                .build()
-                .apiInfo(metaInfo());
+                .apis(RequestHandlerSelectors.basePackage(BookstoreApiJacksonApplication.class.getName()))
+                .paths(PathSelectors.any())
+                .build();
     }
 
-    private ApiInfo metaInfo(){
-        return new ApiInfo(
-                "Bookstore API REST",
-                "REST API to bookstore control.",
-                "1.0",
-                "Terms of Service",
-                new Contact("Jackson Anderson", "https://www.linkedin.com/in/jackson-anderson-041132188/",
-                        "jackson.gomes@phoebustecnologia.com.br"),
-                "Apache License Version 2.0",
-                "https://www.apache.org/licenses/LICENSE-2.0",
-                new ArrayList<VendorExtension>()
-        );
+    @Bean
+    @Primary
+    public SwaggerResourcesProvider swaggerResourcesProvider() {
+        SwaggerResource swaggerResource = new SwaggerResource();
+        swaggerResource.setName("Documentation");
+        swaggerResource.setSwaggerVersion("2.0");
+        swaggerResource.setLocation("/bookstore-api.yml");
+        return () -> Collections.singletonList(swaggerResource);
     }
 }
