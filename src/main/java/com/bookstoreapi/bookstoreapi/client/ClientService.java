@@ -43,6 +43,6 @@ public class ClientService {
     public ClientDTO update(Long id, ClientDTO clientDTO){
         Client clientSaved = this.findById(id);
         BeanUtils.copyProperties(clientDTO, clientSaved);
-        return this.save(new ClientDTO(clientSaved));
+        return new ClientDTO(clientRepository.save(clientSaved));
     }
 }
