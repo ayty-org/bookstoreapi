@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -29,13 +30,13 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientDTO save(@RequestBody ClientDTO client){
+    public ClientDTO save( @RequestBody @Valid ClientDTO client){
         return clientService.save(client);
     }
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientDTO update(@PathVariable Long clientId, @RequestBody ClientDTO client){
+    public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO client){
         return clientService.update(clientId,client);
     }
 
