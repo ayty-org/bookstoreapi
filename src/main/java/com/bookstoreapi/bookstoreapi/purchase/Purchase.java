@@ -25,4 +25,12 @@ public class Purchase {
     private double amount;
     private Date purchaseDate;
     private boolean isCompleted;
+
+    public Purchase(PurchaseDTO purchaseDTO){
+        this.client = purchaseDTO.getClient();
+        this.purchasedBooks = purchaseDTO.getPurchasedBooks();
+        this.amount = purchaseDTO.getAmount();
+        this.purchaseDate = purchaseDTO.getPurchaseDate();
+        this.isCompleted = purchaseDTO.isCompleted();
+    }
 }

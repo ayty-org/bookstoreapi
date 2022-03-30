@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseService {
@@ -14,28 +15,35 @@ public class PurchaseService {
     private PurchaseRepository purchaseRepository;
 
 
-    public List<Purchase> findAll(){
-        return purchaseRepository.findAll();
+    public List<PurchaseDTO> findAll(){
+        return purchaseRepository.findAll()
+                .stream()
+                .map(PurchaseDTO::new).collect(Collectors.toList());
     }
 
-    public Purchase findById(Long id){
+    private Purchase findById(Long id){
         return purchaseRepository.findById(id).orElseThrow(() ->{
             throw new EntityNotFoundException("Purchase with id "+id+" not found");
         });
     }
 
-    public Purchase save(Purchase purchase){
-        return purchaseRepository.save(purchase);
+    public PurchaseDTO getDTO(Long id){
+        return new PurchaseDTO(this.findById(id));
+    }
+
+    public PurchaseDTO save(PurchaseDTO purchaseDTO){
+        purchaseRepository.save(new Purchase(purchaseDTO));
+        return purchaseDTO;
     }
 
     public void delete(Long id){
-        Purchase purchaseSaved = this.findById(id);
-        purchaseRepository.delete(purchaseSaved);
+        purchaseRepository.delete(this.findById(id));
     }
 
-    public Purchase update(Long id,Purchase purchase){
+    public PurchaseDTO update(Long id,PurchaseDTO purchaseDTO){
         Purchase purchaseSaved = this.findById(id);
-        BeanUtils.copyProperties(purchase,purchaseSaved);
-        return this.save(purchaseSaved);
+        BeanUtils.copyProperties(purchaseDTO,purchaseSaved);
+        purchaseRepository.save(purchaseSaved);
+        return purchaseDTO;
     }
 }

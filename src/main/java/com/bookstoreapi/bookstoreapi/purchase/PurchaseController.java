@@ -16,25 +16,25 @@ public class PurchaseController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Purchase> list(){
+    public List<PurchaseDTO> list(){
         return purchaseService.findAll();
     }
 
     @GetMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public Purchase find(@PathVariable Long purchaseId){
-        return purchaseService.findById(purchaseId);
+    public PurchaseDTO find(@PathVariable Long purchaseId){
+        return purchaseService.getDTO(purchaseId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Purchase save(@RequestBody Purchase purchase){
+    public PurchaseDTO save(@RequestBody PurchaseDTO purchase){
         return purchaseService.save(purchase);
     }
 
     @PutMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public Purchase update(@PathVariable Long purchaseId, @RequestBody Purchase purchase){
+    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody PurchaseDTO purchase){
         return purchaseService.update(purchaseId, purchase);
     }
 
