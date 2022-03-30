@@ -6,39 +6,43 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
-    @Autowired
-    private ClientFieldsVerifier clientFieldsVerification;
 
 
-    public List<Client> findAll(){
-        return clientRepository.findAll();
+    public List<ClientDTO> findAll(){
+        return clientRepository.findAll()
+                .stream()
+                .map(ClientDTO::new).collect(Collectors.toList());
     }
 
-    public Client findById(Long id){
+    private Client findById(Long id){
         return clientRepository.findById(id).orElseThrow( () ->{
             throw new EntityNotFoundException("client with id "+id+" not found");
         });
     }
 
-    public Client save(Client client){
-        clientFieldsVerification.clientFieldsVerification(client);
-        return clientRepository.save(client);
+    public ClientDTO getDTO(Long id){
+        return new ClientDTO(this.findById(id));
+    }
+
+    public ClientDTO save(ClientDTO clientDTO){
+        clientRepository.save(new Client(clientDTO));
+        return clientDTO;
     }
 
     public void delete(Long id){
-        Client clientSaved = this.findById(id);
-        clientRepository.delete(clientSaved);
+        clientRepository.delete(this.findById(id));
     }
 
-    public Client update(Long id, Client client){
+    public ClientDTO update(Long id, ClientDTO clientDTO){
         Client clientSaved = this.findById(id);
-        BeanUtils.copyProperties(client, clientSaved, "id");
-        return this.save(clientSaved);
+        BeanUtils.copyProperties(clientDTO, clientSaved);
+        return this.save(new ClientDTO(clientSaved));
     }
 }

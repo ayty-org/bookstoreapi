@@ -1,5 +1,6 @@
 package com.bookstoreapi.bookstoreapi.book;
 
+import com.bookstoreapi.bookstoreapi.categories.Category;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,5 +14,5 @@ public class BookDTO {
     private Date publicationYear;
     private double price;
     private String authorName;
-    private List<String> categoriesName;
+    private List<Category> categories;
 }

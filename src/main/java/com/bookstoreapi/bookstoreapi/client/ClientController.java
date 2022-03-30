@@ -17,25 +17,25 @@ public class ClientController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Client> list(){
+    public List<ClientDTO> list(){
         return clientService.findAll();
     }
 
     @GetMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
-    public Client find(@PathVariable Long clientId){
-        return clientService.findById(clientId);
+    public ClientDTO find(@PathVariable Long clientId){
+        return clientService.getDTO(clientId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client save(@RequestBody Client client){
+    public ClientDTO save(@RequestBody ClientDTO client){
         return clientService.save(client);
     }
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
-    public Client update(@PathVariable Long clientId, @RequestBody Client client){
+    public ClientDTO update(@PathVariable Long clientId, @RequestBody ClientDTO client){
         return clientService.update(clientId,client);
     }
 
