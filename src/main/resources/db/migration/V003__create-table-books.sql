@@ -1,5 +1,5 @@
 CREATE SEQUENCE book_id_sequence INCREMENT 1;
-CREATE TABLE books(
+CREATE TABLE book(
     id BIGINT DEFAULT nextval('book_id_sequence') PRIMARY KEY,
     title VARCHAR(60) NOT NULL,
     synopsis VARCHAR(500) NOT NULL,

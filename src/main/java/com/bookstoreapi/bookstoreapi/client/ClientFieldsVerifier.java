@@ -25,8 +25,8 @@ public class ClientFieldsVerifier {
         if(client.getName() == null){
             throw new IllegalArgumentException("name invalid (cannot be null");
         }
-        String nameWithoutSpaces = client.getName().replace(" ", "");
-        if(nameWithoutSpaces.length() < 3 || nameWithoutSpaces.length() > 50){
+        int nameLenght = client.getName().length();
+        if(nameLenght < 3 || nameLenght > 50){
             throw new IllegalArgumentException("name invalid (must contain between 3 and 50 characters)");
         }
     }

@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Table(name = "categories")
 @Data
 @Entity
 public class Category {

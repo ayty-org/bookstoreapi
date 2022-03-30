@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "purchases")
 @Data
 @Entity
 public class Purchase {

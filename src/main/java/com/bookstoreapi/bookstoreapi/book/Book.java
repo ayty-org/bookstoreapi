@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 
-@Table(name = "books")
 @Data
 @Entity
 public class Book {
