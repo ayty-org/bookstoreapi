@@ -1,10 +1,13 @@
 package com.bookstoreapi.bookstoreapi.categories;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Category {
 
@@ -12,5 +15,9 @@ public class Category {
     @Id
     private Long id;
     private String name;
+
+    public Category(CategoryDTO categoryDTO){
+        this.name = categoryDTO.getName();
+    }
 
 }

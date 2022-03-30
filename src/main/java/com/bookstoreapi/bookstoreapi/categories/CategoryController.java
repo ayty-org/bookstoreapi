@@ -17,13 +17,13 @@ public class CategoryController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Category> list(){
+    public List<CategoryDTO> list(){
         return categoryService.findAll();
     }
 
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    public Category find(@PathVariable Long categoryId){
-        return categoryService.findById(categoryId);
+    public CategoryDTO find(@PathVariable Long categoryId){
+        return categoryService.getDTO(categoryId);
     }
 }
