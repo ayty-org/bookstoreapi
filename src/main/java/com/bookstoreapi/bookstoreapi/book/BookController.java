@@ -16,31 +16,31 @@ public class BookController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Book> list(){
+    public List<BookDTO> list(){
         return bookService.findAll();
     }
 
     @GetMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
-    public Book find(@PathVariable Long bookId){
-        return bookService.findById(bookId);
+    public BookDTO find(@PathVariable Long bookId){
+        return bookService.getDTO(bookId);
     }
 
     @GetMapping("/categories/{categoryName}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Book> findByCategory(@PathVariable String categoryName){
+    public List<BookDTO> findByCategory(@PathVariable String categoryName){
         return bookService.findAllByCategoriesName(categoryName);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Book save(@RequestBody Book book){
+    public BookDTO save(@RequestBody BookDTO book){
         return bookService.save(book);
     }
 
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
-    public Book update(@PathVariable Long bookId, @RequestBody Book book){
+    public BookDTO update(@PathVariable Long bookId, @RequestBody BookDTO book){
         return bookService.update(bookId,book);
     }
 

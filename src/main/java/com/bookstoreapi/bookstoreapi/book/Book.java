@@ -1,14 +1,17 @@
 package com.bookstoreapi.bookstoreapi.book;
 
 import com.bookstoreapi.bookstoreapi.categories.Category;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Book {
 
@@ -25,5 +28,15 @@ public class Book {
 
     @ManyToMany
     private List<Category> categories;
+
+    public Book(BookDTO bookDTO){
+        this.title = bookDTO.getTitle();
+        this.synopsis = bookDTO.getSynopsis();
+        this.isbn = bookDTO.getIsbn();
+        this.publicationYear = bookDTO.getPublicationYear();
+        this.price = bookDTO.getPrice();
+        this.authorName = bookDTO.getAuthorName();
+        this.categories = bookDTO.getCategories();
+    }
 
 }
