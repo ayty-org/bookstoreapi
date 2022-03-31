@@ -26,13 +26,13 @@ public class PurchaseController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<PurchaseDTO> list(){
+    public List<PurchaseResumedDTO> list(){
         return getAllPurchaseService.findAll();
     }
 
     @GetMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public PurchaseDTO find(@PathVariable Long purchaseId){
+    public PurchaseResumedDTO find(@PathVariable Long purchaseId){
         return getPurchaseService.findById(purchaseId);
     }
 
@@ -44,7 +44,7 @@ public class PurchaseController {
 
     @PutMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseDTO purchase){
+    public PurchaseResumedDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseDTO purchase){
         return putPurchaseService.update(purchaseId, purchase);
     }
 

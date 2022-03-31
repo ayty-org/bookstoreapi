@@ -7,6 +7,7 @@ import com.bookstoreapi.bookstoreapi.client.service.GetClientService;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
+import com.bookstoreapi.bookstoreapi.purchase.PurchaseResumedDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,13 @@ public class PutPurchaseServiceImpl implements PutPurchaseService{
 
 
     @Override
-    public PurchaseDTO update(Long id,PurchaseDTO purchaseDTO){
+    public PurchaseResumedDTO update(Long id, PurchaseDTO purchaseDTO){
         Purchase purchaseSaved = this.findById(id);
         verifyFields(purchaseDTO.getClient(), purchaseSaved.getPurchasedBooks());
-        calcAmountToPay(purchaseDTO);
+        setAmountToPay(purchaseDTO);
         BeanUtils.copyProperties(purchaseDTO,purchaseSaved);
         purchaseRepository.save(purchaseSaved);
-        return purchaseDTO;
+        return new PurchaseResumedDTO(purchaseDTO);
     }
 
     private Purchase findById(Long id) {
@@ -48,7 +49,7 @@ public class PutPurchaseServiceImpl implements PutPurchaseService{
         }
     }
 
-    private void calcAmountToPay(PurchaseDTO purchaseDTO){
+    private void setAmountToPay(PurchaseDTO purchaseDTO){
         double amount = 0.0;
         for(Book book: purchaseDTO.getPurchasedBooks()){
             amount+= book.getPrice();

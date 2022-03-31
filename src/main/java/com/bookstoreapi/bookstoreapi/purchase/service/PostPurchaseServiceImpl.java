@@ -3,7 +3,6 @@ package com.bookstoreapi.bookstoreapi.purchase.service;
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.service.GetBookService;
 import com.bookstoreapi.bookstoreapi.client.Client;
-import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.client.service.GetClientService;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
@@ -27,6 +26,7 @@ public class PostPurchaseServiceImpl implements PostPurchaseService{
     @Override
     public PurchaseDTO save(PurchaseDTO purchaseDTO){
         verifyFields(purchaseDTO.getClient(), purchaseDTO.getPurchasedBooks());
+        setAmountToPay(purchaseDTO);
         purchaseRepository.save(new Purchase(purchaseDTO));
         return purchaseDTO;
     }
@@ -36,5 +36,13 @@ public class PostPurchaseServiceImpl implements PostPurchaseService{
         for(Book book: books){
             getBookService.findById(book.getId());
         }
+    }
+
+    private void setAmountToPay(PurchaseDTO purchaseDTO){
+        double amount = 0.0;
+        for(Book book: purchaseDTO.getPurchasedBooks()){
+            amount += getBookService.findById(book.getId()).getPrice();
+        }
+        purchaseDTO.setAmount(amount);
     }
 }
