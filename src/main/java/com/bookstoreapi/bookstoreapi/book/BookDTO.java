@@ -34,7 +34,6 @@ public class BookDTO {
     @NotBlank(message = "isbn cannot be null or void")
     private String isbn;
 
-    @DateTimeFormat(pattern = "dd-mm-yyyy")
     @NotNull(message = "publication year cannot be null")
     private Date publicationYear;
 

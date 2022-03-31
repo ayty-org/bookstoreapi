@@ -46,4 +46,8 @@ public class PurchaseService {
         purchaseRepository.save(purchaseSaved);
         return purchaseDTO;
     }
+
+    public boolean existsByBookId(Long id){
+        return purchaseRepository.existsByPurchasedBooksId(id);
+    }
 }
