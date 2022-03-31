@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/books")
@@ -34,13 +35,13 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO save(@RequestBody BookDTO book){
+    public BookDTO save(@RequestBody @Valid BookDTO book){
         return bookService.save(book);
     }
 
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO update(@PathVariable Long bookId, @RequestBody BookDTO book){
+    public BookDTO update(@PathVariable Long bookId, @RequestBody @Valid BookDTO book){
         return bookService.update(bookId,book);
     }
 

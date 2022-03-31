@@ -2,13 +2,16 @@ package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.client.Client;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Purchase {
 
@@ -27,7 +30,6 @@ public class Purchase {
     private boolean isCompleted;
 
     public Purchase(PurchaseDTO purchaseDTO){
-        this.client = purchaseDTO.getClient();
         this.purchasedBooks = purchaseDTO.getPurchasedBooks();
         this.amount = purchaseDTO.getAmount();
         this.purchaseDate = purchaseDTO.getPurchaseDate();

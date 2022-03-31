@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/purchases")
@@ -28,13 +29,13 @@ public class PurchaseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PurchaseDTO save(@RequestBody PurchaseDTO purchase){
+    public PurchaseDTO save(@RequestBody @Valid PurchaseDTO purchase){
         return purchaseService.save(purchase);
     }
 
     @PutMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody PurchaseDTO purchase){
+    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseDTO purchase){
         return purchaseService.update(purchaseId, purchase);
     }
 

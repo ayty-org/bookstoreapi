@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -16,14 +17,21 @@ import java.util.List;
 @Setter
 public class PurchaseDTO {
 
+    @NotNull(message = "purchase client cannot be null")
     private Client client;
+
+    @NotNull(message = "a purchase must have at least one book")
     private List<Book> purchasedBooks;
+
     private double amount;
+
+    @NotNull(message = "purchase date cannot be null")
     private Date purchaseDate;
+
+    @NotNull(message = "purchase status cannot be null")
     private boolean isCompleted;
 
     public PurchaseDTO(Purchase purchase){
-        this.client = purchase.getClient();
         this.purchasedBooks = purchase.getPurchasedBooks();
         this.amount = purchase.getAmount();
         this.purchaseDate = purchase.getPurchaseDate();
