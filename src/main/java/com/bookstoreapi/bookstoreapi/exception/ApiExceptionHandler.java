@@ -24,7 +24,12 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getBindingResult().getAllErrors()
-                .get(0).getDefaultMessage());
+        StringBuilder msg = new StringBuilder();
+        e.getBindingResult().getAllErrors().forEach(
+                error -> {
+                    msg.append(error.getDefaultMessage()).append("\n");
+                }
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msg.toString());
     }
 }
