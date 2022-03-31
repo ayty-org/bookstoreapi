@@ -1,5 +1,6 @@
 package com.bookstoreapi.bookstoreapi.client;
 
+import com.bookstoreapi.bookstoreapi.client.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,36 +14,44 @@ import java.util.List;
 public class ClientController {
 
     @Autowired
-    private ClientService clientService;
+    private GetAllClientService getAllClientService;
+    @Autowired
+    private GetClientService getClientService;
+    @Autowired
+    private PostClientService postClientService;
+    @Autowired
+    private PutClientService putClientService;
+    @Autowired
+    private DeleteClientService deleteClientService;
 
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ClientDTO> list(){
-        return clientService.findAll();
+        return getAllClientService.findAll();
     }
 
     @GetMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO find(@PathVariable Long clientId){
-        return clientService.getDTO(clientId);
+        return getClientService.findById(clientId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClientDTO save( @RequestBody @Valid ClientDTO client){
-        return clientService.save(client);
+        return postClientService.save(client);
     }
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO client){
-        return clientService.update(clientId,client);
+        return putClientService.update(clientId,client);
     }
 
     @DeleteMapping("/{clientId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long clientId){
-        clientService.delete(clientId);
+        deleteClientService.delete(clientId);
     }
 }
