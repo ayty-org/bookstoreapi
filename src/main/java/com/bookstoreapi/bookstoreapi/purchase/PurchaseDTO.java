@@ -32,6 +32,7 @@ public class PurchaseDTO {
     private boolean isCompleted;
 
     public PurchaseDTO(Purchase purchase){
+        this.client = purchase.getClient();
         this.purchasedBooks = purchase.getPurchasedBooks();
         this.amount = purchase.getAmount();
         this.purchaseDate = purchase.getPurchaseDate();

@@ -2,7 +2,7 @@ package com.bookstoreapi.bookstoreapi.book.service;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.BookRepository;
-import com.bookstoreapi.bookstoreapi.purchase.PurchaseService;
+import com.bookstoreapi.bookstoreapi.purchase.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,7 @@ public class DeleteBookServiceImpl implements DeleteBookService{
     private BookRepository bookRepository;
     @Autowired
     private PurchaseService purchaseService;
+
 
     @Override
     public void delete(Long id){

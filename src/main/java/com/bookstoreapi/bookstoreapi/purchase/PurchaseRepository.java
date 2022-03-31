@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     boolean existsByPurchasedBooksId(Long id);
+    boolean existsByClientId(Long id);
 }
