@@ -38,7 +38,7 @@ public class PurchaseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PurchaseDTO save(@RequestBody @Valid PurchaseDTO purchase){
+    public PurchaseResumedDTO save(@RequestBody @Valid PurchaseDTO purchase){
         return postPurchaseService.save(purchase);
     }
 

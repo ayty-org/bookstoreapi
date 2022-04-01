@@ -41,6 +41,11 @@ public class BookDTO {
     @Min(value = 0, message = "price cannot be negative")
     private double price;
 
+
+    @Min(value = 0, message = "quantity in stock cannot be negative")
+    @NotNull(message = "quantity in stock cannot be null")
+    private int quantityInStock;
+
     @Size(min = 2, max = 60, message = "author name must be between 2 and 60 characters")
     @NotBlank(message = "author name cannot be null or void")
     private String authorName;
@@ -54,6 +59,7 @@ public class BookDTO {
         this.isbn = book.getIsbn();
         this.publicationYear = book.getPublicationYear();
         this.price = book.getPrice();
+        this.quantityInStock = book.getQuantityInStock();
         this.authorName = book.getAuthorName();
         this.categories = book.getCategories();
     }

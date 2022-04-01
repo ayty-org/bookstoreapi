@@ -1,9 +1,10 @@
 package com.bookstoreapi.bookstoreapi.purchase.service;
 
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
+import com.bookstoreapi.bookstoreapi.purchase.PurchaseResumedDTO;
 
 @FunctionalInterface
 public interface PostPurchaseService {
 
-    public PurchaseDTO save(PurchaseDTO purchaseDTO);
+    public PurchaseResumedDTO save(PurchaseDTO purchaseDTO);
 }

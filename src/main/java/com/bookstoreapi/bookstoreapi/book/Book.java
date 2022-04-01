@@ -35,6 +35,7 @@ public class Book {
         this.isbn = bookDTO.getIsbn();
         this.publicationYear = bookDTO.getPublicationYear();
         this.price = bookDTO.getPrice();
+        this.quantityInStock = bookDTO.getQuantityInStock();
         this.authorName = bookDTO.getAuthorName();
         this.categories = bookDTO.getCategories();
     }
