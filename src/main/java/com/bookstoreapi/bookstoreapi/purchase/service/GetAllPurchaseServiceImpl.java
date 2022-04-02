@@ -2,7 +2,6 @@ package com.bookstoreapi.bookstoreapi.purchase.service;
 
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
-import com.bookstoreapi.bookstoreapi.purchase.PurchaseResumedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +16,9 @@ public class GetAllPurchaseServiceImpl implements GetAllPurchaseService{
 
 
     @Override
-    public List<PurchaseResumedDTO> findAll() {
-        List<PurchaseDTO> list =  purchaseRepository.findAll()
+    public List<PurchaseDTO> findAll() {
+        return purchaseRepository.findAll()
                 .stream()
                 .map(PurchaseDTO::new).collect(Collectors.toList());
-
-        return list.stream().map(PurchaseResumedDTO::new).collect(Collectors.toList());
     }
 }

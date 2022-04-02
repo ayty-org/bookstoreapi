@@ -12,6 +12,8 @@ public class GetAllClientServiceImpl implements GetAllClientService{
 
     @Autowired
     private ClientRepository clientRepository;
+
+
     @Override
     public List<ClientDTO> findAll(){
         return clientRepository.findAll()

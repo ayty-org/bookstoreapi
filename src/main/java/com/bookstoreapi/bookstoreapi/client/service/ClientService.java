@@ -1,21 +1,22 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
 import com.bookstoreapi.bookstoreapi.client.Client;
-import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.client.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
-public class PostClientServiceImpl implements PostClientService {
+public class ClientService {
+
 
     @Autowired
     private ClientRepository clientRepository;
 
-
-    @Override
-    public ClientDTO save(ClientDTO clientDTO) {
-        clientRepository.save(new Client(clientDTO));
-        return clientDTO;
+    public Client findById(Long id){
+        return clientRepository.findById(id).orElseThrow( () ->{
+            throw new EntityNotFoundException("client with id "+id+" not found");
+        });
     }
 }

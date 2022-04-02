@@ -26,25 +26,25 @@ public class PurchaseController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<PurchaseResumedDTO> list(){
+    public List<PurchaseDTO> list(){
         return getAllPurchaseService.findAll();
     }
 
     @GetMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public PurchaseResumedDTO find(@PathVariable Long purchaseId){
+    public PurchaseDTO find(@PathVariable Long purchaseId){
         return getPurchaseService.findById(purchaseId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PurchaseResumedDTO save(@RequestBody @Valid PurchaseDTO purchase){
+    public PurchaseDTO save(@RequestBody @Valid PurchaseDTO purchase){
         return postPurchaseService.save(purchase);
     }
 
     @PutMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public PurchaseResumedDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseDTO purchase){
+    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseDTO purchase){
         return putPurchaseService.update(purchaseId, purchase);
     }
 
