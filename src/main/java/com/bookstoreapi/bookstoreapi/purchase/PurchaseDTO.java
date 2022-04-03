@@ -24,8 +24,6 @@ public class PurchaseDTO {
     private List<Book> purchasedBooks;
 
     private double amount;
-
-    @NotNull(message = "purchase date cannot be null")
     private Date purchaseDate;
 
     @NotNull(message = "purchase status cannot be null")
