@@ -26,8 +26,7 @@ public class GetClientServiceImplTest {
     private GetClientServiceImpl getClientService;
     @Mock
     private ClientService service;
-
-    private Map<Long, Client> clients = new HashMap<>();
+    Map<Long, Client> clients = new HashMap<>();
 
 
     @BeforeEach
