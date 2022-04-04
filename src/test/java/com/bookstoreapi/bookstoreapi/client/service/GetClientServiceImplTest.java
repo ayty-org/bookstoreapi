@@ -15,7 +15,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 
@@ -28,7 +27,7 @@ public class GetClientServiceImplTest {
     @Mock
     private ClientService service;
 
-    Map<Long, Client> clients = new HashMap<>();
+    private Map<Long, Client> clients = new HashMap<>();
 
 
     @BeforeEach
@@ -36,9 +35,11 @@ public class GetClientServiceImplTest {
         Client client1 = new Client();
         client1.setId(1L);
         client1.setName("Jenipapo da Silva");
+
         Client client2 = new Client();
         client2.setId(2L);
         client2.setName("Fernandin dos Santos");
+
         clients.put(1L, client1);
         clients.put(2L, client2);
      }
