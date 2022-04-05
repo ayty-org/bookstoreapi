@@ -35,7 +35,7 @@ public class BookService {
         return categoriesList;
     }
 
-    public void saveAll(List<Book> books){
-        bookRepository.saveAll(books);
+    public List<Book> saveAll(List<Book> books){
+        return bookRepository.saveAll(books);
     }
 }
