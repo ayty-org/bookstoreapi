@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class GetPurchaseServiceImplTest {
 
-
     @InjectMocks
     private GetPurchaseServiceImpl getPurchaseService;
     @Mock

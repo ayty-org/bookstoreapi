@@ -38,11 +38,9 @@ public class GetAllPurchaseServiceImplTest {
         purchase2.setId(2L);
         purchase2.setAmount(40);
 
-
         Purchase purchase3 = new Purchase();
         purchase3.setId(3L);
         purchase3.setAmount(30);
-
 
         allPurchases.add(purchase1);
         allPurchases.add(purchase2);
@@ -57,7 +55,5 @@ public class GetAllPurchaseServiceImplTest {
         for(int k = 0; k<3; k++){
             assertThat(allPurchases.get(k).getAmount(), is(equalTo(listReturned.get(k).getAmount())));
         }
-
     }
-
 }

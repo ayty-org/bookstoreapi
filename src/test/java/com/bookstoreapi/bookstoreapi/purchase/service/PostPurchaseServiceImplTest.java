@@ -5,6 +5,7 @@ import com.bookstoreapi.bookstoreapi.client.Client;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,11 +29,11 @@ class PostPurchaseServiceImplTest {
     private PurchaseRepository repository;
     @Mock
     private PurchaseService purchaseService;
+    private Purchase purchase;
 
 
-
-    @Test
-    void saveTest(){
+    @BeforeEach
+    void setUp(){
         Purchase purchase = new Purchase();
         purchase.setId(1L);
 
@@ -47,18 +48,19 @@ class PostPurchaseServiceImplTest {
         Client client = new Client();
         client.setId(1L);
         purchase.setClient(client);
-
-
+        this.purchase = purchase;
+    }
+    @Test
+    void saveTest(){
         PurchaseDTO purchaseDTO = new PurchaseDTO(purchase);
         Client client2 = new Client();
         client2.setId(2L);
         client2.setName("Ana Júlia");
-
         purchaseDTO.setClient(client2);
 
         when(repository.save(purchase)).thenReturn(purchase);
         when(purchaseService.getClient(client2)).thenReturn(client2);
-        when(purchaseService.getBooks(any())).thenReturn(books);
+        when(purchaseService.getBooks(any())).thenReturn(purchase.getPurchasedBooks());
 
         assertInstanceOf(PurchaseDTO.class, postPurchaseService.save(purchaseDTO));
         assertEquals("Ana Júlia", postPurchaseService.save(purchaseDTO).getClient().getName());
