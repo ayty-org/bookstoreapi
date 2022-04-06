@@ -8,13 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.EntityNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -31,28 +28,30 @@ public class DeleteClientServiceImplTest {
     private PurchaseService purchaseService;
     @Mock
     private ClientService service;
-    private final Map<Long, Client> clients = new HashMap<>();
+    private Client client;
 
 
     @BeforeEach
     void setUp() {
-        Client client1 = new Client();
-        client1.setId(1L);
-        client1.setName("Jenipapo da Silva");
+        Client client = new Client();
+        client.setId(1L);
+        client.setName("Jenipapo da Silva");
 
-        Client client2 = new Client();
-        client2.setId(2L);
-        client2.setName("Fernandin dos Santos");
-
-        clients.put(1L, client1);
-        clients.put(2L, client2);
+       this.client = client;
     }
 
     @Test
     void deleteWhenIdExistTest(){
         when(purchaseService.existsByClientId(anyLong())).thenReturn(false);
-        when(service.findById(1L)).thenReturn(clients.get(1L));
+        when(service.findById(1L)).thenReturn(client);
         deleteClientService.delete(1L);
+    }
+
+    @Test
+    void deleteWhenIdDontExistTest(){
+        when(purchaseService.existsByClientId(anyLong())).thenReturn(false);
+        when(service.findById(1L)).thenThrow(EntityNotFoundException.class);
+        assertThrows(EntityNotFoundException.class, ()-> deleteClientService.delete(1L));
     }
 
     @Test

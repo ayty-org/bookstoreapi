@@ -3,6 +3,7 @@ package com.bookstoreapi.bookstoreapi.client.service;
 import com.bookstoreapi.bookstoreapi.client.Client;
 import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.client.ClientRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,16 +21,19 @@ class PostClientServiceImplTest {
     private PostClientServiceImpl postClientService;
     @Mock
     private ClientRepository repository;
+    private Client client;
 
 
-
-    @Test
-    void saveTest(){
-
+    @BeforeEach
+    void setUp(){
         Client client = new Client();
         client.setId(1L);
         client.setName("Ana Júlia");
+        this.client = client;
+    }
 
+    @Test
+    void saveTest(){
         ClientDTO clientDTO = new ClientDTO();
         clientDTO.setName("Ana Júlia");
         clientDTO.setEmail("aninha@hotmail.com");

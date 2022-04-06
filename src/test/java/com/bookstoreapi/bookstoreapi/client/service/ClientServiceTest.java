@@ -2,11 +2,11 @@ package com.bookstoreapi.bookstoreapi.client.service;
 
 import com.bookstoreapi.bookstoreapi.client.Client;
 import com.bookstoreapi.bookstoreapi.client.ClientRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,13 +26,18 @@ class ClientServiceTest {
     private ClientService clientService;
     @Mock
     private ClientRepository repository;
+    private Client client;
 
-
-    @Test
-    void findByIdWhenIdExistTest(){
+    @BeforeEach
+    void setUp(){
         Client client = new Client();
         client.setId(1L);
         client.setName("Ana Júlia");
+        this.client = client;
+    }
+
+    @Test
+    void findByIdWhenIdExistTest(){
         when(repository.findById(anyLong())).thenReturn(Optional.of(client));
 
         Client client3 = clientService.findById(1L);
