@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
@@ -17,12 +16,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 
 @ExtendWith(SpringExtension.class)
 public class GetCategoryServiceImplTest {
-
 
     @InjectMocks
     private GetCategoryServiceImpl getCategoryService;
@@ -58,7 +57,7 @@ public class GetCategoryServiceImplTest {
 
     @Test
     void testGetByIdWhenIdDontExist(){
-        when(service.findById(3L)).thenThrow(new IllegalArgumentException());
+        when(service.findById(anyLong())).thenThrow(new IllegalArgumentException());
         assertThrows(IllegalArgumentException.class, ()-> getCategoryService.findById(3L));
     }
 }

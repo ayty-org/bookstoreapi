@@ -2,11 +2,11 @@ package com.bookstoreapi.bookstoreapi.categories.service;
 
 import com.bookstoreapi.bookstoreapi.categories.Category;
 import com.bookstoreapi.bookstoreapi.categories.CategoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
@@ -25,13 +25,18 @@ class CategoryServiceTest {
     private CategoryService categoryService;
     @Mock
     private CategoryRepository repository;
+    private Category category;
 
-
-    @Test
-    void findByIdWhenIdExistTest() {
+    @BeforeEach
+    void setUp(){
         Category category = new Category();
         category.setId(1L);
         category.setName("Romance");
+        this.category = category;
+    }
+
+    @Test
+    void findByIdWhenIdExistTest() {
         when(repository.findById(anyLong())).thenReturn(Optional.of(category));
 
         Category categorySaved = categoryService.findById(1L);
