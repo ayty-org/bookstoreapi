@@ -51,6 +51,7 @@ public class GetAllBookServiceImplTest {
     void findAllTest(){
         when(bookRepository.findAll()).thenReturn(allBooks);
         List<BookDTO> listReturned = getAllBookService.findAll();
+
         assertThat(3, is(equalTo(listReturned.size())));
         for(int k = 0; k<3; k++){
             assertThat(allBooks.get(k).getTitle(), is(equalTo(listReturned.get(k).getTitle())));

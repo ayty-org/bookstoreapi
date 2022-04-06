@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,7 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +33,9 @@ class BookServiceTest {
     private BookRepository repository;
     @Mock
     private CategoryService categoryService;
+    private Book book;
     private final HashMap<Long, Category> categories = new HashMap<>();
+
 
     @BeforeEach
     void setUp(){
@@ -43,17 +43,20 @@ class BookServiceTest {
         Category action = new Category(2L, "Action");
         categories.put(1L, romance);
         categories.put(2L, action);
+
+        Book book = new Book();
+        book.setId(1L);
+        book.setTitle("Book 1");
+        this.book = book;
     }
 
     @Test
     void findByIdWhenIdExistTest(){
-        Book book = new Book();
-        book.setId(1L);
-        book.setTitle("Rocky IV");
+
         when(repository.findById(anyLong())).thenReturn(Optional.of(book));
 
         Book bookSaved = bookService.findById(1L);
-        assertThat("Rocky IV", is(bookSaved.getTitle()));
+        assertThat("Book 1", is(bookSaved.getTitle()));
     }
 
     @Test
@@ -81,30 +84,5 @@ class BookServiceTest {
             Category categorySaved = categories.get(found.getId());
             assertThat(categorySaved.getName(), is(equalTo(found.getName())));
         }
-    }
-
-    @Test
-    void saveAllTest(){
-        Book bookSaved1 = new Book();
-        bookSaved1.setId(1L);
-        bookSaved1.setTitle("book 1");
-        Book bookSaved2 = new Book();
-        bookSaved1.setId(2L);
-        bookSaved1.setTitle("book 2");
-
-        List<Book> books = new ArrayList<>();
-        books.add(bookSaved1);
-        books.add(bookSaved2);
-        when(repository.saveAll(anyCollection())).thenReturn(books);
-
-        Book book1 = new Book();
-        book1.setTitle("book 1");
-        Book book2 = new Book();
-        book2.setTitle("book 2");
-        List<Book> toSave = new ArrayList<>();
-        toSave.add(book1);
-        toSave.add(book2);
-
-        assertThat(2, is(equalTo(bookService.saveAll(toSave).size())));
     }
 }

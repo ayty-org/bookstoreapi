@@ -4,6 +4,7 @@ import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.BookDTO;
 import com.bookstoreapi.bookstoreapi.book.BookRepository;
 import com.bookstoreapi.bookstoreapi.categories.Category;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,21 +29,26 @@ class PostBookServiceImplTest {
     private BookRepository repository;
     @Mock
     private BookService service;
+    private Book book;
 
-
-    @Test
-    void saveTest(){
+    @BeforeEach
+    void setUp(){
         Book book = new Book();
         book.setId(1L);
         book.setTitle("test");
+        this.book = book;
+    }
 
+    @Test
+    void saveTest(){
         BookDTO bookDTO = new BookDTO();
         bookDTO.setTitle("test");
         bookDTO.setQuantityInStock(4);
-        bookDTO.setAuthorName("blabla da silva bla");
+        bookDTO.setAuthorName("blabla bla");
         bookDTO.setPublicationYear(new Date());
         bookDTO.setSynopsis("bla bla bla");
         bookDTO.setCategories(new ArrayList<>());
+
         when(repository.save(book)).thenReturn(book);
         when(service.getCategories(anyList())).thenReturn(new ArrayList<>());
 
@@ -62,6 +68,5 @@ class PostBookServiceImplTest {
         when(service.getCategories(anyList())).thenThrow(EntityNotFoundException.class);
 
         assertThrows(EntityNotFoundException.class, ()-> postBookService.save(bookDTO));
-
     }
 }

@@ -16,11 +16,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class GetBookServiceImplTest {
-
 
     @InjectMocks
     private GetBookServiceImpl getBookService;
@@ -56,7 +56,7 @@ public class GetBookServiceImplTest {
 
     @Test
     void testGetByIdWhenIdDontExist(){
-        when(service.findById(3L)).thenThrow(new IllegalArgumentException());
+        when(service.findById(anyLong())).thenThrow(new IllegalArgumentException());
         assertThrows(IllegalArgumentException.class, ()-> getBookService.findById(3L));
     }
 }

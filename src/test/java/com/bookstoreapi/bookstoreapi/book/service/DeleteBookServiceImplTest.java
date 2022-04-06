@@ -48,7 +48,6 @@ public class DeleteBookServiceImplTest {
 
     @Test
     void deleteWhenIdExistTest(){
-        when(purchaseService.existsByBookId(anyLong())).thenReturn(false);
         when(service.findById(1L)).thenReturn(books.get(1L));
         deleteBookService.delete(1L);
     }
