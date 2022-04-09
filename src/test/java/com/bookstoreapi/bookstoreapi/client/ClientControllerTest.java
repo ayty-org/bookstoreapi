@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -40,17 +42,15 @@ public class ClientControllerTest {
     private PutClientServiceImpl putClientService;
     @MockBean
     private DeleteClientServiceImpl deleteClientService;
-    @MockBean
-    private ClientService clientService;
 
 
     ObjectMapper mapper = new ObjectMapper();
 
-    private List<ClientDTO> clients = new ArrayList<>();
+    private final List<ClientDTO> clients = new ArrayList<>();
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         ClientDTO client1 = new ClientDTO();
         client1.setName("Client 1");
         client1.setAge(20);
@@ -69,7 +69,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    void listTest() throws Exception{
+    void listTest() throws Exception {
         when(getAllClientService.findAll()).thenReturn(clients);
         mockMvc.perform(get("/clients"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -87,7 +87,7 @@ public class ClientControllerTest {
 
 
     @Test
-    void findWhenIdExistTest() throws Exception{
+    void findWhenIdExistTest() throws Exception {
         when(getClientService.findById(1L)).thenReturn(clients.get(0));
         mockMvc.perform(get("/clients/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -99,17 +99,17 @@ public class ClientControllerTest {
     }
 
     @Test
-    void findWhenIdDontExist() throws Exception{
+    void findWhenIdDontExist() throws Exception {
         when(getClientService.findById(3L)).thenThrow(EntityNotFoundException.class);
         mockMvc.perform(get("/clients/3"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
-    void saveTest() throws Exception{
+    void saveTest() throws Exception {
         ClientDTO clientDTO = new ClientDTO
                 ("new client", 50, "12345678901",
-                        "testeteste@hotmail.com","Female");
+                        "testeteste@hotmail.com", "Female");
         when(postClientService.save(any())).thenReturn(clientDTO);
         String json = mapper.writeValueAsString(clientDTO);
         mockMvc.perform(post("/clients")
@@ -124,10 +124,10 @@ public class ClientControllerTest {
     }
 
     @Test
-    void saveWhenBodyIsInvalid() throws Exception{
+    void saveWhenBodyIsInvalid() throws Exception {
         ClientDTO clientDTO = new ClientDTO
                 (null, 80, "12345678901",
-                        "testeteste@hotmail.com","Female");
+                        "testeteste@hotmail.com", "Female");
 
         String json = mapper.writeValueAsString(clientDTO);
         mockMvc.perform(post("/clients")
@@ -138,11 +138,11 @@ public class ClientControllerTest {
     }
 
     @Test
-    void updateTest() throws Exception{
+    void updateTest() throws Exception {
         ClientDTO clientDTO = new ClientDTO
                 ("update", 50, "12345678901",
-                        "teste@hotmail.com","Female");
-        when(putClientService.update(anyLong(),any())).thenReturn(clientDTO);
+                        "teste@hotmail.com", "Female");
+        when(putClientService.update(anyLong(), any())).thenReturn(clientDTO);
         String json = mapper.writeValueAsString(clientDTO);
         mockMvc.perform(put("/clients/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -156,10 +156,10 @@ public class ClientControllerTest {
     }
 
     @Test
-    void updateWhenBodyIsInvalid() throws Exception{
+    void updateWhenBodyIsInvalid() throws Exception {
         ClientDTO clientDTO = new ClientDTO
                 ("test name", 121, "12345678901",
-                        "teste@hotmail.com","Male");
+                        "teste@hotmail.com", "Male");
 
         String json = mapper.writeValueAsString(clientDTO);
         mockMvc.perform(put("/clients/1")
@@ -170,9 +170,25 @@ public class ClientControllerTest {
     }
 
     @Test
-    void deleteTest() throws Exception{
+    void deleteTest() throws Exception {
         mockMvc.perform(delete("/clients/1"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
+        verify(deleteClientService).delete(1L);
     }
 
+    @Test
+    void deleteWhenIdDontExist() throws Exception {
+        when(mockMvc.perform(delete("/clients/1"))).thenThrow(EntityNotFoundException.class);
+        mockMvc.perform(delete("/clients/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+        verify(deleteClientService).delete(1L);
+    }
+
+    @Test
+    void deleteWhenHasPurchaseWithThisClient() throws Exception {
+        when(mockMvc.perform(delete("/clients/1"))).thenThrow(DataIntegrityViolationException.class);
+        mockMvc.perform(delete("/clients/1"))
+                .andExpect(MockMvcResultMatchers.status().isConflict());
+        verify(deleteClientService).delete(1L);
+    }
 }
