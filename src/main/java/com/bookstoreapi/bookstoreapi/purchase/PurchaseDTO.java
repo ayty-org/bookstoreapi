@@ -1,16 +1,16 @@
 package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
+import com.bookstoreapi.bookstoreapi.categories.CategoryDTO;
 import com.bookstoreapi.bookstoreapi.client.Client;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,11 +29,30 @@ public class PurchaseDTO {
     @NotNull(message = "purchase status cannot be null")
     private Boolean isCompleted;
 
-    public PurchaseDTO(Purchase purchase){
-        this.client = purchase.getClient();
-        this.purchasedBooks = purchase.getPurchasedBooks();
-        this.amount = purchase.getAmount();
-        this.purchaseDate = purchase.getPurchaseDate();
-        this.isCompleted = purchase.getIsCompleted();
+    public static PurchaseDTO from(Purchase purchase) {
+        return PurchaseDTO.builder()
+                .client(purchase.getClient())
+                .purchasedBooks(purchase.getPurchasedBooks())
+                .amount(purchase.getAmount())
+                .purchaseDate(purchase.getPurchaseDate())
+                .isCompleted(purchase.getIsCompleted())
+                .build();
     }
+
+    public static Purchase from(PurchaseDTO purchase) {
+        return Purchase.builder()
+                .client(purchase.getClient())
+                .purchasedBooks(purchase.getPurchasedBooks())
+                .amount(purchase.getAmount())
+                .purchaseDate(purchase.getPurchaseDate())
+                .isCompleted(purchase.getIsCompleted())
+                .build();
+    }
+
+    public static List<PurchaseDTO> fromAll(List<Purchase> purchases) {
+        return purchases.stream()
+                .map(PurchaseDTO::from)
+                .collect(Collectors.toList());
+    }
+
 }

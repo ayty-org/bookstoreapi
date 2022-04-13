@@ -13,6 +13,6 @@ public class GetBookServiceImpl implements GetBookService{
 
     @Override
     public BookDTO findById(Long id){
-        return new BookDTO(bookService.findById(id));
+        return BookDTO.from(bookService.findById(id));
     }
 }

@@ -13,6 +13,6 @@ public class GetPurchaseServiceImpl implements GetPurchaseService{
 
     @Override
     public PurchaseDTO findById(Long id) {
-        return new PurchaseDTO(purchaseService.findById(id));
+        return  PurchaseDTO.from(purchaseService.findById(id));
     }
 }

@@ -1,16 +1,14 @@
 package com.bookstoreapi.bookstoreapi.book;
 
 import com.bookstoreapi.bookstoreapi.categories.Category;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 
+@Builder
 @Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,16 +30,4 @@ public class Book {
 
     @OneToMany
     private List<Category> categories;
-
-    public Book(BookDTO bookDTO){
-        this.title = bookDTO.getTitle();
-        this.synopsis = bookDTO.getSynopsis();
-        this.isbn = bookDTO.getIsbn();
-        this.publicationYear = bookDTO.getPublicationYear();
-        this.price = bookDTO.getPrice();
-        this.quantityInStock = bookDTO.getQuantityInStock();
-        this.authorName = bookDTO.getAuthorName();
-        this.categories = bookDTO.getCategories();
-    }
-
 }

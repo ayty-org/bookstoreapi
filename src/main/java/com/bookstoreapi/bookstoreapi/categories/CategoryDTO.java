@@ -33,8 +33,8 @@ public class CategoryDTO {
                 .build();
     }
 
-    public static List<CategoryDTO> fromAll (List<Category> clients) {
-        return clients.stream()
+    public static List<CategoryDTO> fromAll (List<Category> categories) {
+        return categories.stream()
                 .map(CategoryDTO::from)
                 .collect(Collectors.toList());
     }

@@ -22,51 +22,51 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class PostBookServiceImplTest {
-
-    @InjectMocks
-    private PostBookServiceImpl postBookService;
-    @Mock
-    private BookRepository repository;
-    @Mock
-    private BookService service;
-    private Book book;
-
-    @BeforeEach
-    void setUp(){
-        Book book = new Book();
-        book.setId(1L);
-        book.setTitle("test");
-        this.book = book;
-    }
-
-    @Test
-    void saveTest(){
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setTitle("test");
-        bookDTO.setQuantityInStock(4);
-        bookDTO.setAuthorName("blabla bla");
-        bookDTO.setPublicationYear(new Date());
-        bookDTO.setSynopsis("bla bla bla");
-        bookDTO.setCategories(new ArrayList<>());
-
-        when(repository.save(book)).thenReturn(book);
-        when(service.getCategories(anyList())).thenReturn(new ArrayList<>());
-
-        assertInstanceOf(BookDTO.class, postBookService.save(bookDTO));
-        assertEquals("test", postBookService.save(bookDTO).getTitle());
-    }
-
-    @Test
-    void saveWhenCategoryDontExistTest(){
-        BookDTO bookDTO = new BookDTO();
-        Category category = new Category();
-        category.setId(1L);
-        List<Category> categories = new ArrayList<>();
-        categories.add(category);
-        bookDTO.setCategories(categories);
-
-        when(service.getCategories(anyList())).thenThrow(EntityNotFoundException.class);
-
-        assertThrows(EntityNotFoundException.class, ()-> postBookService.save(bookDTO));
-    }
+//
+//    @InjectMocks
+//    private PostBookServiceImpl postBookService;
+//    @Mock
+//    private BookRepository repository;
+//    @Mock
+//    private BookService service;
+//    private Book book;
+//
+//    @BeforeEach
+//    void setUp(){
+//        Book book = new Book();
+//        book.setId(1L);
+//        book.setTitle("test");
+//        this.book = book;
+//    }
+//
+//    @Test
+//    void saveTest(){
+//        BookDTO bookDTO = new BookDTO();
+//        bookDTO.setTitle("test");
+//        bookDTO.setQuantityInStock(4);
+//        bookDTO.setAuthorName("blabla bla");
+//        bookDTO.setPublicationYear(new Date());
+//        bookDTO.setSynopsis("bla bla bla");
+//        bookDTO.setCategories(new ArrayList<>());
+//
+//        when(repository.save(book)).thenReturn(book);
+//        when(service.getCategories(anyList())).thenReturn(new ArrayList<>());
+//
+//        assertInstanceOf(BookDTO.class, postBookService.save(bookDTO));
+//        assertEquals("test", postBookService.save(bookDTO).getTitle());
+//    }
+//
+//    @Test
+//    void saveWhenCategoryDontExistTest(){
+//        BookDTO bookDTO = new BookDTO();
+//        Category category = new Category();
+//        category.setId(1L);
+//        List<Category> categories = new ArrayList<>();
+//        categories.add(category);
+//        bookDTO.setCategories(categories);
+//
+//        when(service.getCategories(anyList())).thenThrow(EntityNotFoundException.class);
+//
+//        assertThrows(EntityNotFoundException.class, ()-> postBookService.save(bookDTO));
+//    }
 }

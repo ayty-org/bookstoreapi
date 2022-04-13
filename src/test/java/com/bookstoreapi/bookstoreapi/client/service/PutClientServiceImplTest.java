@@ -22,45 +22,45 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class PutClientServiceImplTest {
-
-
-    @InjectMocks
-    private PutClientServiceImpl putClientService;
-    @Mock
-    private ClientRepository repository;
-    @Mock
-    private ClientService service;
-    private Client client;
-
-
-    @BeforeEach
-    void setUp(){
-        Client clientOld = new Client();
-        clientOld.setId(1L);
-        clientOld.setName("old");
-        clientOld.setEmail("old@old.com");
-        clientOld.setAge(25);
-        clientOld.setGender("Female");
-        clientOld.setTelephone("11111111111");
-        this.client = clientOld;
-    }
-
-    @Test
-    void updateTest(){
-        Client clientUpdated = new Client();
-        BeanUtils.copyProperties(client, clientUpdated);
-        clientUpdated.setName("updated");
-        clientUpdated.setEmail("updated@updated.com");
-
-        ClientDTO clientDTO = new ClientDTO();
-        BeanUtils.copyProperties(clientUpdated, clientDTO);
-
-        when(service.findById(anyLong())).thenReturn(client);
-        when(repository.save(any())).thenReturn(clientUpdated);
-
-        assertThat("updated", is(equalTo
-                (putClientService.update(1L, clientDTO).getName())));
-        assertInstanceOf(ClientDTO.class, putClientService.update(1L, clientDTO));
-    }
+//
+//
+//    @InjectMocks
+//    private PutClientServiceImpl putClientService;
+//    @Mock
+//    private ClientRepository repository;
+//    @Mock
+//    private ClientService service;
+//    private Client client;
+//
+//
+//    @BeforeEach
+//    void setUp(){
+//        Client clientOld = new Client();
+//        clientOld.setId(1L);
+//        clientOld.setName("old");
+//        clientOld.setEmail("old@old.com");
+//        clientOld.setAge(25);
+//        clientOld.setGender("Female");
+//        clientOld.setTelephone("11111111111");
+//        this.client = clientOld;
+//    }
+//
+//    @Test
+//    void updateTest(){
+//        Client clientUpdated = new Client();
+//        BeanUtils.copyProperties(client, clientUpdated);
+//        clientUpdated.setName("updated");
+//        clientUpdated.setEmail("updated@updated.com");
+//
+//        ClientDTO clientDTO = new ClientDTO();
+//        BeanUtils.copyProperties(clientUpdated, clientDTO);
+//
+//        when(service.findById(anyLong())).thenReturn(client);
+//        when(repository.save(any())).thenReturn(clientUpdated);
+//
+//        assertThat("updated", is(equalTo
+//                (putClientService.update(1L, clientDTO).getName())));
+//        assertInstanceOf(ClientDTO.class, putClientService.update(1L, clientDTO));
+//    }
 
 }

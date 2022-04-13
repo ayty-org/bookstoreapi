@@ -17,8 +17,6 @@ public class GetAllByCategoryNameBookServiceImpl implements GetAllByCategoryName
 
     @Override
     public List<BookDTO> findAllByCategoriesName(String name){
-        return bookRepository.findAllByCategoriesNameIgnoreCase(name)
-                .stream()
-                .map(BookDTO::new).collect(Collectors.toList());
+        return BookDTO.fromAll(bookRepository.findAllByCategoriesNameIgnoreCase(name));
     }
 }

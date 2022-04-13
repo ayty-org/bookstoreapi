@@ -34,8 +34,8 @@ public class PurchaseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PurchaseDTO save(@RequestBody @Valid PurchaseDTO purchase){
-        return postPurchaseService.save(purchase);
+    public PurchaseDTO save(@RequestBody @Valid PurchaseDTO purchaseDTO){
+        return postPurchaseService.save(PurchaseDTO.from(purchaseDTO));
     }
 
     @PutMapping("/{purchaseId}")

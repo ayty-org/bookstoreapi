@@ -17,8 +17,7 @@ public class GetAllBookServiceImpl implements GetAllBookService{
 
     @Override
     public List<BookDTO> findAll() {
-        return bookRepository.findAll()
-                .stream()
-                .map(BookDTO::new).collect(Collectors.toList());
+        return BookDTO.fromAll(bookRepository.findAll());
+
     }
 }

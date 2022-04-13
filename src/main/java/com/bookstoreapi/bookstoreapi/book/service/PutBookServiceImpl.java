@@ -17,10 +17,10 @@ public class PutBookServiceImpl implements PutBookService{
 
 
     @Override
-    public BookDTO update(Long id, BookDTO bookDTO){
+    public BookDTO update(Long id, Book book){
         Book bookSaved = bookService.findById(id);
-        bookDTO.setCategories(bookService.getCategories(bookDTO.getCategories()));
-        BeanUtils.copyProperties(bookDTO, bookSaved);
-        return new BookDTO(bookRepository.save(bookSaved));
+        book.setCategories(bookService.getCategories(book.getCategories()));
+        BeanUtils.copyProperties(book, bookSaved);
+        return BookDTO.from(bookRepository.save(bookSaved));
     }
 }

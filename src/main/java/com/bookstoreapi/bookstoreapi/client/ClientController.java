@@ -41,8 +41,8 @@ public class ClientController {
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO client){
-        return putClientService.update(clientId,client);
+    public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO clientDTO){
+        return putClientService.update(clientId,ClientDTO.from(clientDTO));
     }
 
     @DeleteMapping("/{clientId}")

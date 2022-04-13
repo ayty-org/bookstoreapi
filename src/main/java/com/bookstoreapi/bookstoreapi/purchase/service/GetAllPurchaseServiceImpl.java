@@ -17,8 +17,6 @@ public class GetAllPurchaseServiceImpl implements GetAllPurchaseService{
 
     @Override
     public List<PurchaseDTO> findAll() {
-        return purchaseRepository.findAll()
-                .stream()
-                .map(PurchaseDTO::new).collect(Collectors.toList());
+        return PurchaseDTO.fromAll(purchaseRepository.findAll());
     }
 }

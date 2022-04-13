@@ -2,7 +2,6 @@ package com.bookstoreapi.bookstoreapi.book;
 
 import com.bookstoreapi.bookstoreapi.book.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +41,14 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO save(@RequestBody @Valid BookDTO book){
-        return postBookService.save(book);
+    public BookDTO save(@RequestBody @Valid BookDTO bookDTO){
+        return postBookService.save(BookDTO.from(bookDTO));
     }
 
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO update(@PathVariable Long bookId, @RequestBody @Valid BookDTO book){
-        return putBookService.update(bookId,book);
+    public BookDTO update(@PathVariable Long bookId, @RequestBody @Valid BookDTO bookDTO){
+        return putBookService.update(bookId, BookDTO.from(bookDTO));
     }
 
    @DeleteMapping("/{bookId}")

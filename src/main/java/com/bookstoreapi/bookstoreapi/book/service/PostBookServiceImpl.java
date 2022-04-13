@@ -15,9 +15,8 @@ public class PostBookServiceImpl implements PostBookService{
 
 
     @Override
-    public BookDTO save(BookDTO bookDTO){
-        bookDTO.setCategories(bookService.getCategories(bookDTO.getCategories()));
-        bookRepository.save(new Book(bookDTO));
-        return bookDTO;
+    public BookDTO save(Book book){
+        book.setCategories(bookService.getCategories(book.getCategories()));
+        return BookDTO.from(bookRepository.save(book));
     }
 }
