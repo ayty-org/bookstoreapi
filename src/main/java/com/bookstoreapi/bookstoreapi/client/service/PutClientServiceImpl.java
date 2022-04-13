@@ -18,7 +18,7 @@ public class PutClientServiceImpl implements PutClientService{
     public ClientDTO update(Long id, ClientDTO clientDTO) {
         Client clientSaved = clientService.findById(id);
         BeanUtils.copyProperties(clientDTO, clientSaved);
-        return new ClientDTO(clientRepository.save(clientSaved));
+        return ClientDTO.from(clientRepository.save(clientSaved));
     }
 
 }

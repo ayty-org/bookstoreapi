@@ -16,33 +16,33 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class PostClientServiceImplTest {
-
-    @InjectMocks
-    private PostClientServiceImpl postClientService;
-    @Mock
-    private ClientRepository repository;
-    private Client client;
-
-
-    @BeforeEach
-    void setUp(){
-        Client client = new Client();
-        client.setId(1L);
-        client.setName("Ana Júlia");
-        this.client = client;
-    }
-
-    @Test
-    void saveTest(){
-        ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setName("Ana Júlia");
-        clientDTO.setEmail("aninha@hotmail.com");
-        clientDTO.setAge(25);
-        clientDTO.setGender("Female");
-        clientDTO.setTelephone("11111111111");
-        when(repository.save(client)).thenReturn(client);
-
-        assertInstanceOf(ClientDTO.class, postClientService.save(clientDTO));
-        assertEquals("Ana Júlia", postClientService.save(clientDTO).getName());
-    }
+//
+//    @InjectMocks
+//    private PostClientServiceImpl postClientService;
+//    @Mock
+//    private ClientRepository repository;
+//    private Client client;
+//
+//
+//    @BeforeEach
+//    void setUp(){
+//        Client client = new Client();
+//        client.setId(1L);
+//        client.setName("Ana Júlia");
+//        this.client = client;
+//    }
+//
+//    @Test
+//    void saveTest(){
+//        ClientDTO clientDTO = new ClientDTO();
+//        clientDTO.setName("Ana Júlia");
+//        clientDTO.setEmail("aninha@hotmail.com");
+//        clientDTO.setAge(25);
+//        clientDTO.setGender("Female");
+//        clientDTO.setTelephone("11111111111");
+//        when(repository.save(client)).thenReturn(client);
+//
+//        assertInstanceOf(ClientDTO.class, postClientService.save(clientDTO));
+//        assertEquals("Ana Júlia", postClientService.save(clientDTO).getName());
+//    }
 }

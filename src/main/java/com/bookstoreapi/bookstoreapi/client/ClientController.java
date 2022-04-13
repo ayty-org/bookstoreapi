@@ -36,7 +36,7 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClientDTO save(@RequestBody @Valid ClientDTO client){
-        return postClientService.save(client);
+        return postClientService.save(ClientDTO.from(client));
     }
 
     @PutMapping("/{clientId}")

@@ -17,8 +17,7 @@ public class GetAllClientServiceImpl implements GetAllClientService {
 
     @Override
     public List<ClientDTO> findAll() {
-        return clientRepository.findAll()
-                .stream()
-                .map(ClientDTO::new).collect(Collectors.toList());
+        return ClientDTO.fromAll(clientRepository.findAll());
+
     }
 }

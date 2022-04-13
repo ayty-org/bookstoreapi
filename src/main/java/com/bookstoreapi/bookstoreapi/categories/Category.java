@@ -1,12 +1,14 @@
 package com.bookstoreapi.bookstoreapi.categories;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.bookstoreapi.bookstoreapi.client.Client;
+import com.bookstoreapi.bookstoreapi.client.ClientDTO;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@Builder
 @Table(name = "categories")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,9 +21,4 @@ public class Category {
     @Id
     private Long id;
     private String name;
-
-    public Category(CategoryDTO categoryDTO){
-        this.name = categoryDTO.getName();
-    }
-
 }

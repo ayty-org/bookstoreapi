@@ -1,14 +1,11 @@
 package com.bookstoreapi.bookstoreapi.client;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-
+@Builder
 @Table(name = "clients")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,11 +23,4 @@ public class Client {
     private String email;
     private String gender;
 
-    public Client(ClientDTO clientDTO){
-        this.name = clientDTO.getName();
-        this.age = clientDTO.getAge();
-        this.telephone = clientDTO.getTelephone();
-        this.email = clientDTO.getEmail();
-        this.gender = clientDTO.getGender();
-    }
 }

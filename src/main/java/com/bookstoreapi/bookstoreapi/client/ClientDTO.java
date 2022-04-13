@@ -1,14 +1,14 @@
 package com.bookstoreapi.bookstoreapi.client;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -37,11 +37,30 @@ public class ClientDTO {
     private String gender;
 
 
-    public ClientDTO(Client client){
-        this.name = client.getName();
-        this.age = client.getAge();
-        this.telephone = client.getTelephone();
-        this.email = client.getEmail();
-        this.gender = client.getGender();
+    public static ClientDTO from(Client client){
+        return ClientDTO.builder()
+                .name(client.getName())
+                .age(client.getAge())
+                .telephone(client.getTelephone())
+                .email(client.getEmail())
+                .gender(client.getGender())
+                .build();
     }
+
+    public static List<ClientDTO> fromAll (List<Client> clients) {
+        return clients.stream()
+                .map(ClientDTO::from)
+                .collect(Collectors.toList());
+    }
+
+    public static Client from(ClientDTO clientDTO){
+        return Client.builder()
+                .name(clientDTO.getName())
+                .age(clientDTO.getAge())
+                .telephone(clientDTO.getTelephone())
+                .email(clientDTO.getEmail())
+                .gender(clientDTO.getGender())
+                .build();
+    }
+
 }
