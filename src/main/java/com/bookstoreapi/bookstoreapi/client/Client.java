@@ -21,7 +21,7 @@ public class Client {
     @Id
     private Long id;
     private String name;
-    private int age;
+    private Integer age;
     private String telephone;
     private String email;
     private String gender;

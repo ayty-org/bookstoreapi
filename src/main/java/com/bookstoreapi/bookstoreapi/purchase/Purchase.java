@@ -2,16 +2,16 @@ package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.client.Client;
-import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchProfile;
-import org.springframework.context.annotation.Lazy;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Table(name = "purchases")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,15 +29,15 @@ public class Purchase {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Book> purchasedBooks;
 
-    private double amount;
+    private Double amount;
     private Date purchaseDate;
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
     public Purchase(PurchaseDTO purchaseDTO){
         this.client = purchaseDTO.getClient();
         this.purchasedBooks = purchaseDTO.getPurchasedBooks();
         this.amount = purchaseDTO.getAmount();
         this.purchaseDate = purchaseDTO.getPurchaseDate();
-        this.isCompleted = purchaseDTO.isCompleted();
+        this.isCompleted = purchaseDTO.getIsCompleted();
     }
 }

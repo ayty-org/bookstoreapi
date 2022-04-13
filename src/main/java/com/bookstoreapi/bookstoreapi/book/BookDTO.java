@@ -39,11 +39,11 @@ public class BookDTO {
 
     @Min(value = 0, message = "price cannot be negative")
     @NotNull(message = "price cannot be null")
-    private double price;
+    private Double price;
 
     @Min(value = 0, message = "quantity in stock cannot be negative")
     @NotNull(message = "quantity in stock cannot be null")
-    private int quantityInStock;
+    private Integer quantityInStock;
 
     @Size(min = 2, max = 60, message = "author name must be between 2 and 60 characters")
     @NotBlank(message = "author name cannot be null or void")

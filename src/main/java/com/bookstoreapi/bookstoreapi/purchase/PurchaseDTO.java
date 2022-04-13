@@ -23,17 +23,17 @@ public class PurchaseDTO {
     @NotNull(message = "a purchase must have at least one book")
     private List<Book> purchasedBooks;
 
-    private double amount;
+    private Double amount;
     private Date purchaseDate;
 
     @NotNull(message = "purchase status cannot be null")
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
     public PurchaseDTO(Purchase purchase){
         this.client = purchase.getClient();
         this.purchasedBooks = purchase.getPurchasedBooks();
         this.amount = purchase.getAmount();
         this.purchaseDate = purchase.getPurchaseDate();
-        this.isCompleted = purchase.isCompleted();
+        this.isCompleted = purchase.getIsCompleted();
     }
 }

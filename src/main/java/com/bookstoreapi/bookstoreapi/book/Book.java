@@ -1,13 +1,17 @@
 package com.bookstoreapi.bookstoreapi.book;
 
 import com.bookstoreapi.bookstoreapi.categories.Category;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 
+@Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,8 +26,8 @@ public class Book {
     private String synopsis;
     private String isbn;
     private Date publicationYear;
-    private double price;
-    private int quantityInStock;
+    private Double price;
+    private Integer quantityInStock;
     private String authorName;
 
     @OneToMany

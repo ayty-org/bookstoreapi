@@ -39,7 +39,7 @@ class PostPurchaseServiceImplTest {
 
         Book book = new Book();
         book.setTitle("a");
-        book.setPrice(50);
+        book.setPrice(50.0);
         book.setQuantityInStock(1);
         List<Book> books = new ArrayList<>();
         books.add(book);

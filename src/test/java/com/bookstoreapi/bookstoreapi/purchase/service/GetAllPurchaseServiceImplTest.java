@@ -32,15 +32,15 @@ public class GetAllPurchaseServiceImplTest {
     void setUp(){
         Purchase purchase1 = new Purchase();
         purchase1.setId(1L);
-        purchase1.setAmount(50);
+        purchase1.setAmount(50.0);
 
         Purchase purchase2 = new Purchase();
         purchase2.setId(2L);
-        purchase2.setAmount(40);
+        purchase2.setAmount(40.0);
 
         Purchase purchase3 = new Purchase();
         purchase3.setId(3L);
-        purchase3.setAmount(30);
+        purchase3.setAmount(30.0);
 
         allPurchases.add(purchase1);
         allPurchases.add(purchase2);

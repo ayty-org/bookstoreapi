@@ -72,13 +72,13 @@ public class PurchaseControllerTest {
         PurchaseDTO purchase1 = new PurchaseDTO();
         purchase1.setClient(client1);
         purchase1.setPurchasedBooks(List.of(book25,book50,book100));
-        purchase1.setCompleted(true);
+        purchase1.setIsCompleted(true);
         purchase1.setPurchaseDate(new Date());
 
         PurchaseDTO purchase2 = new PurchaseDTO();
         purchase2.setClient(client2);
         purchase2.setPurchasedBooks(List.of(book100, book100));
-        purchase2.setCompleted(false);
+        purchase2.setIsCompleted(false);
         purchase2.setPurchaseDate(new Date());
 
         purchases.add(purchase1);
