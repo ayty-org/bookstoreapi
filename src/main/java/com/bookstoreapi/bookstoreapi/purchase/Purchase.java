@@ -3,6 +3,7 @@ package com.bookstoreapi.bookstoreapi.purchase;
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.client.Client;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchProfile;
 import org.springframework.context.annotation.Lazy;
@@ -25,7 +26,7 @@ public class Purchase {
     @ManyToOne
     private Client client;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Book> purchasedBooks;
 
     private double amount;

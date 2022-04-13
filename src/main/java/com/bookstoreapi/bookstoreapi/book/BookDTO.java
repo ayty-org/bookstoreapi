@@ -37,10 +37,9 @@ public class BookDTO {
     @NotNull(message = "publication year cannot be null")
     private Date publicationYear;
 
-    @NotNull(message = "price cannot be null")
     @Min(value = 0, message = "price cannot be negative")
+    @NotNull(message = "price cannot be null")
     private double price;
-
 
     @Min(value = 0, message = "quantity in stock cannot be negative")
     @NotNull(message = "quantity in stock cannot be null")

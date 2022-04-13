@@ -10,9 +10,9 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class ClientService {
 
-
     @Autowired
     private ClientRepository clientRepository;
+
 
     public Client findById(Long id){
         return clientRepository.findById(id).orElseThrow( () ->{

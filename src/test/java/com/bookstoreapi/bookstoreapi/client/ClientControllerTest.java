@@ -46,7 +46,6 @@ public class ClientControllerTest {
 
 
 
-
     ObjectMapper mapper = new ObjectMapper();
 
     private final List<ClientDTO> clients = new ArrayList<>();

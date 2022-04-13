@@ -26,7 +26,7 @@ public class Book {
     private int quantityInStock;
     private String authorName;
 
-    @ManyToMany
+    @OneToMany
     private List<Category> categories;
 
     public Book(BookDTO bookDTO){

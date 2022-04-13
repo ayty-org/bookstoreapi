@@ -1,6 +1,7 @@
 package com.bookstoreapi.bookstoreapi.client;
 
 import com.bookstoreapi.bookstoreapi.client.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,19 +11,15 @@ import java.util.List;
 
 
 @RequestMapping("/clients")
+@RequiredArgsConstructor
 @RestController
 public class ClientController {
 
-    @Autowired
-    private GetAllClientService getAllClientService;
-    @Autowired
-    private GetClientService getClientService;
-    @Autowired
-    private PostClientService postClientService;
-    @Autowired
-    private PutClientService putClientService;
-    @Autowired
-    private DeleteClientService deleteClientService;
+    private final GetAllClientService getAllClientService;
+    private final GetClientService getClientService;
+    private final PostClientService postClientService;
+    private final PutClientService putClientService;
+    private final DeleteClientService deleteClientService;
 
 
     @GetMapping
@@ -39,7 +36,7 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientDTO save( @RequestBody @Valid ClientDTO client){
+    public ClientDTO save(@RequestBody @Valid ClientDTO client){
         return postClientService.save(client);
     }
 
