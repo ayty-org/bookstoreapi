@@ -2,21 +2,19 @@ package com.bookstoreapi.bookstoreapi.categories;
 
 import com.bookstoreapi.bookstoreapi.categories.service.GetAllCategoryService;
 import com.bookstoreapi.bookstoreapi.categories.service.GetCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @RequestMapping("/categories")
 @RestController
 public class CategoryController {
 
-    @Autowired
-    private GetAllCategoryService getAllCategoryService;
-    @Autowired
-    private GetCategoryService getCategoryService;
+    private final GetAllCategoryService getAllCategoryService;
+    private final GetCategoryService getCategoryService;
 
 
     @GetMapping

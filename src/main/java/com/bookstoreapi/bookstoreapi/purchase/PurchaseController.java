@@ -1,27 +1,23 @@
 package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.purchase.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RequestMapping("/purchases")
 @RestController
 public class PurchaseController {
 
-    @Autowired
-    private GetAllPurchaseService getAllPurchaseService;
-    @Autowired
-    private GetPurchaseService getPurchaseService;
-    @Autowired
-    private PostPurchaseService postPurchaseService;
-    @Autowired
-    private PutPurchaseService putPurchaseService;
-    @Autowired
-    private DeletePurchaseService deletePurchaseService;
+    private final GetAllPurchaseService getAllPurchaseService;
+    private final GetPurchaseService getPurchaseService;
+    private final PostPurchaseService postPurchaseService;
+    private final PutPurchaseService putPurchaseService;
+    private final DeletePurchaseService deletePurchaseService;
 
 
     @GetMapping

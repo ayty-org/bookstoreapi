@@ -2,7 +2,6 @@ package com.bookstoreapi.bookstoreapi.client;
 
 import com.bookstoreapi.bookstoreapi.client.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

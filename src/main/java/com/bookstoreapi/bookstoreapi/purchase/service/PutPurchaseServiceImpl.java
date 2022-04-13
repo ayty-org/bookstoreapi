@@ -4,20 +4,19 @@ import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class PutPurchaseServiceImpl implements PutPurchaseService{
 
-    @Autowired
-    private PurchaseRepository purchaseRepository;
-    @Autowired
-    private PurchaseService purchaseService;
+    private final PurchaseRepository purchaseRepository;
+    private final PurchaseService purchaseService;
 
 
     @Override

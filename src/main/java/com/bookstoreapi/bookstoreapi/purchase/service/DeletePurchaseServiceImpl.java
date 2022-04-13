@@ -1,16 +1,15 @@
 package com.bookstoreapi.bookstoreapi.purchase.service;
 
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class DeletePurchaseServiceImpl implements DeletePurchaseService{
 
-    @Autowired
-    private PurchaseRepository purchaseRepository;
-    @Autowired
-    private PurchaseService purchaseService;
+    private final PurchaseRepository purchaseRepository;
+    private final PurchaseService purchaseService;
 
 
     @Override

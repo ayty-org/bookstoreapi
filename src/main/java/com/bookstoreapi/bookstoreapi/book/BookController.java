@@ -1,6 +1,7 @@
 package com.bookstoreapi.bookstoreapi.book;
 
 import com.bookstoreapi.bookstoreapi.book.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,22 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RequestMapping("/books")
 @RestController
 public class BookController {
 
-    @Autowired
-    private GetAllBookService getAllBookService;
-    @Autowired
-    private GetBookService getBookService;
-    @Autowired
-    private GetAllByCategoryNameBookService getAllByCategoryNameBookService;
-    @Autowired
-    private PostBookService postBookService;
-    @Autowired
-    private PutBookService putBookService;
-    @Autowired
-    private DeleteBookService deleteBookService;
+    private final GetAllBookService getAllBookService;
+    private final GetBookService getBookService;
+    private final GetAllByCategoryNameBookService getAllByCategoryNameBookService;
+    private final PostBookService postBookService;
+    private final PutBookService putBookService;
+    private final DeleteBookService deleteBookService;
 
 
     @GetMapping

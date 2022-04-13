@@ -1,14 +1,15 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
 import com.bookstoreapi.bookstoreapi.client.ClientDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class GetClientServiceImpl implements GetClientService{
 
-    @Autowired
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Override
     public ClientDTO findById(Long id){

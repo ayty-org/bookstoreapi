@@ -2,17 +2,17 @@ package com.bookstoreapi.bookstoreapi.purchase.service;
 
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class GetAllPurchaseServiceImpl implements GetAllPurchaseService{
 
-    @Autowired
-    private PurchaseRepository purchaseRepository;
+    private final PurchaseRepository purchaseRepository;
 
 
     @Override

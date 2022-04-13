@@ -1,14 +1,14 @@
 package com.bookstoreapi.bookstoreapi.book.service;
 
 import com.bookstoreapi.bookstoreapi.book.BookDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class GetBookServiceImpl implements GetBookService{
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
 
     @Override

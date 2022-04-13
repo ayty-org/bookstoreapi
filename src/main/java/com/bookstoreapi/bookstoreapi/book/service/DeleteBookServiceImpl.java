@@ -2,19 +2,17 @@ package com.bookstoreapi.bookstoreapi.book.service;
 
 import com.bookstoreapi.bookstoreapi.book.BookRepository;
 import com.bookstoreapi.bookstoreapi.purchase.service.PurchaseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class DeleteBookServiceImpl implements DeleteBookService{
 
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private PurchaseService purchaseService;
-    @Autowired
-    private BookService bookService;
+    private final BookRepository bookRepository;
+    private final PurchaseService purchaseService;
+    private final BookService bookService;
 
 
     @Override
