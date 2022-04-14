@@ -1,50 +1,59 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
+import com.bookstoreapi.bookstoreapi.builders.ClientBuilder;
+import com.bookstoreapi.bookstoreapi.client.ClientRepository;
+import com.bookstoreapi.bookstoreapi.exception.DeleteException;
+import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
+import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class DeleteClientServiceImplTest {
-//
-//    @InjectMocks
-//    private DeleteClientServiceImpl deleteClientService;
-//    @Mock
-//    private ClientRepository repository;
-//    @Mock
-//    private PurchaseService purchaseService;
-//    @Mock
-//    private ClientService service;
-//    private Client client;
-//
-//
-//    @BeforeEach
-//    void setUp() {
-//        Client client = new Client();
-//        client.setId(1L);
-//        client.setName("Jenipapo da Silva");
-//
-//       this.client = client;
-//    }
-//
-//    @Test
-//    void deleteWhenIdExistTest(){
-//        when(purchaseService.existsByClientId(anyLong())).thenReturn(false);
-//        when(service.findById(1L)).thenReturn(client);
-//        deleteClientService.delete(1L);
-//    }
-//
-//    @Test
-//    void deleteWhenIdDontExistTest(){
-//        when(purchaseService.existsByClientId(anyLong())).thenReturn(false);
-//        when(service.findById(1L)).thenThrow(EntityNotFoundException.class);
-//        assertThrows(EntityNotFoundException.class, ()-> deleteClientService.delete(1L));
-//    }
-//
-//    @Test
-//    void deleteWhenExistPurchaseWithClient(){
-//        when(purchaseService.existsByClientId(anyLong())).thenReturn(true);
-//        assertThrows(DataIntegrityViolationException.class, ()-> deleteClientService.delete(1L));
-//    }
+
+    private DeleteClientServiceImpl deleteClientService;
+    @Mock
+    private ClientRepository clientRepository;
+    @Mock
+    private PurchaseRepository purchaseRepository;
+
+
+
+    @BeforeEach
+    void setUp() {
+        this.deleteClientService = new DeleteClientServiceImpl(clientRepository, purchaseRepository);
+    }
+
+    @Test
+    void deleteWhenIdExistTest(){
+        when(clientRepository.existsById(1L)).thenReturn(true);
+        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientValid()));
+
+        deleteClientService.delete(1L);
+        verify(clientRepository, times(1)).delete(any());
+    }
+
+    @Test
+    void deleteWhenIdDontExistTest(){
+        when(clientRepository.existsById(1L)).thenReturn(false);
+        assertThrows(EntityNotFoundException.class, ()-> deleteClientService.delete(1L));
+        verify(clientRepository, never()).delete(any());
+        verify(clientRepository, never()).findById(anyLong());
+    }
+
+    @Test
+    void deleteWhenExistPurchaseWithClient(){
+        when(clientRepository.existsById(1L)).thenReturn(true);
+        when(purchaseRepository.existsByClientId(anyLong())).thenReturn(true);
+        assertThrows(DeleteException.class, ()-> deleteClientService.delete(1L));
+        verify(clientRepository, never()).delete(any());
+    }
 }

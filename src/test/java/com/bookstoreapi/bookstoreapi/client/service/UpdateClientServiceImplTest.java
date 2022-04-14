@@ -1,27 +1,16 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
-import com.bookstoreapi.bookstoreapi.client.Client;
-import com.bookstoreapi.bookstoreapi.client.ClientDTO;
-import com.bookstoreapi.bookstoreapi.client.ClientRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.beans.BeanUtils;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 
 
 @ExtendWith(SpringExtension.class)
-class PutClientServiceImplTest {
+class UpdateClientServiceImplTest {
 //
 //
 //    @InjectMocks
