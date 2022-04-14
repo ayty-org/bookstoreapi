@@ -37,4 +37,8 @@ public class CategoryDTO {
                 .map(CategoryDTO::from)
                 .collect(Collectors.toList());
     }
+
+    public static String getClassName(){
+        return "Category";
+    }
 }

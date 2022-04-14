@@ -1,9 +1,9 @@
 package com.bookstoreapi.bookstoreapi.categories.service;
 
-import com.bookstoreapi.bookstoreapi.categories.CategoryDTO;
+import com.bookstoreapi.bookstoreapi.categories.Category;
 
 @FunctionalInterface
 public interface GetCategoryService {
 
-    CategoryDTO findById(Long id);
+    Category findById(Long id);
 }

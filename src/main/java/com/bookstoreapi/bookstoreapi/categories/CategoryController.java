@@ -20,12 +20,12 @@ public class CategoryController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> list(){
-        return getAllCategoryService.findAll();
+        return CategoryDTO.fromAll(getAllCategoryService.findAll());
     }
 
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryDTO find(@PathVariable Long categoryId){
-        return getCategoryService.findById(categoryId);
+        return CategoryDTO.from(getCategoryService.findById(categoryId));
     }
 }
