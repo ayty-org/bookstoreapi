@@ -51,7 +51,7 @@ class PutPurchaseServiceImplTest {
 
         when(service.findById(1L)).thenReturn(purchase);
         when(repository.save(any())).thenReturn(purchase);
-        when(service.getClient(any())).thenReturn(clientUpdate);
+        //when(service.getClient(any())).thenReturn(clientUpdate);
         when(service.getBooks(any())).thenReturn(new ArrayList<>());
 
         assertThat("updated", is(equalTo

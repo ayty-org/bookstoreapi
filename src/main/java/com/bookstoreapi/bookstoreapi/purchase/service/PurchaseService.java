@@ -3,7 +3,6 @@ package com.bookstoreapi.bookstoreapi.purchase.service;
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.service.BookService;
 import com.bookstoreapi.bookstoreapi.client.Client;
-import com.bookstoreapi.bookstoreapi.client.service.ClientService;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,8 @@ import java.util.List;
 @Service
 public class PurchaseService {
 
-    @Autowired
     private PurchaseRepository purchaseRepository;
-    @Autowired
     private BookService bookService;
-    @Autowired
-    private ClientService clientService;
 
 
     public Purchase findById(Long id){
@@ -39,9 +34,9 @@ public class PurchaseService {
         return amount;
     }
 
-    public Client getClient(Client client){
-        return clientService.findById(client.getId());
-    }
+//    public Client getClient(Client client){
+//        return clientService.findById(client.getId());
+//    }
 
     public List<Book> getBooks(List<Book> books){
         List<Book> bookList= new ArrayList<>();

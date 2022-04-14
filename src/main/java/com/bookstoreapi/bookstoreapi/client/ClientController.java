@@ -24,25 +24,25 @@ public class ClientController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ClientDTO> list(){
-        return getAllClientService.findAll();
+        return ClientDTO.fromAll(getAllClientService.findAll());
     }
 
     @GetMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO find(@PathVariable Long clientId){
-        return getClientService.findById(clientId);
+        return ClientDTO.from(getClientService.findById(clientId));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClientDTO save(@RequestBody @Valid ClientDTO client){
-        return postClientService.save(ClientDTO.to(client));
+        return ClientDTO.from(postClientService.save(ClientDTO.to(client)));
     }
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO clientDTO){
-        return putClientService.update(clientId,ClientDTO.to(clientDTO));
+        return ClientDTO.from(putClientService.update(clientId,ClientDTO.to(clientDTO)));
     }
 
     @DeleteMapping("/{clientId}")

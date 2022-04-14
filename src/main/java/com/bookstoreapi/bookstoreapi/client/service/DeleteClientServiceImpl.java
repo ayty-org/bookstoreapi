@@ -1,10 +1,11 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
+import com.bookstoreapi.bookstoreapi.client.Client;
+import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.client.ClientRepository;
-import com.bookstoreapi.bookstoreapi.purchase.service.PurchaseService;
+import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
+import com.bookstoreapi.bookstoreapi.exception.DeleteException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -12,16 +13,21 @@ import org.springframework.stereotype.Service;
 public class DeleteClientServiceImpl implements DeleteClientService{
 
     private final ClientRepository clientRepository;
-    private final PurchaseService purchaseService;
-    private final ClientService clientService;
 
 
     @Override
-    public void delete(Long id){
-        if(purchaseService.existsByClientId(id)){
-            throw new DataIntegrityViolationException
-                    ("One or more purchases have this client, it is not possible to delete");
+    public void delete(Long id) throws EntityNotFoundException {
+        if(clientRepository.existsById(id)){
+            try{
+                clientRepository.delete(clientRepository.getById(id));
+            }catch (Exception e){
+                throw new DeleteException(id, ClientDTO.getClassName());
+            }
+        }else{
+            throw new EntityNotFoundException(id, ClientDTO.getClassName());
         }
-        clientRepository.delete(clientService.findById(id));
     }
+
+
+
 }

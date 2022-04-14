@@ -24,7 +24,7 @@ public class PutPurchaseServiceImpl implements PutPurchaseService{
         Purchase purchaseSaved = purchaseService.findById(id);
 
         purchaseDTO.setPurchasedBooks(purchaseService.getBooks(purchaseDTO.getPurchasedBooks()));
-        purchaseDTO.setClient(purchaseService.getClient(purchaseDTO.getClient()));
+        //purchaseDTO.setClient(purchaseService.getClient(purchaseDTO.getClient()));
         purchaseDTO.setAmount(purchaseService.getAmountToPay(purchaseDTO.getPurchasedBooks()));
 
         checkUpdatesBooksStock(purchaseDTO.getPurchasedBooks(), purchaseSaved.getPurchasedBooks());

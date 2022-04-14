@@ -18,7 +18,7 @@ public class PostPurchaseServiceImpl implements PostPurchaseService{
 
     @Override
     public PurchaseDTO save(Purchase purchase){
-        purchase.setClient(purchaseService.getClient(purchase.getClient()));
+        //purchase.setClient(purchaseService.getClient(purchase.getClient()));
         purchase.setPurchasedBooks(purchaseService.getBooks(purchase.getPurchasedBooks()));
         purchase.setAmount(purchaseService.getAmountToPay(purchase.getPurchasedBooks()));
         purchase.setPurchaseDate(new Date());

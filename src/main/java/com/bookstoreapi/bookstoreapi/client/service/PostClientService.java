@@ -6,5 +6,5 @@ import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 @FunctionalInterface
 public interface PostClientService {
 
-    ClientDTO save(Client clientDTO);
+    Client save(Client clientDTO);
 }

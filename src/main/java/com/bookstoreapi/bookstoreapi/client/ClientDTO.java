@@ -1,7 +1,6 @@
 package com.bookstoreapi.bookstoreapi.client;
 
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.*;
 import java.util.List;
@@ -63,5 +62,7 @@ public class ClientDTO {
                 .collect(Collectors.toList());
     }
 
-
+    public static String getClassName(){
+        return "Client";
+    }
 }

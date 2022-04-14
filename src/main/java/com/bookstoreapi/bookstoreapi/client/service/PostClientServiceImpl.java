@@ -14,7 +14,7 @@ public class PostClientServiceImpl implements PostClientService {
 
 
     @Override
-    public ClientDTO save(Client client) {
-        return ClientDTO.from(clientRepository.save(client));
+    public Client save(Client client) {
+        return clientRepository.save(client);
     }
 }

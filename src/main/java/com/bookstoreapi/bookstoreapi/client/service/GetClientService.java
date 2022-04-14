@@ -1,9 +1,9 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
-import com.bookstoreapi.bookstoreapi.client.ClientDTO;
+import com.bookstoreapi.bookstoreapi.client.Client;
 
 @FunctionalInterface
 public interface GetClientService {
 
-    ClientDTO findById(Long id);
+    Client findById(Long id);
 }

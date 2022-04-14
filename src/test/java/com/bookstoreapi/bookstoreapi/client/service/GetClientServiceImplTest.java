@@ -22,44 +22,44 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class GetClientServiceImplTest {
-
-
-    @InjectMocks
-    private GetClientServiceImpl getClientService;
-    @Mock
-    private ClientService service;
-    Map<Long, Client> clients = new HashMap<>();
-
-
-    @BeforeEach
-    void setUp(){
-        Client client1 = new Client();
-        client1.setId(1L);
-        client1.setName("Jenipapo da Silva");
-
-        Client client2 = new Client();
-        client2.setId(2L);
-        client2.setName("Fernandin dos Santos");
-
-        clients.put(1L, client1);
-        clients.put(2L, client2);
-     }
-
-    @Test
-    void testGetByIdWhenIdExist(){
-        when(service.findById(1L)).thenReturn(clients.get(1L));
-        when(service.findById(2L)).thenReturn(clients.get(2L));
-
-        ClientDTO clientDTO = getClientService.findById(1L);
-        assertThat("Jenipapo da Silva", is(equalTo(clientDTO.getName())));
-        clientDTO = getClientService.findById(2L);
-        assertThat("Fernandin dos Santos", is(equalTo(clientDTO.getName())));
-   }
-
-   @Test
-    void testGetByIdWhenIdDontExist(){
-       when(service.findById(anyLong()
-       )).thenThrow(new IllegalArgumentException());
-       assertThrows(IllegalArgumentException.class, ()-> getClientService.findById(3L));
-   }
+//
+//
+//    @InjectMocks
+//    private GetClientServiceImpl getClientService;
+//    @Mock
+//    private ClientService service;
+//    Map<Long, Client> clients = new HashMap<>();
+//
+//
+//    @BeforeEach
+//    void setUp(){
+//        Client client1 = new Client();
+//        client1.setId(1L);
+//        client1.setName("Jenipapo da Silva");
+//
+//        Client client2 = new Client();
+//        client2.setId(2L);
+//        client2.setName("Fernandin dos Santos");
+//
+//        clients.put(1L, client1);
+//        clients.put(2L, client2);
+//     }
+//
+//    @Test
+//    void testGetByIdWhenIdExist(){
+//        when(service.findById(1L)).thenReturn(clients.get(1L));
+//        when(service.findById(2L)).thenReturn(clients.get(2L));
+//
+//        ClientDTO clientDTO = getClientService.findById(1L);
+//        assertThat("Jenipapo da Silva", is(equalTo(clientDTO.getName())));
+//        clientDTO = getClientService.findById(2L);
+//        assertThat("Fernandin dos Santos", is(equalTo(clientDTO.getName())));
+//   }
+//
+//   @Test
+//    void testGetByIdWhenIdDontExist(){
+//       when(service.findById(anyLong()
+//       )).thenThrow(new IllegalArgumentException());
+//       assertThrows(IllegalArgumentException.class, ()-> getClientService.findById(3L));
+//   }
 }

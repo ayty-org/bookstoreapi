@@ -7,7 +7,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -33,7 +32,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<?> illegalArgumentHandler(DataIntegrityViolationException e){
+    public ResponseEntity<?> illegalArgumentHandler(DeleteException e){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 

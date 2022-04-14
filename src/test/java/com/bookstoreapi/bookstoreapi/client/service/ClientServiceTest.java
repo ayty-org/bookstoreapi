@@ -21,32 +21,32 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class ClientServiceTest {
-
-    @InjectMocks
-    private ClientService clientService;
-    @Mock
-    private ClientRepository repository;
-    private Client client;
-
-    @BeforeEach
-    void setUp(){
-        Client client = new Client();
-        client.setId(1L);
-        client.setName("Ana Júlia");
-        this.client = client;
-    }
-
-    @Test
-    void findByIdWhenIdExistTest(){
-        when(repository.findById(anyLong())).thenReturn(Optional.of(client));
-
-        Client client3 = clientService.findById(1L);
-        assertThat("Ana Júlia", is(client3.getName()));
-    }
-
-    @Test
-    void findByIdWhenIdDontExist(){
-        when(repository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, ()-> clientService.findById(1L));
-    }
+//
+//    @InjectMocks
+//    private ClientService clientService;
+//    @Mock
+//    private ClientRepository repository;
+//    private Client client;
+//
+//    @BeforeEach
+//    void setUp(){
+//        Client client = new Client();
+//        client.setId(1L);
+//        client.setName("Ana Júlia");
+//        this.client = client;
+//    }
+//
+//    @Test
+//    void findByIdWhenIdExistTest(){
+//        when(repository.findById(anyLong())).thenReturn(Optional.of(client));
+//
+//        Client client3 = clientService.findById(1L);
+//        assertThat("Ana Júlia", is(client3.getName()));
+//    }
+//
+//    @Test
+//    void findByIdWhenIdDontExist(){
+//        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+//        assertThrows(EntityNotFoundException.class, ()-> clientService.findById(1L));
+//    }
 }
