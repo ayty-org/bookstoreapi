@@ -21,18 +21,18 @@ public class SaveBookServiceImpl implements SaveBookService {
 
 
     @Override
-    public Book save(Book book, List<Long> categories){
-        book.setCategories(this.getCategories(categories));
+    public Book save(Book book){
+        book.setCategories(this.getCategories(book.getCategories()));
         return bookRepository.save(book);
     }
 
-    private List<Category> getCategories(List<Long> ids) {
+    private List<Category> getCategories(List<Category> categories) {
         List<Category> categoriesSaved = new ArrayList<>();
-        for (Long id : ids) {
-            if (categoryRepository.existsById(id)) {
-                categoriesSaved.add(categoryRepository.findById(id).get());
+        for (Category category : categories) {
+            if (categoryRepository.existsById(category.getId())) {
+                categoriesSaved.add(categoryRepository.findById(category.getId()).get());
             } else {
-                throw new EntityNotFoundException(id, CategoryDTO.getClassName());
+                throw new EntityNotFoundException(category.getId(), CategoryDTO.getClassName());
             }
         }
         return categoriesSaved;

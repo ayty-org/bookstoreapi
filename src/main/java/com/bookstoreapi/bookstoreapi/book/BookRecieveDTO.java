@@ -1,5 +1,6 @@
 package com.bookstoreapi.bookstoreapi.book;
 
+import com.bookstoreapi.bookstoreapi.categories.Category;
 import lombok.*;
 import org.hibernate.validator.constraints.ISBN;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,4 +49,20 @@ public class BookRecieveDTO {
     @NotNull(message = "the book must contain at least one category")
     private List<Long> categories;
 
+    public static Book to (BookRecieveDTO book){
+        List<Category> categories = new ArrayList<>();
+        for(Long id: book.getCategories()){
+            categories.add(Category.builder().id(id).build());
+        }
+        return Book.builder()
+                .title(book.getTitle())
+                .synopsis(book.getSynopsis())
+                .isbn(book.getIsbn())
+                .publicationYear(book.getPublicationYear())
+                .price(book.getPrice())
+                .categories(categories)
+                .quantityInStock(book.getQuantityInStock())
+                .authorName(book.getAuthorName())
+                .build();
+    }
 }

@@ -2,12 +2,7 @@ package com.bookstoreapi.bookstoreapi.book;
 
 import com.bookstoreapi.bookstoreapi.categories.Category;
 import lombok.*;
-import org.hibernate.validator.constraints.ISBN;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,18 +34,6 @@ public class BookDTO {
                 .quantityInStock(book.getQuantityInStock())
                 .authorName(book.getAuthorName())
                 .categories(book.getCategories())
-                .build();
-    }
-
-    public static Book to (BookRecieveDTO book){
-        return Book.builder()
-                .title(book.getTitle())
-                .synopsis(book.getSynopsis())
-                .isbn(book.getIsbn())
-                .publicationYear(book.getPublicationYear())
-                .price(book.getPrice())
-                .quantityInStock(book.getQuantityInStock())
-                .authorName(book.getAuthorName())
                 .build();
     }
 

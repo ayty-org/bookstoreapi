@@ -22,22 +22,22 @@ public class UpdateBookServiceImpl implements UpdateBookService {
 
 
     @Override
-    public Book update(Long id, Book book, List<Long> categories) throws EntityNotFoundException{
+    public Book update(Long id, Book book) throws EntityNotFoundException{
         if(bookRepository.existsById(id)){
-            book.setCategories(this.getCategories(categories));
+            book.setCategories(this.getCategories(book.getCategories()));
             book.setId(id);
             return bookRepository.save(book);
         }
         throw new EntityNotFoundException(id, BookDTO.getClassName());
     }
 
-    private List<Category> getCategories(List<Long> ids) throws EntityNotFoundException {
+    private List<Category> getCategories(List<Category> categories) throws EntityNotFoundException {
         List<Category> categoriesSaved = new ArrayList<>();
-        for (Long id : ids) {
-            if (categoryRepository.existsById(id)) {
-                categoriesSaved.add(categoryRepository.findById(id).get());
+        for (Category category : categories) {
+            if (categoryRepository.existsById(category.getId())) {
+                categoriesSaved.add(categoryRepository.findById(category.getId()).get());
             } else {
-                throw new EntityNotFoundException(id, CategoryDTO.getClassName());
+                throw new EntityNotFoundException(category.getId(), CategoryDTO.getClassName());
             }
         }
         return categoriesSaved;
