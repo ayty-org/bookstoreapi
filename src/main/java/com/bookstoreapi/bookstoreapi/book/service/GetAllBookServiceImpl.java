@@ -1,5 +1,6 @@
 package com.bookstoreapi.bookstoreapi.book.service;
 
+import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.BookDTO;
 import com.bookstoreapi.bookstoreapi.book.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ public class GetAllBookServiceImpl implements GetAllBookService{
 
 
     @Override
-    public List<BookDTO> findAll() {
-        return BookDTO.fromAll(bookRepository.findAll());
+    public List<Book> findAll() {
+        return bookRepository.findAll();
 
     }
 }

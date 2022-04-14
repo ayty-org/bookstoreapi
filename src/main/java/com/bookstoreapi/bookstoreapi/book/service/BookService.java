@@ -18,19 +18,6 @@ public class BookService {
     //private final CategoryService categoryService;
 
 
-    public Book findById(Long id){
-        return bookRepository.findById(id).orElseThrow( () ->{
-            throw new EntityNotFoundException("Book with id "+id+" not found");
-        });
-    }
-
-    public List<Category> getCategories(List<Category> categories){
-        List<Category> categoriesList= new ArrayList<>();
-        for(Category category: categories){
-           // categoriesList.add(categoryService.findById(category.getId()));
-        }
-        return categoriesList;
-    }
 
     public void saveAll(List<Book> books){
         bookRepository.saveAll(books);

@@ -1,9 +1,9 @@
 package com.bookstoreapi.bookstoreapi.book.service;
 
-import com.bookstoreapi.bookstoreapi.book.BookDTO;
+import com.bookstoreapi.bookstoreapi.book.Book;
 
 @FunctionalInterface
 public interface GetBookService {
 
-    BookDTO findById(Long id);
+    Book findById(Long id);
 }

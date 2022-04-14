@@ -28,6 +28,6 @@ public class Book {
     private Integer quantityInStock;
     private String authorName;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Category> categories;
 }

@@ -1,5 +1,6 @@
 package com.bookstoreapi.bookstoreapi.book.service;
 
+import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.BookDTO;
 import com.bookstoreapi.bookstoreapi.book.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class GetAllByCategoryNameBookServiceImpl implements GetAllByCategoryName
 
 
     @Override
-    public List<BookDTO> findAllByCategoriesName(String name){
-        return BookDTO.fromAll(bookRepository.findAllByCategoriesNameIgnoreCase(name));
+    public List<Book> findAllByCategoriesName(String name){
+        return bookRepository.findAllByCategoriesNameIgnoreCase(name);
     }
 }

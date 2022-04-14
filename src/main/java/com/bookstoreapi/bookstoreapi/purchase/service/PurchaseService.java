@@ -29,7 +29,7 @@ public class PurchaseService {
     public double getAmountToPay(List<Book> books){
         double amount = 0.0;
         for(Book book: books){
-            amount += bookService.findById(book.getId()).getPrice();
+            //amount += bookService.findById(book.getId()).getPrice();
         }
         return amount;
     }
@@ -41,7 +41,7 @@ public class PurchaseService {
     public List<Book> getBooks(List<Book> books){
         List<Book> bookList= new ArrayList<>();
         for(Book book: books){
-            bookList.add(bookService.findById(book.getId()));
+            //bookList.add(bookService.findById(book.getId()));
         }
         return bookList;
     }
@@ -57,13 +57,5 @@ public class PurchaseService {
             }
         }
         bookService.saveAll(booksToUpdate);
-    }
-
-    public boolean existsByBookId(Long id){
-        return purchaseRepository.existsByPurchasedBooksId(id);
-    }
-
-    public boolean existsByClientId(Long id){
-        return purchaseRepository.existsByClientId(id);
     }
 }

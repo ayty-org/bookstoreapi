@@ -24,31 +24,31 @@ public class BookController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<BookDTO> list(){
-        return getAllBookService.findAll();
+        return BookDTO.fromAll(getAllBookService.findAll());
     }
 
     @GetMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
     public BookDTO find(@PathVariable Long bookId){
-        return getBookService.findById(bookId);
+        return BookDTO.from(getBookService.findById(bookId));
     }
 
     @GetMapping("/categories/{categoryName}")
     @ResponseStatus(HttpStatus.OK)
     public List<BookDTO> findByCategory(@PathVariable String categoryName){
-        return getAllByCategoryNameBookService.findAllByCategoriesName(categoryName);
+        return BookDTO.fromAll(getAllByCategoryNameBookService.findAllByCategoriesName(categoryName));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO save(@RequestBody @Valid BookDTO bookDTO){
-        return postBookService.save(BookDTO.to(bookDTO));
+    public BookDTO save(@RequestBody @Valid BookRecieveDTO bookDTO){
+        return BookDTO.from(postBookService.save(BookDTO.to(bookDTO), bookDTO.getCategories()));
     }
 
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO update(@PathVariable Long bookId, @RequestBody @Valid BookDTO bookDTO){
-        return putBookService.update(bookId, BookDTO.to(bookDTO));
+    public BookDTO update(@PathVariable Long bookId, @RequestBody @Valid BookRecieveDTO bookDTO){
+        return BookDTO.from(putBookService.update(bookId, BookDTO.to(bookDTO), bookDTO.getCategories()));
     }
 
    @DeleteMapping("/{bookId}")

@@ -19,36 +19,15 @@ import java.util.stream.Collectors;
 @Setter
 public class BookDTO {
 
-
-    @Size(min = 2, max = 60, message = "title must be between 2 and 60 characters")
-    @NotBlank(message = "title cannot be null or void")
     private String title;
-
-    @Size(min = 2, max = 500, message = "synopsis must be between 2 and 500 characters")
-    @NotBlank(message = "synopsis cannot be null or void")
     private String synopsis;
-
-    @ISBN(message = "invalid ISBN")
-    @NotBlank(message = "isbn cannot be null or void")
     private String isbn;
-
-    @NotNull(message = "publication year cannot be null")
     private Date publicationYear;
-
-    @Min(value = 0, message = "price cannot be negative")
-    @NotNull(message = "price cannot be null")
     private Double price;
-
-    @Min(value = 0, message = "quantity in stock cannot be negative")
-    @NotNull(message = "quantity in stock cannot be null")
     private Integer quantityInStock;
-
-    @Size(min = 2, max = 60, message = "author name must be between 2 and 60 characters")
-    @NotBlank(message = "author name cannot be null or void")
     private String authorName;
-
-    @NotNull(message = "the book must contain at least one category")
     private List<Category> categories;
+
 
     public static BookDTO from (Book book){
         return BookDTO.builder()
@@ -63,7 +42,7 @@ public class BookDTO {
                 .build();
     }
 
-    public static Book to (BookDTO book){
+    public static Book to (BookRecieveDTO book){
         return Book.builder()
                 .title(book.getTitle())
                 .synopsis(book.getSynopsis())
@@ -72,7 +51,6 @@ public class BookDTO {
                 .price(book.getPrice())
                 .quantityInStock(book.getQuantityInStock())
                 .authorName(book.getAuthorName())
-                .categories(book.getCategories())
                 .build();
     }
 
@@ -80,5 +58,9 @@ public class BookDTO {
         return books.stream()
                 .map(BookDTO::from)
                 .collect(Collectors.toList());
+    }
+
+    public static String getClassName(){
+        return "Book";
     }
 }
