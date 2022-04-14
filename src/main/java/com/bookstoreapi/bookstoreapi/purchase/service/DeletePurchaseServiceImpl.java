@@ -1,5 +1,7 @@
 package com.bookstoreapi.bookstoreapi.purchase.service;
 
+import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
+import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,11 +11,15 @@ import org.springframework.stereotype.Service;
 public class DeletePurchaseServiceImpl implements DeletePurchaseService{
 
     private final PurchaseRepository purchaseRepository;
-    private final PurchaseService purchaseService;
 
 
     @Override
     public void delete(Long id){
-        purchaseRepository.delete(purchaseService.findById(id));
+        if(purchaseRepository.existsById(id)) {
+            purchaseRepository.delete(purchaseRepository.findById(id).get());
+        }
+        else{
+            throw new EntityNotFoundException(id, PurchaseDTO.getClassName());
+        }
     }
 }

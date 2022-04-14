@@ -1,9 +1,9 @@
 package com.bookstoreapi.bookstoreapi.purchase.service;
 
-import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
+import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 
 @FunctionalInterface
 public interface GetPurchaseService {
 
-    PurchaseDTO findById(Long id);
+    Purchase findById(Long id);
 }

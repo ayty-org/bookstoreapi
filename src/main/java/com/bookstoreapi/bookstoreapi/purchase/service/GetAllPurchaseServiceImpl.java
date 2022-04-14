@@ -1,5 +1,6 @@
 package com.bookstoreapi.bookstoreapi.purchase.service;
 
+import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class GetAllPurchaseServiceImpl implements GetAllPurchaseService{
 
 
     @Override
-    public List<PurchaseDTO> findAll() {
-        return PurchaseDTO.fromAll(purchaseRepository.findAll());
+    public List<Purchase> findAll() {
+        return purchaseRepository.findAll();
     }
 }

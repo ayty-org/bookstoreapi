@@ -23,25 +23,27 @@ public class PurchaseController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<PurchaseDTO> list(){
-        return getAllPurchaseService.findAll();
+        return PurchaseDTO.fromAll(getAllPurchaseService.findAll());
     }
 
     @GetMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
     public PurchaseDTO find(@PathVariable Long purchaseId){
-        return getPurchaseService.findById(purchaseId);
+        return PurchaseDTO.from(getPurchaseService.findById(purchaseId));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PurchaseDTO save(@RequestBody @Valid PurchaseDTO purchaseDTO){
-        return postPurchaseService.save(PurchaseDTO.to(purchaseDTO));
+    public PurchaseDTO save(@RequestBody @Valid PurchaseRecieveDTO purchase){
+        return PurchaseDTO.from(postPurchaseService.save(PurchaseRecieveDTO.to(purchase),
+                purchase.getClient(), purchase.getPurchasedBooks()));
     }
 
     @PutMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
-    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseDTO purchase){
-        return putPurchaseService.update(purchaseId, purchase);
+    public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseRecieveDTO purchase){
+        return PurchaseDTO.from(putPurchaseService.update(purchaseId,
+                PurchaseRecieveDTO.to(purchase), purchase.getClient(), purchase.getPurchasedBooks()));
     }
 
     @DeleteMapping("/{purchaseId}")
