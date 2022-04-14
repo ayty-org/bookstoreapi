@@ -26,23 +26,23 @@ public class SavePurchaseServiceImpl implements SavePurchaseService {
 
 
     @Override
-    public Purchase save(Purchase purchase, Long client, List<Long> books){
-        purchase.setClient(this.getClient(client));
-        purchase.setPurchasedBooks(this.getBooks(books));
+    public Purchase save(Purchase purchase){
+        purchase.setClient(this.getClient(purchase.getClient().getId()));
+        purchase.setPurchasedBooks(this.getBooks(purchase.getPurchasedBooks()));
         purchase.setAmount(this.getAmountToPay(purchase.getPurchasedBooks()));
         purchase.setPurchaseDate(new Date());
         this.updateBooksStockToDown(purchase.getPurchasedBooks());
         return purchaseRepository.save(purchase);
     }
 
-    private List<Book> getBooks(List<Long> ids){
+    private List<Book> getBooks(List<Book> books){
         List<Book> bookList= new ArrayList<>();
-        for(Long id: ids){
-            if(bookRepository.existsById(id)){
-                bookList.add(bookRepository.findById(id).get());
+        for(Book book: books){
+            if(bookRepository.existsById(book.getId())){
+                bookList.add(bookRepository.findById(book.getId()).get());
             }
             else{
-                throw new EntityNotFoundException(id, BookDTO.getClassName());
+                throw new EntityNotFoundException(book.getId(), BookDTO.getClassName());
             }
         }
         return bookList;

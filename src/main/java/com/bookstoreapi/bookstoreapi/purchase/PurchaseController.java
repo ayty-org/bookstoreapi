@@ -35,15 +35,13 @@ public class PurchaseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PurchaseDTO save(@RequestBody @Valid PurchaseRecieveDTO purchase){
-        return PurchaseDTO.from(postPurchaseService.save(PurchaseRecieveDTO.to(purchase),
-                purchase.getClient(), purchase.getPurchasedBooks()));
+        return PurchaseDTO.from(postPurchaseService.save(PurchaseRecieveDTO.to(purchase)));
     }
 
     @PutMapping("/{purchaseId}")
     @ResponseStatus(HttpStatus.OK)
     public PurchaseDTO update(@PathVariable Long purchaseId, @RequestBody @Valid PurchaseRecieveDTO purchase){
-        return PurchaseDTO.from(putPurchaseService.update(purchaseId,
-                PurchaseRecieveDTO.to(purchase), purchase.getClient(), purchase.getPurchasedBooks()));
+        return PurchaseDTO.from(putPurchaseService.update(purchaseId, PurchaseRecieveDTO.to(purchase)));
     }
 
     @DeleteMapping("/{purchaseId}")

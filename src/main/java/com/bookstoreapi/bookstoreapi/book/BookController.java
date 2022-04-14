@@ -51,7 +51,7 @@ public class BookController {
         return BookDTO.from(putBookService.update(bookId, BookDTO.to(bookDTO), bookDTO.getCategories()));
     }
 
-   @DeleteMapping("/{bookId}")
+    @DeleteMapping("/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long bookId){
         deleteBookService.delete(bookId);

@@ -28,11 +28,11 @@ public class UpdatePurchaseServiceImpl implements UpdatePurchaseService {
 
 
     @Override
-    public Purchase update(Long id, Purchase purchase, Long client, List<Long> books){
+    public Purchase update(Long id, Purchase purchase){
         Optional<Purchase> purchaseSaved = purchaseRepository.findById(id);
         if(purchaseSaved.isPresent()){
-            purchase.setPurchasedBooks(this.getBooks(books));
-            purchase.setClient(this.getClient(client));
+            purchase.setPurchasedBooks(this.getBooks(purchase.getPurchasedBooks()));
+            purchase.setClient(this.getClient(purchase.getClient().getId()));
             purchase.setAmount(this.getAmountToPay(purchase.getPurchasedBooks()));
             purchase.setId(id);
             updateBooksStock(purchase.getPurchasedBooks(), purchaseSaved.get().getPurchasedBooks());
@@ -47,14 +47,14 @@ public class UpdatePurchaseServiceImpl implements UpdatePurchaseService {
           this.updateBooksStockToDown(updated);
     }
 
-    private List<Book> getBooks(List<Long> ids){
+    private List<Book> getBooks(List<Book> books){
         List<Book> bookList= new ArrayList<>();
-        for(Long id: ids){
-            if(bookRepository.existsById(id)){
-                bookList.add(bookRepository.findById(id).get());
+        for(Book book: books){
+            if(bookRepository.existsById(book.getId())){
+                bookList.add(bookRepository.findById(book.getId()).get());
             }
             else{
-                throw new EntityNotFoundException(id, BookDTO.getClassName());
+                throw new EntityNotFoundException(book.getId(), BookDTO.getClassName());
             }
         }
         return bookList;

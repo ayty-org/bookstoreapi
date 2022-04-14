@@ -24,7 +24,7 @@ public class Purchase {
     @ManyToOne
     private Client client;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Book> purchasedBooks;
 
     private Double amount;
