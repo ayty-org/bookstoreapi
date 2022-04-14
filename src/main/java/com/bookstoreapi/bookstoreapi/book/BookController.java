@@ -42,13 +42,13 @@ public class BookController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookDTO save(@RequestBody @Valid BookDTO bookDTO){
-        return postBookService.save(BookDTO.from(bookDTO));
+        return postBookService.save(BookDTO.to(bookDTO));
     }
 
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.OK)
     public BookDTO update(@PathVariable Long bookId, @RequestBody @Valid BookDTO bookDTO){
-        return putBookService.update(bookId, BookDTO.from(bookDTO));
+        return putBookService.update(bookId, BookDTO.to(bookDTO));
     }
 
    @DeleteMapping("/{bookId}")

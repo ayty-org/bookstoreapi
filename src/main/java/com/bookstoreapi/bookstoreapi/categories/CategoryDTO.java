@@ -16,24 +16,23 @@ public class CategoryDTO {
     @NotBlank
     private String name;
 
-    public CategoryDTO(Category category){
+    public CategoryDTO(Category category) {
         this.name = category.getName();
     }
 
-
-    public static Category from(CategoryDTO categoryDTO){
-        return Category.builder()
-                .name(categoryDTO.getName())
-                .build();
-    }
-
-    public static CategoryDTO from(Category category){
+    public static CategoryDTO from(Category category) {
         return CategoryDTO.builder()
                 .name(category.getName())
                 .build();
     }
 
-    public static List<CategoryDTO> fromAll (List<Category> categories) {
+    public static Category to(CategoryDTO categoryDTO) {
+        return Category.builder()
+                .name(categoryDTO.getName())
+                .build();
+    }
+
+    public static List<CategoryDTO> fromAll(List<Category> categories) {
         return categories.stream()
                 .map(CategoryDTO::from)
                 .collect(Collectors.toList());

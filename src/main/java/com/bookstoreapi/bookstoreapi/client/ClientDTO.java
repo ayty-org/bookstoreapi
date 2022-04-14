@@ -37,7 +37,7 @@ public class ClientDTO {
     private String gender;
 
 
-    public static ClientDTO from(Client client){
+    public static ClientDTO from(Client client) {
         return ClientDTO.builder()
                 .name(client.getName())
                 .age(client.getAge())
@@ -47,13 +47,7 @@ public class ClientDTO {
                 .build();
     }
 
-    public static List<ClientDTO> fromAll (List<Client> clients) {
-        return clients.stream()
-                .map(ClientDTO::from)
-                .collect(Collectors.toList());
-    }
-
-    public static Client from(ClientDTO clientDTO){
+    public static Client to(ClientDTO clientDTO) {
         return Client.builder()
                 .name(clientDTO.getName())
                 .age(clientDTO.getAge())
@@ -62,5 +56,12 @@ public class ClientDTO {
                 .gender(clientDTO.getGender())
                 .build();
     }
+
+    public static List<ClientDTO> fromAll(List<Client> clients) {
+        return clients.stream()
+                .map(ClientDTO::from)
+                .collect(Collectors.toList());
+    }
+
 
 }

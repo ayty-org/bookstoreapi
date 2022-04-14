@@ -19,15 +19,13 @@ public class PurchaseDTO {
 
     @NotNull(message = "purchase client cannot be null")
     private Client client;
-
     @NotNull(message = "a purchase must have at least one book")
     private List<Book> purchasedBooks;
-
     private Double amount;
     private Date purchaseDate;
-
     @NotNull(message = "purchase status cannot be null")
     private Boolean isCompleted;
+
 
     public static PurchaseDTO from(Purchase purchase) {
         return PurchaseDTO.builder()
@@ -39,7 +37,7 @@ public class PurchaseDTO {
                 .build();
     }
 
-    public static Purchase from(PurchaseDTO purchase) {
+    public static Purchase to(PurchaseDTO purchase) {
         return Purchase.builder()
                 .client(purchase.getClient())
                 .purchasedBooks(purchase.getPurchasedBooks())

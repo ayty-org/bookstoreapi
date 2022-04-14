@@ -36,13 +36,13 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClientDTO save(@RequestBody @Valid ClientDTO client){
-        return postClientService.save(ClientDTO.from(client));
+        return postClientService.save(ClientDTO.to(client));
     }
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO clientDTO){
-        return putClientService.update(clientId,ClientDTO.from(clientDTO));
+        return putClientService.update(clientId,ClientDTO.to(clientDTO));
     }
 
     @DeleteMapping("/{clientId}")

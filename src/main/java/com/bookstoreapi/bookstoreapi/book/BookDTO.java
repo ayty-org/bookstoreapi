@@ -63,7 +63,7 @@ public class BookDTO {
                 .build();
     }
 
-    public static Book from (BookDTO book){
+    public static Book to (BookDTO book){
         return Book.builder()
                 .title(book.getTitle())
                 .synopsis(book.getSynopsis())
