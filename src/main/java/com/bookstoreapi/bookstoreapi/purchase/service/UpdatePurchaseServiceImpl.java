@@ -8,6 +8,7 @@ import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.client.ClientRepository;
 import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
+import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class PostPurchaseServiceImpl implements PostPurchaseService{
+public class UpdatePurchaseServiceImpl implements UpdatePurchaseService {
 
     private final PurchaseRepository purchaseRepository;
     private final BookRepository bookRepository;
@@ -26,13 +28,23 @@ public class PostPurchaseServiceImpl implements PostPurchaseService{
 
 
     @Override
-    public Purchase save(Purchase purchase, Long client, List<Long> books){
-        purchase.setClient(this.getClient(client));
-        purchase.setPurchasedBooks(this.getBooks(books));
-        purchase.setAmount(this.getAmountToPay(purchase.getPurchasedBooks()));
-        purchase.setPurchaseDate(new Date());
-        this.updateBooksStockToDown(purchase.getPurchasedBooks());
-        return purchaseRepository.save(purchase);
+    public Purchase update(Long id, Purchase purchase, Long client, List<Long> books){
+        Optional<Purchase> purchaseSaved = purchaseRepository.findById(id);
+        if(purchaseSaved.isPresent()){
+            purchase.setPurchasedBooks(this.getBooks(books));
+            purchase.setClient(this.getClient(client));
+            purchase.setAmount(this.getAmountToPay(purchase.getPurchasedBooks()));
+            purchase.setId(id);
+            updateBooksStock(purchase.getPurchasedBooks(), purchaseSaved.get().getPurchasedBooks());
+            purchase.setPurchaseDate(new Date());
+            return purchaseRepository.save(purchase);
+        }
+        throw new EntityNotFoundException(id, PurchaseDTO.getClassName());
+    }
+
+    private void updateBooksStock(List<Book> updated, List<Book> old){
+          this.updateBooksStockToUp(old);
+          this.updateBooksStockToDown(updated);
     }
 
     private List<Book> getBooks(List<Long> ids){
@@ -55,12 +67,23 @@ public class PostPurchaseServiceImpl implements PostPurchaseService{
         throw new EntityNotFoundException(id, ClientDTO.getClassName());
     }
 
+
     private double getAmountToPay(List<Book> books){
         double amount = 0.0;
         for(Book book: books){
             amount += bookRepository.findById(book.getId()).get().getPrice();
         }
         return amount;
+    }
+
+
+    private void updateBooksStockToUp(List<Book> books){
+        List<Book> booksToUpdate = new ArrayList<>();
+        for(Book book: books){
+            book.setQuantityInStock(book.getQuantityInStock()+1);
+            booksToUpdate.add(book);
+        }
+        bookRepository.saveAll(booksToUpdate);
     }
 
     private void updateBooksStockToDown(List<Book> books){

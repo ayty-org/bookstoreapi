@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class PutClientServiceImpl implements PutClientService{
+public class UpdateClientServiceImpl implements UpdateClientService {
 
     private final ClientRepository clientRepository;
 

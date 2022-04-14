@@ -16,8 +16,8 @@ public class ClientController {
 
     private final GetAllClientService getAllClientService;
     private final GetClientService getClientService;
-    private final PostClientService postClientService;
-    private final PutClientService putClientService;
+    private final SaveClientService postClientService;
+    private final UpdateClientService putClientService;
     private final DeleteClientService deleteClientService;
 
 

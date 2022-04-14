@@ -15,8 +15,8 @@ public class PurchaseController {
 
     private final GetAllPurchaseService getAllPurchaseService;
     private final GetPurchaseService getPurchaseService;
-    private final PostPurchaseService postPurchaseService;
-    private final PutPurchaseService putPurchaseService;
+    private final SavePurchaseService postPurchaseService;
+    private final UpdatePurchaseService putPurchaseService;
     private final DeletePurchaseService deletePurchaseService;
 
 

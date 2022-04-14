@@ -5,7 +5,7 @@ import com.bookstoreapi.bookstoreapi.book.Book;
 import java.util.List;
 
 @FunctionalInterface
-public interface PostBookService {
+public interface UpdateBookService {
 
-    Book save(Book book, List<Long> categories);
+    Book update(Long id, Book book, List<Long> categories);
 }

@@ -16,8 +16,8 @@ public class BookController {
     private final GetAllBookService getAllBookService;
     private final GetBookService getBookService;
     private final GetAllByCategoryNameBookService getAllByCategoryNameBookService;
-    private final PostBookService postBookService;
-    private final PutBookService putBookService;
+    private final SaveBookService postBookService;
+    private final UpdateBookService putBookService;
     private final DeleteBookService deleteBookService;
 
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class PostBookServiceImpl implements PostBookService{
+public class SaveBookServiceImpl implements SaveBookService {
 
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;

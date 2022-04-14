@@ -5,7 +5,7 @@ import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import java.util.List;
 
 @FunctionalInterface
-public interface PostPurchaseService {
+public interface SavePurchaseService {
 
     Purchase save(Purchase purchase, Long client, List<Long> books);
 }
