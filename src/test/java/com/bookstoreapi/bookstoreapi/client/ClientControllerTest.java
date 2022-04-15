@@ -1,8 +1,7 @@
 package com.bookstoreapi.bookstoreapi.client;
 
-import com.bookstoreapi.bookstoreapi.BookstoreApiJacksonApplicationTests;
+import com.bookstoreapi.bookstoreapi.BookstoreApiClientTests;
 import com.bookstoreapi.bookstoreapi.builders.ClientBuilder;
-import com.bookstoreapi.bookstoreapi.builders.PurchaseBuilder;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
@@ -18,15 +17,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(SpringExtension.class)
-public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
+public class ClientControllerTest extends BookstoreApiClientTests {
 
 
     private MockMvc mockMvc;
@@ -88,7 +85,13 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
     }
 
     @Test
-    void getAll() throws Exception{
+    void testGets() throws Exception{
+        this.getAllTest();
+        this.getOneTest();
+        this.getWhenDontExistTest();
+    }
+
+    void getAllTest() throws Exception{
         this.repository.deleteAll();
         this.repository.save(ClientBuilder.clientJenipapo1());
         this.repository.save(ClientBuilder.clientAna2());
@@ -107,8 +110,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$[1].gender", is("Female")));
     }
 
-    @Test
-    void oneTest() throws Exception{
+    void getOneTest() throws Exception{
         mockMvc.perform(get(url+"/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Jenipapo")))
@@ -118,7 +120,6 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$.gender", is("Male")));
     }
 
-    @Test
     void getWhenDontExistTest() {
         Assertions.assertThatThrownBy(() ->
                         mockMvc.perform(get(url + "/10"))
@@ -178,9 +179,6 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void deleteWhenIdDontExist() throws Exception{
-
-        this.repository.save(ClientBuilder.clientJenipapo1());
-
         Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/4"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(jsonPath("$", is("Client with id 4 not found"))));
