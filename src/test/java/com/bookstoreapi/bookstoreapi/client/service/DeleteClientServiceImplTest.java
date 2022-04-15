@@ -35,7 +35,7 @@ public class DeleteClientServiceImplTest {
     @Test
     void deleteWhenIdExistTest(){
         when(clientRepository.existsById(1L)).thenReturn(true);
-        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientValid()));
+        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
         deleteClientService.delete(1L);
         verify(clientRepository, times(1)).delete(any());

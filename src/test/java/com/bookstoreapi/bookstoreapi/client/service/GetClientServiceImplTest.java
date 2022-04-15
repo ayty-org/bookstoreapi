@@ -35,7 +35,7 @@ public class GetClientServiceImplTest {
 
     @Test
     void testGetByIdWhenIdExist(){
-        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientValid()));
+        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
         Client client = getClientService.findById(1L);
         assertThat(1L, is(client.getId()));

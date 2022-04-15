@@ -33,9 +33,9 @@ class UpdateClientServiceImplTest {
     @Test
     void updateTest(){
         when(repository.existsById(1L)).thenReturn(true);
-        when(repository.save(any())).thenReturn(ClientBuilder.clientValid());
+        when(repository.save(any())).thenReturn(ClientBuilder.clientJenipapo1());
 
-        Client client = updateClientService.update(1L, ClientBuilder.clientValid());
+        Client client = updateClientService.update(1L, ClientBuilder.clientJenipapo1());
         verify(repository, times(1)).existsById(1L);
         verify(repository, times(1)).save(any());
 
@@ -52,7 +52,7 @@ class UpdateClientServiceImplTest {
         when(repository.existsById(1L)).thenReturn(false);
 
         assertThrows(EntityNotFoundException.class,
-                ()-> updateClientService.update(1L, ClientBuilder.clientValid()));
+                ()-> updateClientService.update(1L, ClientBuilder.clientJenipapo1()));
         verify(repository, times(1)).existsById(1L);
         verify(repository, never()).save(any());
     }

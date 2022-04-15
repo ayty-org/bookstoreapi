@@ -11,7 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -30,8 +29,8 @@ class SaveClientServiceImplTest {
 
     @Test
     void saveTest(){
-        when(repository.save(any())).thenReturn(ClientBuilder.clientValid());
-        Client client = saveClientServiceImpl.save(ClientBuilder.clientValid());
+        when(repository.save(any())).thenReturn(ClientBuilder.clientJenipapo1());
+        Client client = saveClientServiceImpl.save(ClientBuilder.clientJenipapo1());
         assertThat(1L, is(client.getId()));
         assertThat("Jenipapo", is(client.getName()));
         assertThat(19, is(client.getAge()));
