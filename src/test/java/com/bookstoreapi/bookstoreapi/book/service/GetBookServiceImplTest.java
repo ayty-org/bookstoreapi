@@ -1,62 +1,58 @@
 package com.bookstoreapi.bookstoreapi.book.service;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
-import com.bookstoreapi.bookstoreapi.book.BookDTO;
+import com.bookstoreapi.bookstoreapi.book.BookRepository;
+import com.bookstoreapi.bookstoreapi.builders.BookBuilder;
+import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class GetBookServiceImplTest {
-//
-//    @InjectMocks
-//    private GetBookServiceImpl getBookService;
-//    @Mock
-//    private BookService service;
-//    Map<Long, Book> books = new HashMap<>();
-//
-//
-//    @BeforeEach
-//    void setUp(){
-//        Book book1 = new Book();
-//        book1.setId(1L);
-//        book1.setTitle("Book 1");
-//
-//        Book book2 = new Book();
-//        book2.setId(2L);
-//        book2.setTitle("Book 2");
-//
-//        books.put(1L, book1);
-//        books.put(2L, book2);
-//    }
-//
-//    @Test
-//    void testGetByIdWhenIdExist(){
-//        when(service.findById(1L)).thenReturn(books.get(1L));
-//        when(service.findById(2L)).thenReturn(books.get(2L));
-//
-//        BookDTO bookDTO = getBookService.findById(1L);
-//        assertThat("Book 1", is(equalTo(bookDTO.getTitle())));
-//        bookDTO = getBookService.findById(2L);
-//        assertThat("Book 2", is(equalTo(bookDTO.getTitle())));
-//    }
-//
-//    @Test
-//    void testGetByIdWhenIdDontExist(){
-//        when(service.findById(anyLong())).thenThrow(new IllegalArgumentException());
-//        assertThrows(IllegalArgumentException.class, ()-> getBookService.findById(3L));
-//    }
+
+    private GetBookServiceImpl getBookService;
+    @Mock
+    private BookRepository repository;
+
+
+    @BeforeEach
+    void setUp(){
+        this.getBookService = new GetBookServiceImpl(repository);
+    }
+
+    @Test
+    void testGetByIdWhenIdExist(){
+        when(repository.findById(1L)).thenReturn(Optional.of(BookBuilder.book1L()));
+
+        Book book = getBookService.findById(1L);
+
+        verify(repository, times(1)).findById(1L);
+        assertThat(1L, is(book.getId()));
+        assertThat(3, is(book.getCategories().size()));
+        assertThat("JavaScript", is(book.getTitle()));
+        assertThat("Aprenda JavaScript", is(book.getSynopsis()));
+        assertThat("1111111111111", is(book.getIsbn()));
+        assertThat(new Date(14032001), is(book.getPublicationYear()));
+        assertThat(50.00, is(book.getPrice()));
+        assertThat(23, is(book.getQuantityInStock()));
+        assertThat("JN Papo", is(book.getAuthorName()));
+    }
+
+    @Test
+    void testGetByIdWhenIdDontExist(){
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class, ()-> getBookService.findById(3L));
+    }
 }

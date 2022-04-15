@@ -22,7 +22,7 @@ public class DeleteBookServiceImpl implements DeleteBookService{
             if(purchaseRepository.existsByPurchasedBooksId(id)){
                 throw new DeleteException(id, BookDTO.getClassName());
             }
-            bookRepository.delete(bookRepository.getById(id));
+            bookRepository.delete(bookRepository.findById(id).get());
         }else{
             throw new EntityNotFoundException(id, BookDTO.getClassName());
         }
