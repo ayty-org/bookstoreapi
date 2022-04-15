@@ -43,7 +43,7 @@ public class ClientBuilder {
     public static Client clientInvalid(){
         return Client.builder()
                 .id(1L)
-                .name(null)
+                .name("a")
                 .age(19)
                 .email("jenipapo@coldmail.com")
                 .telephone("83996438691")
