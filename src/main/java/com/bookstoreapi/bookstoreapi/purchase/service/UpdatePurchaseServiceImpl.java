@@ -35,6 +35,7 @@ public class UpdatePurchaseServiceImpl implements UpdatePurchaseService {
             purchase.setClient(this.getClient(purchase.getClient().getId()));
             purchase.setAmount(this.getAmountToPay(purchase.getPurchasedBooks()));
             purchase.setId(id);
+            purchase.setPurchaseDate(purchaseSaved.get().getPurchaseDate());
             updateBooksStock(purchase.getPurchasedBooks(), purchaseSaved.get().getPurchasedBooks());
             purchase.setPurchaseDate(new Date());
             return purchaseRepository.save(purchase);

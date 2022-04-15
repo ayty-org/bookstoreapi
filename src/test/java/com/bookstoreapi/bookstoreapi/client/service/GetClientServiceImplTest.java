@@ -12,6 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -36,12 +38,12 @@ public class GetClientServiceImplTest {
         when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientValid()));
 
         Client client = getClientService.findById(1L);
-        assertEquals(1L, client.getId());
-        assertEquals("Jenipapo", client.getName());
-        assertEquals(19, client.getAge());
-        assertEquals("jenipapo@coldmail.com", client.getEmail());
-        assertEquals("83996438691", client.getTelephone());
-        assertEquals("Male", client.getGender());
+        assertThat(1L, is(client.getId()));
+        assertThat("Jenipapo", is(client.getName()));
+        assertThat(19, is(client.getAge()));
+        assertThat("jenipapo@coldmail.com", is(client.getEmail()));
+        assertThat("83996438691", is(client.getTelephone()));
+        assertThat("Male", is(client.getGender()));
     }
 
    @Test

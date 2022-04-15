@@ -1,55 +1,59 @@
 package com.bookstoreapi.bookstoreapi.client.service;
 
+import com.bookstoreapi.bookstoreapi.builders.ClientBuilder;
+import com.bookstoreapi.bookstoreapi.client.Client;
+import com.bookstoreapi.bookstoreapi.client.ClientRepository;
+import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(SpringExtension.class)
 class UpdateClientServiceImplTest {
-//
-//
-//    @InjectMocks
-//    private PutClientServiceImpl putClientService;
-//    @Mock
-//    private ClientRepository repository;
-//    @Mock
-//    private ClientService service;
-//    private Client client;
-//
-//
-//    @BeforeEach
-//    void setUp(){
-//        Client clientOld = new Client();
-//        clientOld.setId(1L);
-//        clientOld.setName("old");
-//        clientOld.setEmail("old@old.com");
-//        clientOld.setAge(25);
-//        clientOld.setGender("Female");
-//        clientOld.setTelephone("11111111111");
-//        this.client = clientOld;
-//    }
-//
-//    @Test
-//    void updateTest(){
-//        Client clientUpdated = new Client();
-//        BeanUtils.copyProperties(client, clientUpdated);
-//        clientUpdated.setName("updated");
-//        clientUpdated.setEmail("updated@updated.com");
-//
-//        ClientDTO clientDTO = new ClientDTO();
-//        BeanUtils.copyProperties(clientUpdated, clientDTO);
-//
-//        when(service.findById(anyLong())).thenReturn(client);
-//        when(repository.save(any())).thenReturn(clientUpdated);
-//
-//        assertThat("updated", is(equalTo
-//                (putClientService.update(1L, clientDTO).getName())));
-//        assertInstanceOf(ClientDTO.class, putClientService.update(1L, clientDTO));
-//    }
 
+    private UpdateClientServiceImpl updateClientService;
+    @Mock
+    private ClientRepository repository;
+
+
+    @BeforeEach
+    void setUp(){
+        this.updateClientService = new UpdateClientServiceImpl(repository);
+    }
+
+    @Test
+    void updateTest(){
+        when(repository.existsById(1L)).thenReturn(true);
+        when(repository.save(any())).thenReturn(ClientBuilder.clientValid());
+
+        Client client = updateClientService.update(1L, ClientBuilder.clientValid());
+        verify(repository, times(1)).existsById(1L);
+        verify(repository, times(1)).save(any());
+
+        assertThat(1L, is(client.getId()));
+        assertThat("Jenipapo", is(client.getName()));
+        assertThat(19, is(client.getAge()));
+        assertThat("jenipapo@coldmail.com", is(client.getEmail()));
+        assertThat("83996438691", is(client.getTelephone()));
+        assertThat("Male", is(client.getGender()));
+    }
+
+    @Test
+    void updateWhenIdDontExist(){
+        when(repository.existsById(1L)).thenReturn(false);
+
+        assertThrows(EntityNotFoundException.class,
+                ()-> updateClientService.update(1L, ClientBuilder.clientValid()));
+        verify(repository, times(1)).existsById(1L);
+        verify(repository, never()).save(any());
+    }
 }
