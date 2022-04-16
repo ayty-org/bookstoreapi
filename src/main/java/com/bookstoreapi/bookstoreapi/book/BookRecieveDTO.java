@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -65,4 +66,18 @@ public class BookRecieveDTO {
                 .authorName(book.getAuthorName())
                 .build();
     }
+
+    public static BookRecieveDTO from (Book book){
+        return BookRecieveDTO.builder()
+                .title(book.getTitle())
+                .synopsis(book.getSynopsis())
+                .isbn(book.getIsbn())
+                .publicationYear(book.getPublicationYear())
+                .price(book.getPrice())
+                .categories(book.getCategories().stream().map(Category::getId).collect(Collectors.toList()))
+                .quantityInStock(book.getQuantityInStock())
+                .authorName(book.getAuthorName())
+                .build();
+    }
+
 }

@@ -55,7 +55,7 @@ class UpdateBookServiceImplTest {
         assertThat(3, is(book.getCategories().size()));
         assertThat("JavaScript", is(book.getTitle()));
         assertThat("Aprenda JavaScript", is(book.getSynopsis()));
-        assertThat("1111111111111", is(book.getIsbn()));
+        assertThat("9788533302273", is(book.getIsbn()));
         assertThat(new Date(14032001), is(book.getPublicationYear()));
         assertThat(50.00, is(book.getPrice()));
         assertThat(23, is(book.getQuantityInStock()));

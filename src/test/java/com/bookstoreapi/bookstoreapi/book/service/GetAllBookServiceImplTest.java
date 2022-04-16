@@ -42,7 +42,7 @@ public class GetAllBookServiceImplTest {
         assertThat(3, is(books.get(0).getCategories().size()));
         assertThat("JavaScript", is(books.get(0).getTitle()));
         assertThat("Aprenda JavaScript", is(books.get(0).getSynopsis()));
-        assertThat("1111111111111", is(books.get(0).getIsbn()));
+        assertThat("9788533302273", is(books.get(0).getIsbn()));
         assertThat(new Date(14032001), is(books.get(0).getPublicationYear()));
         assertThat(50.00, is(books.get(0).getPrice()));
         assertThat(23, is(books.get(0).getQuantityInStock()));
@@ -52,7 +52,7 @@ public class GetAllBookServiceImplTest {
         assertThat(3, is(books.get(1).getCategories().size()));
         assertThat("Angular JS", is(books.get(1).getTitle()));
         assertThat("Aprenda a primeira versão do Angular", is(books.get(1).getSynopsis()));
-        assertThat("2222222222222", is(books.get(1).getIsbn()));
+        assertThat("9788533302273", is(books.get(1).getIsbn()));
         assertThat(new Date(15042000), is(books.get(1).getPublicationYear()));
         assertThat(80.00, is(books.get(1).getPrice()));
         assertThat(4, is(books.get(1).getQuantityInStock()));
@@ -62,7 +62,7 @@ public class GetAllBookServiceImplTest {
         assertThat(3, is(books.get(2).getCategories().size()));
         assertThat("Algoritmos", is(books.get(2).getTitle()));
         assertThat("Entenda lógica de programação", is(books.get(2).getSynopsis()));
-        assertThat("3333333333333", is(books.get(2).getIsbn()));
+        assertThat("9788533302273", is(books.get(2).getIsbn()));
         assertThat(new Date(30042000), is(books.get(2).getPublicationYear()));
         assertThat(100.00, is(books.get(2).getPrice()));
         assertThat(23, is(books.get(2).getQuantityInStock()));
