@@ -1,6 +1,6 @@
 package com.bookstoreapi.bookstoreapi.client;
 
-import com.bookstoreapi.bookstoreapi.BookstoreApiClientTests;
+import com.bookstoreapi.bookstoreapi.BookstoreApiJacksonApplicationTests;
 import com.bookstoreapi.bookstoreapi.builders.ClientBuilder;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(SpringExtension.class)
-public class ClientControllerTest extends BookstoreApiClientTests {
+public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
 
     private MockMvc mockMvc;

@@ -7,7 +7,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest()
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class BookstoreApiClientTests {
+public class BookstoreApiJacksonApplicationTests {
 
 	@Test
 	void contextLoads() {
