@@ -1,4 +1,5 @@
 DROP TABLE books_categories;
+DROP TABLE purchases_purchased_books;
 
 INSERT INTO categories (name) VALUES('Romance');
 INSERT INTO categories (name) VALUES('Action');
@@ -25,3 +26,19 @@ INSERT INTO books_categories (book_id, categories_id) VALUES (2,3);
 INSERT INTO books_categories (book_id, categories_id) VALUES (3,1);
 INSERT INTO books_categories (book_id, categories_id) VALUES (3,2);
 INSERT INTO books_categories (book_id, categories_id) VALUES (3,3);
+
+CREATE TABLE purchases_purchased_books(id SERIAL8 PRIMARY KEY,purchased_books_id BIGINT NOT NULL REFERENCES books,purchase_id BIGINT NOT NULL REFERENCES purchases);
+
+INSERT INTO purchases (client_id, amount, purchase_date, is_completed) VALUES (1, 100.00,'2020-11-14',true);
+INSERT INTO purchases (client_id, amount, purchase_date, is_completed) VALUES (2, 200.00,'2020-11-16',false);
+INSERT INTO purchases (client_id, amount, purchase_date, is_completed) VALUES (1, 100.00,'2020-11-14',true);
+
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (1,1);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (1,2);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (1,3);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (2,1);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (2,2);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (2,3);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (3,1);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (3,2);
+INSERT INTO purchases_purchased_books(purchase_id, purchased_books_id) VALUES (3,3);

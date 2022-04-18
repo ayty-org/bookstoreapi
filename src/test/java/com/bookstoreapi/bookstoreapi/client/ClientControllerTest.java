@@ -159,7 +159,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void deleteWhenIdExist() throws Exception{
-        mockMvc.perform(delete(url+"/1"))
+        mockMvc.perform(delete(url+"/4"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/4"))
@@ -168,8 +168,16 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void deleteWhenIdDontExist() throws Exception{
-        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/4"))
+        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/10"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(jsonPath("$", is("Client with id 4 not found"))));
+    }
+
+    @Test
+    void deleteWhenExistPurchaseWithClient() throws Exception{
+        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/1"))
+                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andExpect(jsonPath("$",
+                        is("Client with id 1 cannot be deleted because it is in one or more purchases"))));
     }
 }
