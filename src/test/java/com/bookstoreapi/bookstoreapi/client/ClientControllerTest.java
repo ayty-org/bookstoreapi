@@ -29,12 +29,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
     private MockMvc mockMvc;
     @Autowired
     private ClientController clientController;
-    @Autowired
-    private PurchaseRepository purchaseRepository;
 
-
-    @Mock
-    private ClientRepository repository;
     private final String url = "/clients";
     ObjectMapper mapper = new ObjectMapper();
 
@@ -88,10 +83,6 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void getAllTest() throws Exception{
-        this.repository.deleteAll();
-        this.repository.save(ClientBuilder.clientJenipapo1());
-        this.repository.save(ClientBuilder.clientAna2());
-
         mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is("Jenipapo")))
