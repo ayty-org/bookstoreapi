@@ -2,13 +2,11 @@ package com.bookstoreapi.bookstoreapi.client;
 
 import com.bookstoreapi.bookstoreapi.BookstoreApiJacksonApplicationTests;
 import com.bookstoreapi.bookstoreapi.builders.ClientBuilder;
-import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -169,15 +167,13 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
     @Test
     void deleteWhenIdDontExist() throws Exception{
         Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/10"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(jsonPath("$", is("Client with id 4 not found"))));
+                .andExpect(MockMvcResultMatchers.status().isNotFound()))
+                .hasMessageContaining("Client with id 10 not found");
     }
 
     @Test
     void deleteWhenExistPurchaseWithClient() throws Exception{
-        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/1"))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
-                .andExpect(jsonPath("$",
-                        is("Client with id 1 cannot be deleted because it is in one or more purchases"))));
+        mockMvc.perform(delete(url+"/1"))
+                .andExpect(MockMvcResultMatchers.status().isConflict());
     }
 }

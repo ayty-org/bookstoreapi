@@ -12,8 +12,11 @@ INSERT INTO clients (name, age, telephone, email, gender) VALUES ('Patricia', 25
 
 
 INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('JavaScript', 'Aprenda JavaScript', '9788533302273', '2001-03-14', 50.00, 23, 'JN Papo');
-INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('JavaScript', 'Aprenda a primeira versão do Angular', '9788533302273', '2000-04-15', 80.00, 4, 'Gu Gou');
+INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('Angular JS', 'Aprenda a primeira versão do Angular', '9788533302273', '2000-04-15', 80.00, 4, 'Gu Gou');
 INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('Algoritmos', 'Entenda lógica de programação', '9788533302273', '2000-04-30', 100.00, 23, 'JN Papo');
+INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('Algoritmos', 'Entenda lógica de programação', '9788533302273', '2000-04-30', 100.00, 23, 'JN Papo');
+INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('Angular JS', 'Aprenda a primeira versão do Angular', '9788533302273', '2000-04-15', 80.00, 0, 'Gu Gou');
+
 
 CREATE TABLE books_categories(book_id BIGINT NOT NULL REFERENCES books, categories_id BIGINT NOT NULL REFERENCES categories,PRIMARY KEY (book_id, categories_id));
 

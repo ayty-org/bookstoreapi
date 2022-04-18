@@ -50,6 +50,20 @@ public class BookBuilder {
                 .build();
     }
 
+    public static Book bookInvalid(){
+        return Book.builder()
+                .id(4L)
+                .categories(CategoryBuilder.categoryList())
+                .title("")
+                .synopsis("Entenda lógica de programação")
+                .isbn("9788533302273")
+                .publicationYear(new Date(30042000))
+                .price(100.00)
+                .quantityInStock(23)
+                .authorName("JN Papo")
+                .build();
+    }
+
     public static List<Book> bookList(){
         List<Book> books = new LinkedList<>();
         books.add(book1L());
