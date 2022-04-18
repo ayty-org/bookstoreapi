@@ -84,13 +84,9 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void testGets() throws Exception{
-        this.getAllTest();
-        this.getOneTest();
-        this.getWhenDontExistTest();
-    }
 
+
+    @Test
     void getAllTest() throws Exception{
         this.repository.deleteAll();
         this.repository.save(ClientBuilder.clientJenipapo1());
@@ -110,6 +106,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$[1].gender", is("Female")));
     }
 
+    @Test
     void getOneTest() throws Exception{
         mockMvc.perform(get(url+"/1"))
                 .andExpect(status().isOk())
@@ -120,6 +117,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$.gender", is("Male")));
     }
 
+    @Test
     void getWhenDontExistTest() {
         Assertions.assertThatThrownBy(() ->
                         mockMvc.perform(get(url + "/10"))
@@ -135,7 +133,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
         c1.setEmail("newmar@gmail.com");
 
         String json1 = mapper.writeValueAsString(ClientDTO.from(c1));
-        mockMvc.perform(put(url+"/1")
+        mockMvc.perform(put(url+"/3")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -173,7 +171,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
         mockMvc.perform(delete(url+"/1"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/1"))
+        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/4"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()));
     }
 

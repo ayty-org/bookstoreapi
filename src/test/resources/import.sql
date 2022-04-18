@@ -7,6 +7,8 @@ INSERT INTO categories (name) VALUES('Fantasy');
 INSERT INTO clients (name, age, telephone, email, gender) VALUES ('Jenipapo', 19, '83996438691','jenipapo@coldmail.com','Male');
 INSERT INTO clients (name, age, telephone, email, gender) VALUES ('Ana', 46,  '83996438691', 'ana@coldmail.com','Female');
 INSERT INTO clients (name, age, telephone, email, gender) VALUES ('Patricia', 25, '83996438691','patricia@coldmail.com', 'Trans');
+INSERT INTO clients (name, age, telephone, email, gender) VALUES ('Patricia', 25, '83996438691','patricia@coldmail.com', 'Trans');
+
 
 INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('JavaScript', 'Aprenda JavaScript', '9788533302273', '2001-03-14', 50.00, 23, 'JN Papo');
 INSERT INTO books (title, synopsis, isbn, publication_year, price, quantity_in_stock, author_name) VALUES ('JavaScript', 'Aprenda a primeira versão do Angular', '9788533302273', '2000-04-15', 80.00, 4, 'Gu Gou');
