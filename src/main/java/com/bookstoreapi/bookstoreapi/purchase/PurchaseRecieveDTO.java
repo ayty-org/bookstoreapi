@@ -7,6 +7,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -36,4 +37,11 @@ public class PurchaseRecieveDTO {
                 .build();
     }
 
+    public static PurchaseRecieveDTO from(Purchase purchase) {
+        return PurchaseRecieveDTO.builder()
+                .client(purchase.getClient().getId())
+                .purchasedBooks(purchase.getPurchasedBooks().stream().map(Book::getId).collect(Collectors.toList()))
+                .isCompleted(purchase.getIsCompleted())
+                .build();
+    }
 }

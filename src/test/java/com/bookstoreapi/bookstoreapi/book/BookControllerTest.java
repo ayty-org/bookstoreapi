@@ -124,7 +124,7 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
         bookUpdated.setTitle("updated");
         String json = mapper.writeValueAsString(BookRecieveDTO.from(bookUpdated));
 
-        mockMvc.perform(put(url+"/3")
+        mockMvc.perform(put(url+"/4")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk())
@@ -149,10 +149,10 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void deleteTest() throws Exception{
-        mockMvc.perform(delete(url+"/4"))
+        mockMvc.perform(delete(url+"/5"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/4"))
+        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/5"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()));
     }
 

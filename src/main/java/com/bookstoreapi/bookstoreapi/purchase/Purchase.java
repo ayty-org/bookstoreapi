@@ -24,7 +24,7 @@ public class Purchase {
     @ManyToOne
     private Client client;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Book> purchasedBooks;
 
     private Double amount;
