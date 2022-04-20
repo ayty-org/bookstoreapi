@@ -38,15 +38,15 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientDTO save(@RequestBody @Valid ClientDTO client){
-        return ClientDTO.from(postClientService.save(ClientDTO.to(client)));
+    public ClientDTO save(@RequestBody @Valid ClientRecieveDTO client){
+        return ClientDTO.from(postClientService.save(ClientRecieveDTO.to(client)));
     }
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO update(@PathVariable UUID clientId,
-                            @RequestBody @Valid ClientDTO clientDTO) throws EntityNotFoundException {
-        return ClientDTO.from(putClientService.update(clientId,ClientDTO.to(clientDTO)));
+                            @RequestBody @Valid ClientRecieveDTO clientDTO) throws EntityNotFoundException {
+        return ClientDTO.from(putClientService.update(clientId,ClientRecieveDTO.to(clientDTO)));
     }
 
     @DeleteMapping("/{clientId}")
