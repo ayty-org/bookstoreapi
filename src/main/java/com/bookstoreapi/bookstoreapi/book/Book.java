@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Builder
@@ -17,9 +18,10 @@ import java.util.List;
 @Entity
 public class Book {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private UUID uuid;
     private String title;
     private String synopsis;
     private String isbn;
@@ -29,5 +31,11 @@ public class Book {
     private String authorName;
 
     @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="books_categories",
+            joinColumns={
+                    @JoinColumn(table = "books", name = "book_id", referencedColumnName = "uuid")},
+            inverseJoinColumns = {@JoinColumn(table = "categories", name = "category_id", referencedColumnName = "id")}
+            )
     private List<Category> categories;
 }

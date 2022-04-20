@@ -1,7 +1,6 @@
 package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.BookstoreApiJacksonApplicationTests;
-import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.builders.PurchaseBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
@@ -40,7 +39,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void saveTest() throws Exception{
-        String json = mapper.writeValueAsString(PurchaseRecieveDTO.from(PurchaseBuilder.purchase1L()));
+        String json = mapper.writeValueAsString(PurchaseBuilder.purchaseRecieve());
 
         this.mockMvc.perform(post(this.url)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -54,7 +53,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void saveWhenPurchaseIsInvalid() throws Exception{
-        PurchaseRecieveDTO p = PurchaseRecieveDTO.from(PurchaseBuilder.purchase1L());
+        PurchaseRecieveDTO p = PurchaseBuilder.purchaseRecieve();
         p.setClient(null);
         String json = mapper.writeValueAsString(p);
 
@@ -67,9 +66,9 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void saveWhenClientDontExist() throws Exception {
-        Purchase p = PurchaseBuilder.purchase1L();
-        p.getClient().setId(8L);
-        String json = mapper.writeValueAsString(PurchaseRecieveDTO.from(p));
+//        Purchase p = PurchaseBuilder.purchase1L();
+//        p.getClient().setId(8L);
+        String json = mapper.writeValueAsString(PurchaseBuilder.purchaseRecieve());
 
         Assertions.assertThatThrownBy(() ->this.mockMvc.perform(post(this.url)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -81,8 +80,8 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
     @Test
     void saveWhenBookDontExist() throws Exception{
         Purchase p = PurchaseBuilder.purchase1L();
-        p.getPurchasedBooks().add(Book.builder().id(8L).build());
-        String json = mapper.writeValueAsString(PurchaseRecieveDTO.from(p));
+        //p.getPurchasedBooks().add(BookDTO.builder().uuid().build());
+        String json = mapper.writeValueAsString(PurchaseBuilder.purchaseRecieve());
 
         Assertions.assertThatThrownBy(() ->this.mockMvc.perform(post(this.url)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -121,7 +120,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void updateTest() throws Exception{
-        PurchaseRecieveDTO purchase = PurchaseRecieveDTO.from(PurchaseBuilder.purchase1L());
+        PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
         purchase.setClient(2L);
         purchase.setIsCompleted(true);
 
@@ -138,7 +137,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void updateWhenIdDontExist() throws Exception{
-        PurchaseRecieveDTO purchase = PurchaseRecieveDTO.from(PurchaseBuilder.purchase1L());
+        PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
 
         String json = mapper.writeValueAsString(purchase);
 
@@ -151,7 +150,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void updateWhenClientDontExist() throws Exception{
-        PurchaseRecieveDTO purchase = PurchaseRecieveDTO.from(PurchaseBuilder.purchase1L());
+        PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
         purchase.setClient(10L);
 
         String json = mapper.writeValueAsString(purchase);
@@ -165,7 +164,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
 
     @Test
     void updateWhenBookDontExist() throws Exception{
-        PurchaseRecieveDTO purchase = PurchaseRecieveDTO.from(PurchaseBuilder.purchase1L());
+        PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
         List<Long> ids = new LinkedList<>();
         ids.add(1L);
         ids.add(2L);

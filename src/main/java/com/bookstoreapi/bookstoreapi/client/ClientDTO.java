@@ -2,8 +2,10 @@ package com.bookstoreapi.bookstoreapi.client;
 
 import lombok.*;
 
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 @Setter
 public class ClientDTO {
 
+    @Id
+    private UUID uuid;
     @Size(min = 3, max = 60, message = "name must be between 3 and 60 characters")
     @NotBlank(message = "name cannot be null or void")
     private String name;
@@ -38,6 +42,7 @@ public class ClientDTO {
 
     public static ClientDTO from(Client client) {
         return ClientDTO.builder()
+                .uuid(client.getUuid())
                 .name(client.getName())
                 .age(client.getAge())
                 .telephone(client.getTelephone())
@@ -48,6 +53,7 @@ public class ClientDTO {
 
     public static Client to(ClientDTO clientDTO) {
         return Client.builder()
+                .uuid(clientDTO.getUuid())
                 .name(clientDTO.getName())
                 .age(clientDTO.getAge())
                 .telephone(clientDTO.getTelephone())

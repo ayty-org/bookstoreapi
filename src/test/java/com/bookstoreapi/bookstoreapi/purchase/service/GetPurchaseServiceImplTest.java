@@ -39,7 +39,7 @@ public class GetPurchaseServiceImplTest {
 
         verify(repository, times(1)).findById(1L);
         assertThat(1L, is(purchase.getId()));
-        assertThat(1L, is(purchase.getClient().getId()));
+        assertThat(1L, is(purchase.getClient().getUuid()));
         assertThat("Jenipapo", is(purchase.getClient().getName()));
         assertThat(3, is(purchase.getPurchasedBooks().size()));
         assertThat(100.0, is(purchase.getAmount()));

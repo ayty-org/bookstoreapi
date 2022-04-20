@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @Table(name = "purchases")
@@ -17,14 +18,23 @@ import java.util.List;
 @Entity
 public class Purchase {
 
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    private UUID uuid;
 
     @ManyToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "uuid")
     private Client client;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="purchases_purchased_books",
+            joinColumns={
+                    @JoinColumn(table = "books", name = "book_id", referencedColumnName = "uuid")},
+            inverseJoinColumns = {@JoinColumn(table = "purchases", name = "purchase_id", referencedColumnName = "uuid")}
+    )
     private List<Book> purchasedBooks;
 
     private Double amount;

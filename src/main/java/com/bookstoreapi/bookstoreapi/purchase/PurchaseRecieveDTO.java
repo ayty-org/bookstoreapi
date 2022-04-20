@@ -1,13 +1,14 @@
 package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
+import com.bookstoreapi.bookstoreapi.book.BookDTO;
 import com.bookstoreapi.bookstoreapi.client.Client;
+import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -32,16 +33,10 @@ public class PurchaseRecieveDTO {
         }
         return Purchase.builder()
                 .client(client)
+                //provavelmente vai dar nullpoint por conta do uuid aqui
                 .purchasedBooks(books)
                 .isCompleted(purchase.getIsCompleted())
                 .build();
     }
 
-    public static PurchaseRecieveDTO from(Purchase purchase) {
-        return PurchaseRecieveDTO.builder()
-                .client(purchase.getClient().getId())
-                .purchasedBooks(purchase.getPurchasedBooks().stream().map(Book::getId).collect(Collectors.toList()))
-                .isCompleted(purchase.getIsCompleted())
-                .build();
-    }
 }

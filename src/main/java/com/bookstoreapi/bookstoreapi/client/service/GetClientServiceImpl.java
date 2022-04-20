@@ -17,7 +17,7 @@ public class GetClientServiceImpl implements GetClientService{
     @Override
     public Client findById(Long id) throws EntityNotFoundException {
         return clientRepository.findById(id).orElseThrow( () ->{
-            throw new EntityNotFoundException(id, ClientDTO.getClassName());
+            throw new EntityNotFoundException(id, ClientDTO.class.getSimpleName());
         });
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -27,38 +28,34 @@ public class SavePurchaseServiceImpl implements SavePurchaseService {
 
     @Override
     public Purchase save(Purchase purchase){
-        purchase.setClient(this.getClient(purchase.getClient().getId()));
-        purchase.setPurchasedBooks(this.getBooks(purchase.getPurchasedBooks()));
-        purchase.setAmount(this.getAmountToPay(purchase.getPurchasedBooks()));
+        purchase.setClient(getClientByUuid(purchase.getClient().getUuid()));
+        List<Book> books = getBooksByUuid(purchase.getPurchasedBooks());
+        purchase.setPurchasedBooks(books);
+        purchase.setAmount(getAmountToPay(purchase.getPurchasedBooks()));
         purchase.setPurchaseDate(new Date());
-        this.updateBooksStockToDown(purchase.getPurchasedBooks());
+        this.updateBooksStockToDown(books);
         return purchaseRepository.save(purchase);
     }
 
-    private List<Book> getBooks(List<Book> books){
+    private List<Book> getBooksByUuid(List<Book> books){
         List<Book> bookList= new ArrayList<>();
         for(Book book: books){
-            if(bookRepository.existsById(book.getId())){
-                bookList.add(bookRepository.findById(book.getId()).get());
-            }
-            else{
-                throw new EntityNotFoundException(book.getId(), BookDTO.getClassName());
-            }
+            bookList.add(bookRepository.findByUuid(book.getUuid()).orElseThrow(
+                    ()-> new EntityNotFoundException(null, null)));
         }
         return bookList;
     }
 
-    private Client getClient(Long id){
-        if(clientRepository.existsById(id)){
-            return clientRepository.findById(id).get();
-        }
-        throw new EntityNotFoundException(id, ClientDTO.getClassName());
+    private Client getClientByUuid(UUID id){
+        return clientRepository.findByUuid(id).orElseThrow(()->{
+            throw new EntityNotFoundException(null, null);
+        });
     }
 
     private double getAmountToPay(List<Book> books){
         double amount = 0.0;
         for(Book book: books){
-            amount += bookRepository.findById(book.getId()).get().getPrice();
+            amount += book.getPrice();
         }
         return amount;
     }
@@ -70,7 +67,7 @@ public class SavePurchaseServiceImpl implements SavePurchaseService {
                 book.setQuantityInStock(book.getQuantityInStock()-1);
                 booksToUpdate.add(book);
             }else{
-                throw new IllegalArgumentException("book with id "+book.getId()+" is out of stock");
+                throw new IllegalArgumentException("book with id "+book.getUuid()+" is out of stock");
             }
         }
         bookRepository.saveAll(booksToUpdate);

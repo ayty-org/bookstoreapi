@@ -34,18 +34,14 @@ public class DeletePurchaseServiceImplTest {
 
         deletePurchaseService.delete(1L);
 
-        verify(repository, times(1)).existsById(1L);
         verify(repository, times(1)).findById(1L);
         verify(repository, times(1)).delete(any());
     }
 
     @Test
     void deleteWhenIdDontExist(){
-        when(repository.existsById(1L)).thenReturn(false);
 
         assertThrows(EntityNotFoundException.class, ()->deletePurchaseService.delete(1L));
-        verify(repository, times(1)).existsById(1L);
-        verify(repository, never()).findById(1L);
         verify(repository, never()).delete(any());
     }
 }

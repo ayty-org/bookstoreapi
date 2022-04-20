@@ -165,7 +165,8 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void deleteWhenExistPurchaseWithClient() throws Exception{
-        mockMvc.perform(delete(url+"/1"))
-                        .andExpect(MockMvcResultMatchers.status().isConflict());
+        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/1"))
+                        .andExpect(MockMvcResultMatchers.status().isConflict()))
+                .hasMessageContaining("Book with id 1 cannot be deleted because it is in one or more purchases");
     }
 }

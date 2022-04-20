@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Builder
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Setter
 public class PurchaseDTO {
 
+    private UUID uuid;
     private ClientDTO client;
     private List<BookDTO> purchasedBooks;
     private Double amount;

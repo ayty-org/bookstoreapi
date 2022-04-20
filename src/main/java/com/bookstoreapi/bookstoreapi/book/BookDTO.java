@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Builder
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Setter
 public class BookDTO {
 
+    private UUID uuid;
     private String title;
     private String synopsis;
     private String isbn;
@@ -26,6 +28,7 @@ public class BookDTO {
 
     public static BookDTO from (Book book){
         return BookDTO.builder()
+                .uuid(book.getUuid())
                 .title(book.getTitle())
                 .synopsis(book.getSynopsis())
                 .isbn(book.getIsbn())

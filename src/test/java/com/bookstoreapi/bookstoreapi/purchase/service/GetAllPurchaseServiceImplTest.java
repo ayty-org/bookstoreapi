@@ -38,7 +38,7 @@ public class GetAllPurchaseServiceImplTest {
         assertThat(2, is(purchases.size()));
 
         assertThat(1L, is(purchases.get(0).getId()));
-        assertThat(1L, is(purchases.get(0).getClient().getId()));
+        assertThat(1L, is(purchases.get(0).getClient().getUuid()));
         assertThat("Jenipapo", is(purchases.get(0).getClient().getName()));
         assertThat(3, is(purchases.get(0).getPurchasedBooks().size()));
         assertThat(100.0, is(purchases.get(0).getAmount()));
@@ -46,7 +46,7 @@ public class GetAllPurchaseServiceImplTest {
         assertThat(true, is(purchases.get(0).getIsCompleted()));
 
         assertThat(2L, is(purchases.get(1).getId()));
-        assertThat(2L, is(purchases.get(1).getClient().getId()));
+        assertThat(2L, is(purchases.get(1).getClient().getUuid()));
         assertThat("Ana", is(purchases.get(1).getClient().getName()));
         assertThat(3, is(purchases.get(1).getPurchasedBooks().size()));
         assertThat(200.0, is(purchases.get(1).getAmount()));

@@ -59,7 +59,7 @@ class SavePurchaseServiceImplTest {
         verify(repository, times(1)).save(any());
 
         assertThat(1L, Matchers.is(purchase.getId()));
-        assertThat(1L, Matchers.is(purchase.getClient().getId()));
+        assertThat(1L, Matchers.is(purchase.getClient().getUuid()));
         assertThat("Jenipapo", Matchers.is(purchase.getClient().getName()));
         assertThat(3, Matchers.is(purchase.getPurchasedBooks().size()));
         assertThat(100.0, Matchers.is(purchase.getAmount()));

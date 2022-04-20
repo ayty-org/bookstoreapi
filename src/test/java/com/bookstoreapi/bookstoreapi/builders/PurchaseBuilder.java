@@ -1,6 +1,9 @@
 package com.bookstoreapi.bookstoreapi.builders;
 
+import com.bookstoreapi.bookstoreapi.book.BookDTO;
+import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
+import com.bookstoreapi.bookstoreapi.purchase.PurchaseRecieveDTO;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -27,6 +30,14 @@ public class PurchaseBuilder {
                 .amount(200.0)
                 .purchaseDate(new Date(10102010))
                 .isCompleted(false)
+                .build();
+    }
+
+    public static PurchaseRecieveDTO purchaseRecieve(){
+        return PurchaseRecieveDTO.builder()
+                .client(1L)
+                .purchasedBooks(List.of(1L,2L,3L))
+                .isCompleted(true)
                 .build();
     }
 
