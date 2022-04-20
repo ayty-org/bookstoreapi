@@ -1,12 +1,15 @@
 package com.bookstoreapi.bookstoreapi.client;
 
 import com.bookstoreapi.bookstoreapi.client.service.*;
+import com.bookstoreapi.bookstoreapi.exception.DeleteException;
+import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 
 @RequestMapping("/clients")
@@ -29,8 +32,8 @@ public class ClientController {
 
     @GetMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientDTO find(@PathVariable Long clientId){
-        return ClientDTO.from(getClientService.findById(clientId));
+    public ClientDTO find(@PathVariable UUID clientId) throws EntityNotFoundException {
+        return ClientDTO.from(getClientService.getByUuid(clientId));
     }
 
     @PostMapping
@@ -41,13 +44,14 @@ public class ClientController {
 
     @PutMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientDTO update(@PathVariable Long clientId, @RequestBody @Valid ClientDTO clientDTO){
+    public ClientDTO update(@PathVariable UUID clientId,
+                            @RequestBody @Valid ClientDTO clientDTO) throws EntityNotFoundException {
         return ClientDTO.from(putClientService.update(clientId,ClientDTO.to(clientDTO)));
     }
 
     @DeleteMapping("/{clientId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long clientId){
+    public void delete(@PathVariable UUID clientId) throws EntityNotFoundException, DeleteException {
         deleteClientService.delete(clientId);
     }
 }
