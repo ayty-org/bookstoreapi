@@ -5,5 +5,5 @@ import com.bookstoreapi.bookstoreapi.client.Client;
 @FunctionalInterface
 public interface SaveClientService {
 
-    Client save(Client clientDTO);
+    Client save(Client client);
 }

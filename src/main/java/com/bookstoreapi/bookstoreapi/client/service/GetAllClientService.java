@@ -8,5 +8,4 @@ import java.util.List;
 public interface GetAllClientService {
 
     List<Client> findAll();
-
 }

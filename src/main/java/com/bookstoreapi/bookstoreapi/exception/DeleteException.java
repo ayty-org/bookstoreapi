@@ -1,8 +1,10 @@
 package com.bookstoreapi.bookstoreapi.exception;
 
-public class DeleteException extends RuntimeException{
+import java.util.UUID;
 
-    public DeleteException(Long id, String className){
+public class DeleteException extends Exception{
+
+    public DeleteException(UUID id, String className){
         super(className+ " with id " +id+" cannot be deleted because it is in one or more purchases");
     }
 }

@@ -30,14 +30,14 @@ public class GetClientServiceImplTest {
 
     @BeforeEach
     void setUp(){
-        getClientService = new GetClientServiceImpl(clientRepository);
+        getClientService = new GetClientServiceImpl();
      }
 
     @Test
-    void testGetByIdWhenIdExist(){
+    void testGetByIdWhenIdExist() throws Exception{
         when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
-        Client client = getClientService.findById(1L);
+        Client client = getClientService.findByUuid(null);
         assertThat(1L, is(client.getId()));
         assertThat("Jenipapo", is(client.getName()));
         assertThat(19, is(client.getAge()));
@@ -47,8 +47,8 @@ public class GetClientServiceImplTest {
     }
 
    @Test
-    void testGetByIdWhenIdDontExist(){
+    void testGetByIdWhenIdDontExist() throws Exception{
        when(clientRepository.findById(2L)).thenReturn(Optional.empty());
-       assertThrows(EntityNotFoundException.class, ()-> getClientService.findById(2L));
+       assertThrows(EntityNotFoundException.class, ()-> getClientService.findByUuid(null));
    }
 }

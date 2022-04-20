@@ -1,8 +1,10 @@
 package com.bookstoreapi.bookstoreapi.exception;
 
-public class EntityNotFoundException extends RuntimeException{
+import java.util.UUID;
 
-    public EntityNotFoundException(Long id, String className){
+public class EntityNotFoundException extends Exception{
+
+    public EntityNotFoundException(UUID id, String className){
         super(className+" with id "+id+" not found");
     }
 }
