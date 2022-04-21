@@ -15,12 +15,10 @@ public class GetClientServiceImpl implements GetClientService{
     private final ClientRepository clientRepository;
 
     @Override
-    public Client getByUuid(UUID id) throws EntityNotFoundException {
-        return this.findByUuid(id);
-    }
-
-    private Client findByUuid(UUID uuid) throws EntityNotFoundException{
+    public Client getByUuid(UUID uuid) throws EntityNotFoundException{
         return clientRepository.findByUuid(uuid)
                 .orElseThrow(()-> new EntityNotFoundException(uuid, Client.class.getSimpleName()));
     }
+
+
 }

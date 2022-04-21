@@ -34,7 +34,7 @@ class SaveBookServiceImplTest {
 
     @BeforeEach
     void setUp(){
-        this.saveBookService = new SaveBookServiceImpl(repository);
+        this.saveBookService = new SaveBookServiceImpl(repository, categoryRepository);
     }
 
     @Test

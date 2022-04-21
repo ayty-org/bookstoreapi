@@ -33,7 +33,7 @@ class UpdateBookServiceImplTest {
 
     @BeforeEach
     void setUp(){
-        this.updateBookService = new UpdateBookServiceImpl(repository);
+        this.updateBookService = new UpdateBookServiceImpl(repository, categoryRepository);
     }
 
     @Test

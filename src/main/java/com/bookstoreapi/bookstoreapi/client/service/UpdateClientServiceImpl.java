@@ -6,6 +6,7 @@ import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -17,14 +18,12 @@ public class UpdateClientServiceImpl implements UpdateClientService {
 
     @Override
     public Client update(UUID id, Client client) throws EntityNotFoundException {
-        Client clientSaved = this.findByUuid(id);
-        client.setId(clientSaved.getId());
-        client.setUuid(id);
-        return clientRepository.save(client);
-    }
-
-    private Client findByUuid(UUID uuid) throws EntityNotFoundException{
-        return clientRepository.findByUuid(uuid)
-                .orElseThrow(()-> new EntityNotFoundException(uuid, Client.class.getSimpleName()));
+        Optional<Client> clientOptional = clientRepository.findByUuid(id);
+        if(clientOptional.isPresent()){
+            client.setId(clientOptional.get().getId());
+            client.setUuid(id);
+            return clientRepository.save(client);
+        }
+        throw new EntityNotFoundException(id, Client.class.getSimpleName());
     }
 }

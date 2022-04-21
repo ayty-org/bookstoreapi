@@ -38,8 +38,7 @@ class SavePurchaseServiceImplTest {
 
     @BeforeEach
     void setUp(){
-        this.savePurchaseService =
-                new SavePurchaseServiceImpl(repository);
+        this.savePurchaseService = new SavePurchaseServiceImpl(repository, bookRepository, clientRepository);
     }
 
     @Test

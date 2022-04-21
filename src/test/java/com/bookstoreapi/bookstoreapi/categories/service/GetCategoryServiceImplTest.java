@@ -3,7 +3,7 @@ package com.bookstoreapi.bookstoreapi.categories.service;
 import com.bookstoreapi.bookstoreapi.builders.CategoryBuilder;
 import com.bookstoreapi.bookstoreapi.categories.Category;
 import com.bookstoreapi.bookstoreapi.categories.CategoryRepository;
-import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
+import com.bookstoreapi.bookstoreapi.exception.CategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +36,7 @@ public class GetCategoryServiceImplTest {
     void testGetByIdWhenIdExist() throws Exception{
       when(repository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
 
-      Category category = getCategoryService.findById(null);
+      Category category = getCategoryService.findById(1L);
 
       assertThat(1L, is(category.getId()));
       assertThat("Romance", is(category.getName()));
@@ -45,6 +45,6 @@ public class GetCategoryServiceImplTest {
     @Test
     void testGetByIdWhenIdDontExist(){
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, ()-> getCategoryService.findById(3L));
+        assertThrows(CategoryNotFoundException.class, ()-> getCategoryService.findById(3L));
     }
 }

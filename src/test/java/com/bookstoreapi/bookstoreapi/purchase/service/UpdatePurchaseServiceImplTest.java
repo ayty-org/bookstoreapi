@@ -37,7 +37,7 @@ class UpdatePurchaseServiceImplTest {
 
     @BeforeEach
     void setUp(){
-      this.updatePurchaseService = new UpdatePurchaseServiceImpl(repository);
+      this.updatePurchaseService = new UpdatePurchaseServiceImpl(repository, bookRepository, clientRepository);
     }
 
     @Test

@@ -8,6 +8,7 @@ import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -20,14 +21,15 @@ public class DeleteClientServiceImpl implements DeleteClientService {
 
     @Override
     public void delete(UUID id) throws EntityNotFoundException, DeleteException {
-        if (purchaseRepository.existsByClientUuid(id)) {
-            throw new DeleteException(id, Client.class.getSimpleName());
+        Optional<Client> clientOptional = clientRepository.findByUuid(id);
+        if(clientOptional.isPresent()){
+            if (purchaseRepository.existsByClientUuid(id)) {
+                throw new DeleteException(id, Client.class.getSimpleName());
+            }
+            this.clientRepository.delete(clientOptional.get());
+        }else{
+            throw new EntityNotFoundException(id, Client.class.getSimpleName());
         }
-        this.clientRepository.delete(this.findByUuid(id));
-    }
 
-    private Client findByUuid(UUID uuid) throws EntityNotFoundException{
-        return clientRepository.findByUuid(uuid)
-                .orElseThrow(()-> new EntityNotFoundException(uuid, Client.class.getSimpleName()));
     }
 }
