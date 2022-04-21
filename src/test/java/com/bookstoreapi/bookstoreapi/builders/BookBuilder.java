@@ -5,12 +5,14 @@ import com.bookstoreapi.bookstoreapi.book.Book;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class BookBuilder {
 
     public static Book book1L(){
         return Book.builder()
                 .id(1L)
+                .uuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"))
                 .categories(CategoryBuilder.categoryList())
                 .title("JavaScript")
                 .synopsis("Aprenda JavaScript")
@@ -25,6 +27,7 @@ public class BookBuilder {
     public static Book book2L(){
         return Book.builder()
                 .id(2L)
+                .uuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14"))
                 .categories(CategoryBuilder.categoryList())
                 .title("Angular JS")
                 .synopsis("Aprenda a primeira versão do Angular")
@@ -39,6 +42,7 @@ public class BookBuilder {
     public static Book book3L(){
         return Book.builder()
                 .id(3L)
+                .uuid(UUID.fromString("27eaa649-e8fa-4889-bd5a-ea6825b71e61"))
                 .categories(CategoryBuilder.categoryList())
                 .title("Algoritmos")
                 .synopsis("Entenda lógica de programação")
@@ -53,6 +57,7 @@ public class BookBuilder {
     public static Book bookInvalid(){
         return Book.builder()
                 .id(4L)
+                .uuid(UUID.fromString("27eaa649-e8fa-4889-bd5a-ea6825b71e61"))
                 .categories(CategoryBuilder.categoryList())
                 .title("")
                 .synopsis("Entenda lógica de programação")

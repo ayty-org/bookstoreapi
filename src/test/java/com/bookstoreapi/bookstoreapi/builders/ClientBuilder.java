@@ -4,12 +4,14 @@ import com.bookstoreapi.bookstoreapi.client.Client;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class ClientBuilder {
 
     public static Client clientJenipapo1(){
         return Client.builder()
                 .id(1L)
+                .uuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"))
                 .name("Jenipapo")
                 .age(19)
                 .email("jenipapo@coldmail.com")
@@ -21,6 +23,7 @@ public class ClientBuilder {
     public static Client clientAna2(){
         return Client.builder()
                 .id(2L)
+                .uuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14"))
                 .name("Ana")
                 .age(46)
                 .email("ana@coldmail.com")
@@ -32,6 +35,7 @@ public class ClientBuilder {
     public static Client clientPatricia3(){
         return Client.builder()
                 .id(3L)
+                .uuid(UUID.fromString("27eaa649-e8fa-4889-bd5a-ea6825b71e61"))
                 .name("Patricia")
                 .age(25)
                 .email("patricia@coldmail.com")
