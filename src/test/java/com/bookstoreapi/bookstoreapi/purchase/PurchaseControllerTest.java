@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -121,7 +122,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
     @Test
     void updateTest() throws Exception{
         PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
-        purchase.setClient(2L);
+        purchase.setClient(null);
         purchase.setIsCompleted(true);
 
         String json = mapper.writeValueAsString(purchase);
@@ -151,7 +152,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
     @Test
     void updateWhenClientDontExist() throws Exception{
         PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
-        purchase.setClient(10L);
+        purchase.setClient(null);
 
         String json = mapper.writeValueAsString(purchase);
 
@@ -165,10 +166,10 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
     @Test
     void updateWhenBookDontExist() throws Exception{
         PurchaseRecieveDTO purchase = PurchaseBuilder.purchaseRecieve();
-        List<Long> ids = new LinkedList<>();
-        ids.add(1L);
-        ids.add(2L);
-        ids.add(10L);
+        List<UUID> ids = new LinkedList<>();
+        ids.add(null);
+        ids.add(null);
+        ids.add(null);
 
         purchase.setPurchasedBooks(ids);
         String json = mapper.writeValueAsString(purchase);

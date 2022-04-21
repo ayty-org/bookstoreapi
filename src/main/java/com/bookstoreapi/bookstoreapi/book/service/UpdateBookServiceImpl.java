@@ -22,8 +22,9 @@ public class UpdateBookServiceImpl extends GetCategoriesAbstract implements Upda
     @Override
     public Book update(UUID id, Book book) throws EntityNotFoundException, CategoryNotFoundException {
         Book bookSaved = this.findByUuid(id);
-        book.setId(bookSaved.getId());
         book.setCategories(this.getCategoriesByUuid(book.getCategories()));
-        throw new EntityNotFoundException(id, BookDTO.getClassName());
+        book.setId(bookSaved.getId());
+        book.setUuid(id);
+        return bookRepository.save(book);
     }
 }

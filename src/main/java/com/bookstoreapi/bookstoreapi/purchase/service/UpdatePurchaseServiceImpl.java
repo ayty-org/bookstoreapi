@@ -4,7 +4,6 @@ import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.exception.BookOutOfStockException;
 import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
-import com.bookstoreapi.bookstoreapi.purchase.PurchaseDTO;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import com.bookstoreapi.bookstoreapi.purchase.service.abstracts.GetFieldsPurchaseAbstract;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +31,13 @@ public class UpdatePurchaseServiceImpl extends GetFieldsPurchaseAbstract impleme
             purchase.setClient(getClientByUuid(purchase.getClient().getUuid()));
             purchase.setAmount(getAmountToPay(purchase.getPurchasedBooks()));
             purchase.setId(purchaseSaved.get().getId());
+            purchase.setUuid(uuid);
             purchase.setPurchaseDate(purchaseSaved.get().getPurchaseDate());
             updateBooksStock(books, booksFromOld);
             purchase.setPurchaseDate(new Date());
             return purchaseRepository.save(purchase);
         }
-        throw new EntityNotFoundException(uuid, PurchaseDTO.getClassName());
+        throw new EntityNotFoundException(uuid, Purchase.class.getSimpleName());
     }
 
     private void updateBooksStock(List<Book> updated, List<Book> old) throws BookOutOfStockException{

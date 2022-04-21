@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 
 @ControllerAdvice
@@ -33,6 +34,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(DeleteException.class)
     public ResponseEntity<?> illegalArgumentHandler(DeleteException e){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> uuidConverter(MethodArgumentTypeMismatchException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid UUID on path");
     }
 
 }

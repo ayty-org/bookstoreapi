@@ -3,8 +3,10 @@ package com.bookstoreapi.bookstoreapi.purchase;
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.client.Client;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,12 +18,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class Purchase {
+public class Purchase implements Serializable {
 
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.uuid.UUIDGenerator")
     private UUID uuid;
 
     @ManyToOne
@@ -31,9 +35,12 @@ public class Purchase {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="purchases_purchased_books",
-            joinColumns={
-                    @JoinColumn(table = "books", name = "book_id", referencedColumnName = "uuid")},
-            inverseJoinColumns = {@JoinColumn(table = "purchases", name = "purchase_id", referencedColumnName = "uuid")}
+            joinColumns = {
+                    @JoinColumn(name = "purchase_id", referencedColumnName = "uuid")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(table = "books",name = "book_id", referencedColumnName = "uuid")
+            }
     )
     private List<Book> purchasedBooks;
 

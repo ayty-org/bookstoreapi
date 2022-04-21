@@ -34,6 +34,7 @@ public class SavePurchaseServiceImpl extends GetFieldsPurchaseAbstract implement
         purchase.setAmount(getAmountToPay(purchase.getPurchasedBooks()));
         purchase.setPurchaseDate(new Date());
         this.updateBooksStockToDown(books);
+        purchase.setUuid(UUID.randomUUID());
         return purchaseRepository.save(purchase);
     }
 }

@@ -33,11 +33,11 @@ class UpdateBookServiceImplTest {
 
     @BeforeEach
     void setUp(){
-        this.updateBookService = new UpdateBookServiceImpl(repository, categoryRepository);
+        this.updateBookService = new UpdateBookServiceImpl(repository);
     }
 
     @Test
-    void updateTest(){
+    void updateTest() throws Exception{
         when(categoryRepository.existsById(anyLong())).thenReturn(true);
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
         when(categoryRepository.findById(2L)).thenReturn(Optional.of(CategoryBuilder.categoryComedy()));
@@ -45,7 +45,7 @@ class UpdateBookServiceImplTest {
         when(repository.save(any())).thenReturn(BookBuilder.book1L());
         when(repository.existsById(1L)).thenReturn(true);
 
-        Book book = updateBookService.update(1L, BookBuilder.book1L());
+        Book book = updateBookService.update(null, BookBuilder.book1L());
 
         verify(categoryRepository, times(3)).existsById(anyLong());
         verify(categoryRepository, times(3)).findById(anyLong());
@@ -63,22 +63,22 @@ class UpdateBookServiceImplTest {
     }
 
     @Test
-    void updateWhenIdDontExist(){
+    void updateWhenIdDontExist() throws Exception{
         when(repository.existsById(1L)).thenReturn(false);
 
-        assertThrows(EntityNotFoundException.class, ()->updateBookService.update(1L, BookBuilder.book1L()));
+        assertThrows(EntityNotFoundException.class, ()->updateBookService.update(null, BookBuilder.book1L()));
         verify(categoryRepository, times(0)).existsById(anyLong());
         verify(repository, never()).save(any());
     }
 
     @Test
-    void updateWhenCategoryDontExist(){
+    void updateWhenCategoryDontExist() throws Exception{
         when(repository.existsById(1L)).thenReturn(true);
         when(categoryRepository.existsById(1L)).thenReturn(true);
         when(categoryRepository.existsById(2L)).thenReturn(false);
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
 
-        assertThrows(EntityNotFoundException.class, ()-> updateBookService.update(1L, BookBuilder.book1L()));
+        assertThrows(EntityNotFoundException.class, ()-> updateBookService.update(null, BookBuilder.book1L()));
         verify(categoryRepository, times(2)).existsById(anyLong());
         verify(categoryRepository, times(1)).findById(anyLong());
         verify(repository, never()).save(any());

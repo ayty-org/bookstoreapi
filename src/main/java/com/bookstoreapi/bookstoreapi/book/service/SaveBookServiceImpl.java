@@ -7,6 +7,8 @@ import com.bookstoreapi.bookstoreapi.exception.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class SaveBookServiceImpl extends GetCategoriesAbstract implements SaveBookService {
@@ -17,6 +19,7 @@ public class SaveBookServiceImpl extends GetCategoriesAbstract implements SaveBo
     @Override
     public Book save(Book book) throws CategoryNotFoundException {
         book.setCategories(this.getCategoriesByUuid(book.getCategories()));
+        book.setUuid(UUID.randomUUID());
         return bookRepository.save(book);
     }
 }

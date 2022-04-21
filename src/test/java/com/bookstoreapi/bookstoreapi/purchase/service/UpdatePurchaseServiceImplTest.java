@@ -37,11 +37,11 @@ class UpdatePurchaseServiceImplTest {
 
     @BeforeEach
     void setUp(){
-      this.updatePurchaseService = new UpdatePurchaseServiceImpl(repository, bookRepository, clientRepository);
+      this.updatePurchaseService = new UpdatePurchaseServiceImpl(repository);
     }
 
     @Test
-    void updateTest(){
+    void updateTest() throws Exception{
         when(clientRepository.existsById(1L)).thenReturn(true);
         when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
@@ -53,7 +53,7 @@ class UpdatePurchaseServiceImplTest {
         when(bookRepository.saveAll(any())).thenReturn(BookBuilder.bookList());
         when(repository.findById(1L)).thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
 
-        Purchase purchase = updatePurchaseService.update(1L, PurchaseBuilder.purchase1L());
+        Purchase purchase = updatePurchaseService.update(null, PurchaseBuilder.purchase1L());
 
         verify(repository, times(1)).save(any());
 
@@ -70,7 +70,7 @@ class UpdatePurchaseServiceImplTest {
     void updateWhenIdDontExistTest(){
         when(repository.existsById(2L)).thenReturn(false);
         assertThrows(EntityNotFoundException.class,
-                () -> updatePurchaseService.update(2L, PurchaseBuilder.purchase2L()));
+                () -> updatePurchaseService.update(null, PurchaseBuilder.purchase2L()));
         verify(repository, never()).save(any());
 
     }
@@ -81,7 +81,7 @@ class UpdatePurchaseServiceImplTest {
         when(repository.existsById(2L)).thenReturn(true);
 
         assertThrows(EntityNotFoundException.class,
-                () -> updatePurchaseService.update(2L, PurchaseBuilder.purchase2L()));
+                () -> updatePurchaseService.update(null, PurchaseBuilder.purchase2L()));
         verify(repository, never()).save(any());
     }
 
@@ -97,7 +97,7 @@ class UpdatePurchaseServiceImplTest {
         when(repository.existsById(2L)).thenReturn(true);
 
         assertThrows(EntityNotFoundException.class,
-                ()->updatePurchaseService.update(2L,PurchaseBuilder.purchase2L()));
+                ()->updatePurchaseService.update(null,PurchaseBuilder.purchase2L()));
         verify(repository, never()).save(any());
     }
 }

@@ -1,6 +1,6 @@
 package com.bookstoreapi.bookstoreapi.book.service;
 
-import com.bookstoreapi.bookstoreapi.book.BookDTO;
+import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.BookRepository;
 import com.bookstoreapi.bookstoreapi.book.service.abstracts.FindByUuidBookAbstract;
 import com.bookstoreapi.bookstoreapi.exception.DeleteException;
@@ -22,7 +22,7 @@ public class DeleteBookServiceImpl extends FindByUuidBookAbstract implements Del
     @Override
     public void delete(UUID id) throws EntityNotFoundException, DeleteException {
         if (purchaseRepository.existsByPurchasedBooksUuid(id)) {
-            throw new DeleteException(id, BookDTO.getClassName());
+            throw new DeleteException(id, Book.class.getSimpleName());
         }
         bookRepository.delete(this.findByUuid(id));
     }

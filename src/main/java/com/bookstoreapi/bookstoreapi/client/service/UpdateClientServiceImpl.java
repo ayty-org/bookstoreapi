@@ -20,6 +20,7 @@ public class UpdateClientServiceImpl extends FindByUuidClientAbstract implements
     public Client update(UUID id, Client client) throws EntityNotFoundException {
         Client clientSaved = this.findByUuid(id);
         client.setId(clientSaved.getId());
+        client.setUuid(id);
         return clientRepository.save(client);
     }
 }

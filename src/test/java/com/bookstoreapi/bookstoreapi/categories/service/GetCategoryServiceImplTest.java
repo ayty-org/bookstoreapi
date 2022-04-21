@@ -33,10 +33,10 @@ public class GetCategoryServiceImplTest {
     }
 
     @Test
-    void testGetByIdWhenIdExist(){
+    void testGetByIdWhenIdExist() throws Exception{
       when(repository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
 
-      Category category = getCategoryService.findById(1L);
+      Category category = getCategoryService.findById(null);
 
       assertThat(1L, is(category.getId()));
       assertThat("Romance", is(category.getName()));

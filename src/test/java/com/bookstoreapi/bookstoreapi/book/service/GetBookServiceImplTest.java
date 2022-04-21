@@ -33,10 +33,10 @@ public class GetBookServiceImplTest {
     }
 
     @Test
-    void testGetByIdWhenIdExist(){
+    void testGetByIdWhenIdExist() throws Exception{
         when(repository.findById(1L)).thenReturn(Optional.of(BookBuilder.book1L()));
 
-        Book book = getBookService.findById(1L);
+        Book book = getBookService.getByUuid(null);
 
         verify(repository, times(1)).findById(1L);
         assertThat(1L, is(book.getId()));
@@ -53,6 +53,6 @@ public class GetBookServiceImplTest {
     @Test
     void testGetByIdWhenIdDontExist(){
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, ()-> getBookService.findById(3L));
+        assertThrows(EntityNotFoundException.class, ()-> getBookService.getByUuid(null));
     }
 }

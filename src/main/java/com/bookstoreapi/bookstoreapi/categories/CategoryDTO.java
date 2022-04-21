@@ -13,15 +13,12 @@ import java.util.stream.Collectors;
 @Setter
 public class CategoryDTO {
 
-    @NotBlank
+    private Long id;
     private String name;
-
-    public CategoryDTO(Category category) {
-        this.name = category.getName();
-    }
 
     public static CategoryDTO from(Category category) {
         return CategoryDTO.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .build();
     }

@@ -25,6 +25,7 @@ public class PurchaseDTO {
 
     public static PurchaseDTO from(Purchase purchase) {
         return PurchaseDTO.builder()
+                .uuid(purchase.getUuid())
                 .client(ClientDTO.from(purchase.getClient()))
                 .purchasedBooks(BookDTO.fromAll(purchase.getPurchasedBooks()))
                 .amount(purchase.getAmount())

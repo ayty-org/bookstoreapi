@@ -34,11 +34,11 @@ class SaveBookServiceImplTest {
 
     @BeforeEach
     void setUp(){
-        this.saveBookService = new SaveBookServiceImpl(repository, categoryRepository);
+        this.saveBookService = new SaveBookServiceImpl(repository);
     }
 
     @Test
-    void saveTest(){
+    void saveTest() throws Exception{
         when(categoryRepository.existsById(anyLong())).thenReturn(true);
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
         when(categoryRepository.findById(2L)).thenReturn(Optional.of(CategoryBuilder.categoryComedy()));

@@ -39,11 +39,11 @@ class SavePurchaseServiceImplTest {
     @BeforeEach
     void setUp(){
         this.savePurchaseService =
-                new SavePurchaseServiceImpl(repository,bookRepository,clientRepository);
+                new SavePurchaseServiceImpl(repository);
     }
 
     @Test
-    void saveTest(){
+    void saveTest() throws Exception{
         when(clientRepository.existsById(1L)).thenReturn(true);
         when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
@@ -89,5 +89,4 @@ class SavePurchaseServiceImplTest {
                 ()->savePurchaseService.save(PurchaseBuilder.purchase2L()));
         verify(repository, never()).save(any());
     }
-
 }

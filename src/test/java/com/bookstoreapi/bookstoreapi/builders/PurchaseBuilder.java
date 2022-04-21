@@ -1,7 +1,5 @@
 package com.bookstoreapi.bookstoreapi.builders;
 
-import com.bookstoreapi.bookstoreapi.book.BookDTO;
-import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRecieveDTO;
 
@@ -35,8 +33,8 @@ public class PurchaseBuilder {
 
     public static PurchaseRecieveDTO purchaseRecieve(){
         return PurchaseRecieveDTO.builder()
-                .client(1L)
-                .purchasedBooks(List.of(1L,2L,3L))
+                .client(null)
+                .purchasedBooks(List.of(null,null,null))
                 .isCompleted(true)
                 .build();
     }

@@ -4,6 +4,7 @@ import com.bookstoreapi.bookstoreapi.categories.Category;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +35,9 @@ public class Book {
     @JoinTable(
             name="books_categories",
             joinColumns={
-                    @JoinColumn(table = "books", name = "book_id", referencedColumnName = "uuid")},
-            inverseJoinColumns = {@JoinColumn(table = "categories", name = "category_id", referencedColumnName = "id")}
+                    @JoinColumn(name = "book_id", referencedColumnName = "uuid")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "category_id")}
             )
     private List<Category> categories;
 }

@@ -23,7 +23,7 @@ public class DeleteClientServiceImpl extends FindByUuidClientAbstract implements
     @Override
     public void delete(UUID id) throws EntityNotFoundException, DeleteException {
         if (purchaseRepository.existsByClientUuid(id)) {
-            throw new DeleteException(id, ClientDTO.getClassName());
+            throw new DeleteException(id, Client.class.getSimpleName());
         }
         clientRepository.delete(this.findByUuid(id));
     }

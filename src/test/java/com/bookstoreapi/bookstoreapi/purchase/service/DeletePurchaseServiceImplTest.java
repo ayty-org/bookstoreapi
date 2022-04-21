@@ -28,20 +28,20 @@ public class DeletePurchaseServiceImplTest {
     }
 
     @Test
-    void deleteWhenIdExistTest(){
+    void deleteWhenIdExistTest() throws Exception{
         when(repository.existsById(1L)).thenReturn(true);
         when(repository.findById(1L)).thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
 
-        deletePurchaseService.delete(1L);
+        deletePurchaseService.delete(null);
 
         verify(repository, times(1)).findById(1L);
         verify(repository, times(1)).delete(any());
     }
 
     @Test
-    void deleteWhenIdDontExist(){
+    void deleteWhenIdDontExist() throws Exception{
 
-        assertThrows(EntityNotFoundException.class, ()->deletePurchaseService.delete(1L));
+        assertThrows(EntityNotFoundException.class, ()->deletePurchaseService.delete(null));
         verify(repository, never()).delete(any());
     }
 }

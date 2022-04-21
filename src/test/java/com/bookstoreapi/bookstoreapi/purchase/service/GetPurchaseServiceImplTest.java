@@ -32,10 +32,10 @@ public class GetPurchaseServiceImplTest {
     }
 
     @Test
-    void GetByIdWhenIdExistTest(){
+    void GetByIdWhenIdExistTest() throws Exception{
         when(repository.findById(1L)).thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
 
-        Purchase purchase = getPurchaseService.findById(1L);
+        Purchase purchase = getPurchaseService.getByUuid(null);
 
         verify(repository, times(1)).findById(1L);
         assertThat(1L, is(purchase.getId()));
@@ -48,8 +48,8 @@ public class GetPurchaseServiceImplTest {
     }
 
     @Test
-    void GetByIdWhenIdDontExistTest(){
+    void GetByIdWhenIdDontExistTest() throws Exception{
         when(repository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, ()->getPurchaseService.findById(1L));
+        assertThrows(EntityNotFoundException.class, ()->getPurchaseService.getByUuid(null));
     }
 }

@@ -4,6 +4,7 @@ package com.bookstoreapi.bookstoreapi.client;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Builder
@@ -13,10 +14,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class Client {
+public class Client implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private UUID uuid;
     private String name;

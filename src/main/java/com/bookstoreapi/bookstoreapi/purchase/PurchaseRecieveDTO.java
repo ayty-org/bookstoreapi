@@ -1,14 +1,13 @@
 package com.bookstoreapi.bookstoreapi.purchase;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
-import com.bookstoreapi.bookstoreapi.book.BookDTO;
 import com.bookstoreapi.bookstoreapi.client.Client;
-import com.bookstoreapi.bookstoreapi.client.ClientDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @Getter
@@ -18,18 +17,18 @@ import java.util.List;
 public class PurchaseRecieveDTO {
 
     @NotNull(message = "purchase client cannot be null")
-    private Long client;
+    private UUID client;
     @NotNull(message = "a purchase must have at least one book")
-    private List<Long> purchasedBooks;
+    private List<UUID> purchasedBooks;
     @NotNull(message = "purchase status cannot be null")
     private Boolean isCompleted;
 
 
     public static Purchase to(PurchaseRecieveDTO purchase) {
-        Client client = Client.builder().id(purchase.getClient()).build();
+        Client client = Client.builder().uuid(purchase.getClient()).build();
         List<Book> books = new ArrayList<>();
-        for(Long id: purchase.getPurchasedBooks()){
-            books.add(Book.builder().id(id).build());
+        for(UUID id: purchase.getPurchasedBooks()){
+            books.add(Book.builder().uuid(id).build());
         }
         return Purchase.builder()
                 .client(client)

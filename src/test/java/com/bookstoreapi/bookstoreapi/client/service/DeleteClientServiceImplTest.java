@@ -33,27 +33,27 @@ public class DeleteClientServiceImplTest {
     }
 
     @Test
-    void deleteWhenIdExistTest(){
+    void deleteWhenIdExistTest() throws Exception{
         when(clientRepository.existsById(1L)).thenReturn(true);
         when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
-        deleteClientService.delete(1L);
+        deleteClientService.delete(null);
         verify(clientRepository, times(1)).delete(any());
     }
 
     @Test
-    void deleteWhenIdDontExistTest(){
+    void deleteWhenIdDontExistTest() throws Exception{
         when(clientRepository.existsById(1L)).thenReturn(false);
-        assertThrows(EntityNotFoundException.class, ()-> deleteClientService.delete(1L));
+        assertThrows(EntityNotFoundException.class, ()-> deleteClientService.delete(null));
         verify(clientRepository, never()).delete(any());
         verify(clientRepository, never()).findById(anyLong());
     }
 
     @Test
-    void deleteWhenExistPurchaseWithClient(){
+    void deleteWhenExistPurchaseWithClient() throws Exception{
         when(clientRepository.existsById(1L)).thenReturn(true);
-        when(purchaseRepository.existsByClientId(anyLong())).thenReturn(true);
-        assertThrows(DeleteException.class, ()-> deleteClientService.delete(1L));
+        when(purchaseRepository.existsByClientUuid(any())).thenReturn(true);
+        assertThrows(DeleteException.class, ()-> deleteClientService.delete(null));
         verify(clientRepository, never()).delete(any());
     }
 }
