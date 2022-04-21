@@ -16,8 +16,8 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> illegalArgumentHandler(IllegalArgumentException e){
+    @ExceptionHandler(BookOutOfStockException.class)
+    public ResponseEntity<?> illegalArgumentHandler(BookOutOfStockException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 

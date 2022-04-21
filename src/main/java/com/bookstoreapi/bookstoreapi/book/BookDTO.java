@@ -45,8 +45,4 @@ public class BookDTO {
                 .map(BookDTO::from)
                 .collect(Collectors.toList());
     }
-
-    public static String getClassName(){
-        return "Book";
-    }
 }

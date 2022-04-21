@@ -2,8 +2,6 @@ package com.bookstoreapi.bookstoreapi.client;
 
 import lombok.*;
 
-import javax.persistence.Id;
-import javax.validation.constraints.*;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -50,9 +48,5 @@ public class ClientDTO {
         return clients.stream()
                 .map(ClientDTO::from)
                 .collect(Collectors.toList());
-    }
-
-    public static String getClassName(){
-        return "Client";
     }
 }

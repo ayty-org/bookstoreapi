@@ -38,9 +38,4 @@ public class PurchaseDTO {
                 .map(PurchaseDTO::from)
                 .collect(Collectors.toList());
     }
-
-    public static String getClassName(){
-        return "Purchase";
-    }
-
 }
