@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,28 +35,31 @@ class UpdateClientServiceImplTest {
 
     @Test
     void updateTest() throws Exception{
-        when(repository.existsById(1L)).thenReturn(true);
+        when(repository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
         when(repository.save(any())).thenReturn(ClientBuilder.clientJenipapo1());
 
-        Client client = updateClientService.update(null, ClientBuilder.clientJenipapo1());
-        verify(repository, times(1)).existsById(1L);
-        verify(repository, times(1)).save(any());
+        Client client = updateClientService.update(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"),
+                ClientBuilder.clientJenipapo1());
 
-        assertThat(1L, is(client.getId()));
-        assertThat("Jenipapo", is(client.getName()));
-        assertThat(19, is(client.getAge()));
-        assertThat("jenipapo@coldmail.com", is(client.getEmail()));
-        assertThat("83996438691", is(client.getTelephone()));
-        assertThat("Male", is(client.getGender()));
+        assertThat(client.getId(), is(1L));
+        assertThat(client.getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(client.getName(), is("Jenipapo"));
+        assertThat(client.getAge(), is(19));
+        assertThat(client.getEmail(), is("jenipapo@coldmail.com"));
+        assertThat(client.getTelephone(), is("83996438691"));
+        assertThat(client.getGender(), is("Male"));
+
+        verify(repository, times(1)).save(any());
     }
 
     @Test
     void updateWhenIdDontExist(){
-        when(repository.existsById(1L)).thenReturn(false);
+        when(repository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class,
                 ()-> updateClientService.update(null, ClientBuilder.clientJenipapo1()));
-        verify(repository, times(1)).existsById(1L);
         verify(repository, never()).save(any());
     }
 }

@@ -8,10 +8,12 @@ import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -19,6 +21,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 public class DeleteClientServiceImplTest {
 
+    @InjectMocks
     private DeleteClientServiceImpl deleteClientService;
     @Mock
     private ClientRepository clientRepository;
@@ -29,29 +32,30 @@ public class DeleteClientServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        this.deleteClientService = new DeleteClientServiceImpl(clientRepository, purchaseRepository);
+        this.deleteClientService = new DeleteClientServiceImpl(clientRepository,purchaseRepository);
     }
 
     @Test
     void deleteWhenIdExistTest() throws Exception{
-        when(clientRepository.existsById(1L)).thenReturn(true);
-        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
+        when(clientRepository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"))
+        ).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
-        deleteClientService.delete(null);
+        deleteClientService.delete(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"));
         verify(clientRepository, times(1)).delete(any());
     }
 
     @Test
-    void deleteWhenIdDontExistTest() throws Exception{
-        when(clientRepository.existsById(1L)).thenReturn(false);
+    void deleteWhenIdDontExistTest(){
+        when(clientRepository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, ()-> deleteClientService.delete(null));
         verify(clientRepository, never()).delete(any());
-        verify(clientRepository, never()).findById(anyLong());
     }
 
     @Test
-    void deleteWhenExistPurchaseWithClient() throws Exception{
-        when(clientRepository.existsById(1L)).thenReturn(true);
+    void deleteWhenExistPurchaseWithClient(){
+        when(clientRepository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"))
+        ).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
         when(purchaseRepository.existsByClientUuid(any())).thenReturn(true);
         assertThrows(DeleteException.class, ()-> deleteClientService.delete(null));
         verify(clientRepository, never()).delete(any());

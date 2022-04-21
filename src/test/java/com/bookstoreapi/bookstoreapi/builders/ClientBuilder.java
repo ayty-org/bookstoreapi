@@ -1,6 +1,7 @@
 package com.bookstoreapi.bookstoreapi.builders;
 
 import com.bookstoreapi.bookstoreapi.client.Client;
+import com.bookstoreapi.bookstoreapi.client.ClientRecieveDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -44,9 +45,8 @@ public class ClientBuilder {
                 .build();
     }
 
-    public static Client clientInvalid(){
-        return Client.builder()
-                .id(1L)
+    public static ClientRecieveDTO clientInvalid(){
+        return ClientRecieveDTO.builder()
                 .name("a")
                 .age(19)
                 .email("jenipapo@coldmail.com")
@@ -54,7 +54,15 @@ public class ClientBuilder {
                 .gender("Male")
                 .build();
     }
-
+    public static ClientRecieveDTO clientJenipapoRecieve(){
+        return ClientRecieveDTO.builder()
+                .name("Jenipapo")
+                .age(19)
+                .email("jenipapo@coldmail.com")
+                .telephone("83996438691")
+                .gender("Male")
+                .build();
+    }
 
     public static List<Client> clientList(){
         List<Client> list = new LinkedList<>();

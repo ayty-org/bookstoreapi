@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -20,7 +21,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class GetClientServiceImplTest {
-
 
     private GetClientServiceImpl getClientService;
     @Mock
@@ -34,20 +34,23 @@ public class GetClientServiceImplTest {
 
     @Test
     void testGetByIdWhenIdExist() throws Exception{
-        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
+        when(clientRepository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
-        Client client = getClientService.findByUuid(null);
-        assertThat(1L, is(client.getId()));
-        assertThat("Jenipapo", is(client.getName()));
-        assertThat(19, is(client.getAge()));
-        assertThat("jenipapo@coldmail.com", is(client.getEmail()));
-        assertThat("83996438691", is(client.getTelephone()));
-        assertThat("Male", is(client.getGender()));
+        Client client = getClientService.getByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(client.getId(), is(1L));
+        assertThat(client.getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(client.getName(), is("Jenipapo"));
+        assertThat(client.getAge(), is(19));
+        assertThat(client.getEmail(), is("jenipapo@coldmail.com"));
+        assertThat(client.getTelephone(), is("83996438691"));
+        assertThat(client.getGender(), is("Male"));
     }
 
    @Test
-    void testGetByIdWhenIdDontExist() throws Exception{
-       when(clientRepository.findById(2L)).thenReturn(Optional.empty());
-       assertThrows(EntityNotFoundException.class, ()-> getClientService.findByUuid(null));
+    void testGetByIdWhenIdDontExist(){
+       when(clientRepository.findByUuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
+               .thenReturn(Optional.empty());
+       assertThrows(EntityNotFoundException.class, ()-> getClientService.getByUuid(null));
    }
 }

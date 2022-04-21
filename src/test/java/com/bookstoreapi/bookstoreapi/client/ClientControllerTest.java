@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
-
     private MockMvc mockMvc;
     @Autowired
     private ClientController clientController;
@@ -40,10 +39,8 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
     @Test
     void saveTest() throws Exception {
         Client c1 = ClientBuilder.clientJenipapo1();
-        Client c2 = ClientBuilder.clientAna2();
 
-        String json1 = mapper.writeValueAsString(ClientDTO.from(c1));
-        String json2 = mapper.writeValueAsString(ClientDTO.from(c2));
+        String json1 = mapper.writeValueAsString(ClientBuilder.clientJenipapoRecieve());
 
         this.mockMvc.perform(post(this.url)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -54,22 +51,11 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$.email", is("jenipapo@coldmail.com")))
                 .andExpect(jsonPath("$.telephone", is("83996438691")))
                 .andExpect(jsonPath("$.gender", is("Male")));
-
-        mockMvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json2))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is("Ana")))
-                .andExpect(jsonPath("$.age", is(46)))
-                .andExpect(jsonPath("$.email", is("ana@coldmail.com")))
-                .andExpect(jsonPath("$.telephone", is("83996438691")))
-                .andExpect(jsonPath("$.gender", is("Female")));
     }
 
     @Test
     void saveWhenClientIsInvalidTest() throws Exception {
-        Client c1 = ClientBuilder.clientInvalid();
-        String json1 = mapper.writeValueAsString(ClientDTO.from(c1));
+        String json1 = mapper.writeValueAsString(ClientBuilder.clientInvalid());
 
         mockMvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,17 +63,17 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(status().isBadRequest());
     }
 
-
-
     @Test
     void getAllTest() throws Exception{
         mockMvc.perform(get(url))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].uuid", is("12d51c0a-a843-46fc-8447-5fda559ec69b")))
                 .andExpect(jsonPath("$[0].name", is("Jenipapo")))
                 .andExpect(jsonPath("$[0].age", is(19)))
                 .andExpect(jsonPath("$[0].email", is("jenipapo@coldmail.com")))
                 .andExpect(jsonPath("$[0].telephone", is("83996438691")))
                 .andExpect(jsonPath("[0].gender", is("Male")))
+                .andExpect(jsonPath("$[1].uuid", is("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
                 .andExpect(jsonPath("$[1].name", is("Ana")))
                 .andExpect(jsonPath("$[1].age", is(46)))
                 .andExpect(jsonPath("[1].email", is("ana@coldmail.com")))
@@ -97,8 +83,9 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void getOneTest() throws Exception{
-        mockMvc.perform(get(url+"/1"))
+        mockMvc.perform(get(url+"/12d51c0a-a843-46fc-8447-5fda559ec69b"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.uuid", is("12d51c0a-a843-46fc-8447-5fda559ec69b")))
                 .andExpect(jsonPath("$.name", is("Jenipapo")))
                 .andExpect(jsonPath("$.age", is(19)))
                 .andExpect(jsonPath("$.email", is("jenipapo@coldmail.com")))
@@ -109,23 +96,24 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
     @Test
     void getWhenDontExistTest() {
         Assertions.assertThatThrownBy(() ->
-                        mockMvc.perform(get(url + "/10"))
+                        mockMvc.perform(get(url + "/12d51c0a-a843-46fc-8447-5fda559ec699"))
                                 .andExpect(status().isNotFound()))
-                .hasMessageContaining("Client with id 10 not found");
+                .hasMessageContaining("Client with id 12d51c0a-a843-46fc-8447-5fda559ec699 not found");
     }
 
     @Test
     void putWhenIdExistTest() throws Exception{
-        Client c1 = ClientBuilder.clientJenipapo1();
+        ClientRecieveDTO c1 = ClientBuilder.clientJenipapoRecieve();
         c1.setName("Newmar");
         c1.setAge(44);
         c1.setEmail("newmar@gmail.com");
 
-        String json1 = mapper.writeValueAsString(ClientDTO.from(c1));
-        mockMvc.perform(put(url+"/3")
+        String json1 = mapper.writeValueAsString(c1);
+        mockMvc.perform(put(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e61")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.uuid", is("27eaa649-e8fa-4889-bd5a-ea6825b71e61")))
                 .andExpect(jsonPath("$.name", is("Newmar")))
                 .andExpect(jsonPath("$.age", is(44)))
                 .andExpect(jsonPath("$.email", is("newmar@gmail.com")))
@@ -137,19 +125,19 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
     void putWhenIdDontExistTest() throws Exception{
         Client c1 = ClientBuilder.clientJenipapo1();
         String json1 = mapper.writeValueAsString(ClientDTO.from(c1));
-        Assertions.assertThatThrownBy(() ->mockMvc.perform(put(url+"/10")
+        Assertions.assertThatThrownBy(() ->mockMvc.perform(put(
+                url+"/df670f4b-5d4d-4f70-ae78-f2ddc9fa1f19")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json1))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()))
-                .hasMessageContaining("Client with id 10 not found");
+                .hasMessageContaining("Client with id df670f4b-5d4d-4f70-ae78-f2ddc9fa1f19 not found");
     }
 
     @Test
     void putWhenClientIsInvalid() throws Exception{
-        Client c1 = ClientBuilder.clientInvalid();
-        String json1 = mapper.writeValueAsString(ClientDTO.from(c1));
+        String json1 = mapper.writeValueAsString(ClientBuilder.clientInvalid());
 
-        mockMvc.perform(put(url+"/3")
+        mockMvc.perform(put(url+"/12d51c0a-a843-46fc-8447-5fda559ec69b")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json1))
                 .andExpect(status().isBadRequest());
@@ -157,23 +145,25 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
 
     @Test
     void deleteWhenIdExist() throws Exception{
-        mockMvc.perform(delete(url+"/4"))
+        mockMvc.perform(delete(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e6b"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/4"))
+        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e6b"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()));
     }
 
     @Test
     void deleteWhenIdDontExist() throws Exception{
-        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/10"))
+        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e10"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()))
-                .hasMessageContaining("Client with id 10 not found");
+                .hasMessageContaining("Client with id 27eaa649-e8fa-4889-bd5a-ea6825b71e10 not found");
     }
 
     @Test
     void deleteWhenExistPurchaseWithClient() throws Exception{
-        mockMvc.perform(delete(url+"/1"))
-                .andExpect(MockMvcResultMatchers.status().isConflict());
+        Assertions.assertThatThrownBy(() ->mockMvc.perform(delete(url+"/12d51c0a-a843-46fc-8447-5fda559ec69b"))
+                .andExpect(MockMvcResultMatchers.status().isConflict()))
+                .hasMessageContaining("Client with id 12d51c0a-a843-46fc-8447-5fda559ec69b " +
+                        "cannot be deleted because it is in one or more purchases");
     }
 }
