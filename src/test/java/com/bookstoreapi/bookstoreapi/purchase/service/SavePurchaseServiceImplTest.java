@@ -17,11 +17,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -43,13 +43,16 @@ class SavePurchaseServiceImplTest {
 
     @Test
     void saveTest() throws Exception{
-        when(clientRepository.existsById(1L)).thenReturn(true);
-        when(clientRepository.findById(1L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
+        when(clientRepository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
-        when(bookRepository.existsById(anyLong())).thenReturn(true);
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(BookBuilder.book1L()));
-        when(bookRepository.findById(2L)).thenReturn(Optional.of(BookBuilder.book2L()));
-        when(bookRepository.findById(3L)).thenReturn(Optional.of(BookBuilder.book3L()));
+        when(bookRepository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.of(BookBuilder.book1L()));
+        when(bookRepository.findByUuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
+                .thenReturn(Optional.of(BookBuilder.book2L()));
+        when(bookRepository.findByUuid(UUID.fromString("27eaa649-e8fa-4889-bd5a-ea6825b71e61")))
+                .thenReturn(Optional.of(BookBuilder.book3L()));
+
         when(repository.save(any())).thenReturn(PurchaseBuilder.purchase1L());
         when(bookRepository.saveAll(any())).thenReturn(BookBuilder.bookList());
 
@@ -58,7 +61,7 @@ class SavePurchaseServiceImplTest {
         verify(repository, times(1)).save(any());
 
         assertThat(1L, Matchers.is(purchase.getId()));
-        assertThat(1L, Matchers.is(purchase.getClient().getUuid()));
+        assertThat("12d51c0a-a843-46fc-8447-5fda559ec69b", Matchers.is(purchase.getClient().getUuid().toString()));
         assertThat("Jenipapo", Matchers.is(purchase.getClient().getName()));
         assertThat(3, Matchers.is(purchase.getPurchasedBooks().size()));
         assertThat(100.0, Matchers.is(purchase.getAmount()));
@@ -68,7 +71,8 @@ class SavePurchaseServiceImplTest {
 
     @Test
     void saveWhenClientDontExistTest(){
-        when(clientRepository.existsById(2L)).thenReturn(false);
+        when(clientRepository.findByUuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
+                .thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class,
                 ()->savePurchaseService.save(PurchaseBuilder.purchase2L()));
@@ -77,12 +81,10 @@ class SavePurchaseServiceImplTest {
 
     @Test
     void saveWhenBookDontExistTest(){
-        when(clientRepository.existsById(2L)).thenReturn(true);
-        when(clientRepository.findById(2L)).thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
+        when(clientRepository.findByUuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
+                .thenReturn(Optional.of(ClientBuilder.clientJenipapo1()));
 
-        when(bookRepository.existsById(1L)).thenReturn(true);
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(BookBuilder.book1L()));
-        when(bookRepository.existsById(2L)).thenReturn(false);
+        when(bookRepository.findByUuid(UUID.fromString("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14"))).thenReturn(Optional.of(BookBuilder.book1L()));
 
         assertThrows(EntityNotFoundException.class,
                 ()->savePurchaseService.save(PurchaseBuilder.purchase2L()));

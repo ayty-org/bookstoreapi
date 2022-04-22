@@ -2,13 +2,11 @@ package com.bookstoreapi.bookstoreapi.builders;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.book.BookRecieveDTO;
-import com.bookstoreapi.bookstoreapi.categories.Category;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class BookBuilder {
 

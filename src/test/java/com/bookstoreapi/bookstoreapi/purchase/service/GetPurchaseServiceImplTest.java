@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -27,29 +28,33 @@ public class GetPurchaseServiceImplTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         this.getPurchaseService = new GetPurchaseServiceImpl(repository);
     }
 
     @Test
-    void GetByIdWhenIdExistTest() throws Exception{
-        when(repository.findById(1L)).thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
+    void GetByIdWhenIdExistTest() throws Exception {
+        when(repository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
 
-        Purchase purchase = getPurchaseService.getByUuid(null);
+        Purchase purchase = getPurchaseService.getByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"));
 
-        verify(repository, times(1)).findById(1L);
-        assertThat(1L, is(purchase.getId()));
-        assertThat(1L, is(purchase.getClient().getUuid()));
-        assertThat("Jenipapo", is(purchase.getClient().getName()));
-        assertThat(3, is(purchase.getPurchasedBooks().size()));
-        assertThat(100.0, is(purchase.getAmount()));
-        assertThat(new Date(14112020), is(purchase.getPurchaseDate()));
-        assertThat(true, is(purchase.getIsCompleted()));
+        verify(repository, times(1)).findByUuid(any());
+        assertThat(purchase.getId(), is(1L));
+        assertThat(purchase.getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(purchase.getClient().getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(purchase.getClient().getName(), is("Jenipapo"));
+        assertThat(purchase.getPurchasedBooks().size(), is(3));
+        assertThat(purchase.getAmount(), is(100.00));
+        assertThat(purchase.getPurchaseDate(), is(new Date(14112020)));
+        assertThat(purchase.getIsCompleted(), is(true));
     }
 
     @Test
-    void GetByIdWhenIdDontExistTest() throws Exception{
-        when(repository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, ()->getPurchaseService.getByUuid(null));
+    void GetByIdWhenIdDontExistTest() {
+        when(repository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class,
+                () -> getPurchaseService.getByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")));
     }
 }

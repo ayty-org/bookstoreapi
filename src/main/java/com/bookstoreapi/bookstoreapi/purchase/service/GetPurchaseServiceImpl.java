@@ -1,6 +1,5 @@
 package com.bookstoreapi.bookstoreapi.purchase.service;
 
-import com.bookstoreapi.bookstoreapi.book.Book;
 import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
 import com.bookstoreapi.bookstoreapi.purchase.Purchase;
 import com.bookstoreapi.bookstoreapi.purchase.PurchaseRepository;
@@ -19,6 +18,6 @@ public class GetPurchaseServiceImpl implements GetPurchaseService{
 
     public Purchase getByUuid(UUID uuid) throws EntityNotFoundException {
         return this.purchaseRepository.findByUuid(uuid)
-                .orElseThrow(()-> new EntityNotFoundException(uuid, Book.class.getSimpleName()));
+                .orElseThrow(()-> new EntityNotFoundException(uuid, Purchase.class.getSimpleName()));
     }
 }

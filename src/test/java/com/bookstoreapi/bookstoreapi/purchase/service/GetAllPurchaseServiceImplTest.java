@@ -25,32 +25,34 @@ public class GetAllPurchaseServiceImplTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         this.getAllPurchaseService = new GetAllPurchaseServiceImpl(repository);
     }
 
     @Test
-    void findAllTest(){
+    void findAllTest() {
         when(repository.findAll()).thenReturn(PurchaseBuilder.purchaseList());
 
         List<Purchase> purchases = getAllPurchaseService.findAll();
 
         assertThat(2, is(purchases.size()));
 
-        assertThat(1L, is(purchases.get(0).getId()));
-        assertThat(1L, is(purchases.get(0).getClient().getUuid()));
-        assertThat("Jenipapo", is(purchases.get(0).getClient().getName()));
-        assertThat(3, is(purchases.get(0).getPurchasedBooks().size()));
-        assertThat(100.0, is(purchases.get(0).getAmount()));
-        assertThat(new Date(14112020), is(purchases.get(0).getPurchaseDate()));
-        assertThat(true, is(purchases.get(0).getIsCompleted()));
+        assertThat(purchases.get(0).getId(), is(1L));
+        assertThat(purchases.get(0).getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(purchases.get(0).getClient().getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(purchases.get(0).getClient().getName(), is("Jenipapo"));
+        assertThat(purchases.get(0).getPurchasedBooks().size(), is(3));
+        assertThat(purchases.get(0).getAmount(), is(100.00));
+        assertThat(purchases.get(0).getPurchaseDate(), is(new Date(14112020)));
+        assertThat(purchases.get(0).getIsCompleted(), is(true));
 
-        assertThat(2L, is(purchases.get(1).getId()));
-        assertThat(2L, is(purchases.get(1).getClient().getUuid()));
-        assertThat("Ana", is(purchases.get(1).getClient().getName()));
-        assertThat(3, is(purchases.get(1).getPurchasedBooks().size()));
-        assertThat(200.0, is(purchases.get(1).getAmount()));
-        assertThat(new Date(10102010), is(purchases.get(1).getPurchaseDate()));
-        assertThat(false, is(purchases.get(1).getIsCompleted()));
+        assertThat(purchases.get(1).getId(), is(2L));
+        assertThat(purchases.get(1).getUuid().toString(), is("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14"));
+        assertThat(purchases.get(1).getClient().getUuid().toString(), is("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14"));
+        assertThat(purchases.get(1).getClient().getName(), is("Ana"));
+        assertThat(purchases.get(1).getPurchasedBooks().size(), is(3));
+        assertThat(purchases.get(1).getAmount(), is(200.0));
+        assertThat(purchases.get(1).getPurchaseDate(), is(new Date(10102010)));
+        assertThat(purchases.get(1).getIsCompleted(), is(false));
     }
 }

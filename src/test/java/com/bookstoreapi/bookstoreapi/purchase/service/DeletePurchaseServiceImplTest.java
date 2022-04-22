@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -28,20 +29,20 @@ public class DeletePurchaseServiceImplTest {
     }
 
     @Test
-    void deleteWhenIdExistTest() throws Exception{
-        when(repository.existsById(1L)).thenReturn(true);
-        when(repository.findById(1L)).thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
+    void deleteWhenIdExistTest() throws Exception {
+        when(repository.findByUuid(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .thenReturn(Optional.of(PurchaseBuilder.purchase1L()));
 
-        deletePurchaseService.delete(null);
+        deletePurchaseService.delete(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b"));
 
-        verify(repository, times(1)).findById(1L);
+        verify(repository, times(1)).findByUuid(any());
         verify(repository, times(1)).delete(any());
     }
 
     @Test
-    void deleteWhenIdDontExist() throws Exception{
-
-        assertThrows(EntityNotFoundException.class, ()->deletePurchaseService.delete(null));
+    void deleteWhenIdDontExist() {
+        assertThrows(EntityNotFoundException.class,
+                () -> deletePurchaseService.delete(UUID.fromString("12d51c0a-a843-46fc-8447-5fda559ec69b")));
         verify(repository, never()).delete(any());
     }
 }
