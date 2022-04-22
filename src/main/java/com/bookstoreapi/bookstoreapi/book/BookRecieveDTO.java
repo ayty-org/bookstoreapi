@@ -66,18 +66,4 @@ public class BookRecieveDTO {
                 .authorName(book.getAuthorName())
                 .build();
     }
-
-    public static BookRecieveDTO from (Book book){
-        return BookRecieveDTO.builder()
-                .title(book.getTitle())
-                .synopsis(book.getSynopsis())
-                .isbn(book.getIsbn())
-                .publicationYear(book.getPublicationYear())
-                .price(book.getPrice())
-                .categories(book.getCategories().stream().map(Category::getId).collect(Collectors.toList()))
-                .quantityInStock(book.getQuantityInStock())
-                .authorName(book.getAuthorName())
-                .build();
-    }
-
 }

@@ -32,7 +32,7 @@ public class UpdateBookServiceImpl implements UpdateBookService {
             book.setUuid(id);
             return bookRepository.save(book);
         }
-        throw new EntityNotFoundException(id, Client.class.getSimpleName());
+        throw new EntityNotFoundException(id, Book.class.getSimpleName());
     }
 
     private List<Category> getCategoriesByUuid(List<Category> categories) throws CategoryNotFoundException {

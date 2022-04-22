@@ -38,34 +38,37 @@ public class GetAllBookServiceImplTest {
         assertThat(3, is(books.size()));
         verify(bookRepository, times(1)).findAll();
 
-        assertThat(1L, is(books.get(0).getId()));
-        assertThat(3, is(books.get(0).getCategories().size()));
-        assertThat("JavaScript", is(books.get(0).getTitle()));
-        assertThat("Aprenda JavaScript", is(books.get(0).getSynopsis()));
-        assertThat("9788533302273", is(books.get(0).getIsbn()));
-        assertThat(new Date(14032001), is(books.get(0).getPublicationYear()));
-        assertThat(50.00, is(books.get(0).getPrice()));
-        assertThat(23, is(books.get(0).getQuantityInStock()));
-        assertThat("JN Papo", is(books.get(0).getAuthorName()));
+        assertThat(books.get(0).getId(), is(1L));
+        assertThat(books.get(0).getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(books.get(0).getCategories().size(), is(3));
+        assertThat(books.get(0).getTitle(), is("JavaScript"));
+        assertThat(books.get(0).getSynopsis(), is("Aprenda JavaScript"));
+        assertThat(books.get(0).getIsbn(), is("9788533302273"));
+        assertThat(books.get(0).getPublicationYear(), is(new Date(14032001)));
+        assertThat(books.get(0).getPrice(), is(50.00));
+        assertThat(books.get(0).getQuantityInStock(), is(23));
+        assertThat(books.get(0).getAuthorName(), is("JN Papo"));
 
-        assertThat(2L, is(books.get(1).getId()));
-        assertThat(3, is(books.get(1).getCategories().size()));
-        assertThat("Angular JS", is(books.get(1).getTitle()));
-        assertThat("Aprenda a primeira versão do Angular", is(books.get(1).getSynopsis()));
-        assertThat("9788533302273", is(books.get(1).getIsbn()));
-        assertThat(new Date(15042000), is(books.get(1).getPublicationYear()));
-        assertThat(80.00, is(books.get(1).getPrice()));
-        assertThat(4, is(books.get(1).getQuantityInStock()));
-        assertThat("Gu Gou", is(books.get(1).getAuthorName()));
+        assertThat(books.get(1).getId(), is(2L));
+        assertThat(books.get(1).getUuid().toString(), is("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14"));
+        assertThat(books.get(1).getCategories().size(), is(3));
+        assertThat(books.get(1).getTitle(), is("Angular JS"));
+        assertThat(books.get(1).getSynopsis(), is("Aprenda a primeira versão do Angular"));
+        assertThat(books.get(1).getIsbn(), is("9788533302273"));
+        assertThat(books.get(1).getPublicationYear(), is(new Date(15042000)));
+        assertThat(books.get(1).getPrice(), is(80.00));
+        assertThat(books.get(1).getQuantityInStock(), is(4));
+        assertThat(books.get(1).getAuthorName(), is("Gu Gou"));
 
-        assertThat(3L, is(books.get(2).getId()));
-        assertThat(3, is(books.get(2).getCategories().size()));
-        assertThat("Algoritmos", is(books.get(2).getTitle()));
-        assertThat("Entenda lógica de programação", is(books.get(2).getSynopsis()));
-        assertThat("9788533302273", is(books.get(2).getIsbn()));
-        assertThat(new Date(30042000), is(books.get(2).getPublicationYear()));
-        assertThat(100.00, is(books.get(2).getPrice()));
-        assertThat(23, is(books.get(2).getQuantityInStock()));
-        assertThat("JN Papo", is(books.get(2).getAuthorName()));
+        assertThat(books.get(2).getId(), is(3L));
+        assertThat(books.get(2).getUuid().toString(), is("27eaa649-e8fa-4889-bd5a-ea6825b71e61"));
+        assertThat(books.get(2).getCategories().size(), is(3));
+        assertThat(books.get(2).getTitle(), is("Algoritmos"));
+        assertThat(books.get(2).getSynopsis(), is("Entenda lógica de programação"));
+        assertThat(books.get(2).getIsbn(), is("9788533302273"));
+        assertThat(books.get(2).getPublicationYear(), is(new Date(30042000)));
+        assertThat(books.get(2).getPrice(), is(100.00));
+        assertThat(books.get(2).getQuantityInStock(), is(23));
+        assertThat(books.get(2).getAuthorName(), is("JN Papo"));
     }
 }

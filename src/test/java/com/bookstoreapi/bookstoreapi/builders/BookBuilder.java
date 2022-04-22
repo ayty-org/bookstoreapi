@@ -1,11 +1,14 @@
 package com.bookstoreapi.bookstoreapi.builders;
 
 import com.bookstoreapi.bookstoreapi.book.Book;
+import com.bookstoreapi.bookstoreapi.book.BookRecieveDTO;
+import com.bookstoreapi.bookstoreapi.categories.Category;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class BookBuilder {
 
@@ -54,11 +57,9 @@ public class BookBuilder {
                 .build();
     }
 
-    public static Book bookInvalid(){
-        return Book.builder()
-                .id(4L)
-                .uuid(UUID.fromString("27eaa649-e8fa-4889-bd5a-ea6825b71e61"))
-                .categories(CategoryBuilder.categoryList())
+    public static BookRecieveDTO bookInvalid(){
+        return BookRecieveDTO.builder()
+                .categories(List.of(1L,2L,3L))
                 .title("")
                 .synopsis("Entenda lógica de programação")
                 .isbn("9788533302273")
@@ -75,5 +76,18 @@ public class BookBuilder {
         books.add(book2L());
         books.add(book3L());
         return books;
+    }
+
+    public static BookRecieveDTO book1LBookRecieve(){
+        return BookRecieveDTO.builder()
+                .categories(List.of(1L,2L,3L))
+                .title("JavaScript")
+                .synopsis("Aprenda JavaScript")
+                .isbn("9788533302273")
+                .publicationYear(new Date(14032001))
+                .price(50.00)
+                .quantityInStock(23)
+                .authorName("JN Papo")
+                .build();
     }
 }

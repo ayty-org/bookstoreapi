@@ -5,7 +5,7 @@ import com.bookstoreapi.bookstoreapi.book.BookRepository;
 import com.bookstoreapi.bookstoreapi.builders.BookBuilder;
 import com.bookstoreapi.bookstoreapi.builders.CategoryBuilder;
 import com.bookstoreapi.bookstoreapi.categories.CategoryRepository;
-import com.bookstoreapi.bookstoreapi.exception.EntityNotFoundException;
+import com.bookstoreapi.bookstoreapi.exception.CategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +38,7 @@ class SaveBookServiceImplTest {
     }
 
     @Test
-    void saveTest() throws Exception{
-        when(categoryRepository.existsById(anyLong())).thenReturn(true);
+    void saveTest() throws Exception {
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
         when(categoryRepository.findById(2L)).thenReturn(Optional.of(CategoryBuilder.categoryComedy()));
         when(categoryRepository.findById(3L)).thenReturn(Optional.of(CategoryBuilder.categoryAdventure()));
@@ -47,33 +46,29 @@ class SaveBookServiceImplTest {
 
         Book book = saveBookService.save(BookBuilder.book1L());
 
-        verify(categoryRepository, times(3)).existsById(anyLong());
         verify(categoryRepository, times(3)).findById(anyLong());
         verify(repository, times(1)).save(any());
 
-        assertThat(1L, is(book.getId()));
-        assertThat(3, is(book.getCategories().size()));
-        assertThat("JavaScript", is(book.getTitle()));
-        assertThat("Aprenda JavaScript", is(book.getSynopsis()));
-        assertThat("9788533302273", is(book.getIsbn()));
-        assertThat(new Date(14032001), is(book.getPublicationYear()));
-        assertThat(50.00, is(book.getPrice()));
-        assertThat(23, is(book.getQuantityInStock()));
-        assertThat("JN Papo", is(book.getAuthorName()));
+        assertThat(book.getId(), is(1L));
+        assertThat(book.getUuid().toString(), is("12d51c0a-a843-46fc-8447-5fda559ec69b"));
+        assertThat(book.getCategories().size(), is(3));
+        assertThat(book.getTitle(), is("JavaScript"));
+        assertThat(book.getSynopsis(), is("Aprenda JavaScript"));
+        assertThat(book.getIsbn(), is("9788533302273"));
+        assertThat(book.getPublicationYear(), is(new Date(14032001)));
+        assertThat(book.getPrice(), is(50.00));
+        assertThat(book.getQuantityInStock(), is(23));
+        assertThat(book.getAuthorName(), is("JN Papo"));
     }
 
     @Test
     void saveWhenCategoryDontExistTest(){
-        when(categoryRepository.existsById(1L)).thenReturn(true);
-        when(categoryRepository.existsById(2L)).thenReturn(true);
-        when(categoryRepository.existsById(3L)).thenReturn(false);
-
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(CategoryBuilder.categoryRomance()));
         when(categoryRepository.findById(2L)).thenReturn(Optional.of(CategoryBuilder.categoryComedy()));
+        when(categoryRepository.findById(3L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, ()->saveBookService.save(BookBuilder.book1L()));
-        verify(categoryRepository, times(3)).existsById(anyLong());
-        verify(categoryRepository, times(2)).findById(anyLong());
+        assertThrows(CategoryNotFoundException.class, ()->saveBookService.save(BookBuilder.book1L()));
+        verify(categoryRepository, times(3)).findById(anyLong());
         verify(repository, never()).save(any());
     }
 }
