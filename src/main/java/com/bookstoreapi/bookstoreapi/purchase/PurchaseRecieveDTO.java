@@ -20,8 +20,7 @@ public class PurchaseRecieveDTO {
     private UUID client;
     @NotNull(message = "a purchase must have at least one book")
     private List<UUID> purchasedBooks;
-    @NotNull(message = "purchase status cannot be null")
-    private Boolean isCompleted;
+    private Boolean isCompleted = true;
 
 
     public static Purchase to(PurchaseRecieveDTO purchase) {
@@ -34,7 +33,7 @@ public class PurchaseRecieveDTO {
                 .client(client)
                 //provavelmente vai dar nullpoint por conta do uuid aqui
                 .purchasedBooks(books)
-                .isCompleted(purchase.getIsCompleted())
+                .isCompleted(true)
                 .build();
     }
 

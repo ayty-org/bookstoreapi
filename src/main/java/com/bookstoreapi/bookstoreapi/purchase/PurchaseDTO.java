@@ -21,7 +21,7 @@ public class PurchaseDTO {
     private List<BookDTO> purchasedBooks;
     private Double amount;
     private Date purchaseDate;
-    private Boolean isCompleted;
+    private Boolean isCompleted = true;
 
     public static PurchaseDTO from(Purchase purchase) {
         return PurchaseDTO.builder()
@@ -30,7 +30,7 @@ public class PurchaseDTO {
                 .purchasedBooks(BookDTO.fromAll(purchase.getPurchasedBooks()))
                 .amount(purchase.getAmount())
                 .purchaseDate(purchase.getPurchaseDate())
-                .isCompleted(purchase.getIsCompleted())
+                .isCompleted(true)
                 .build();
     }
 

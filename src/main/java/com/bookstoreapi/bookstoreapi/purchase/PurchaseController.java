@@ -21,6 +21,7 @@ public class PurchaseController {
     private final SavePurchaseService postPurchaseService;
     private final UpdatePurchaseService putPurchaseService;
     private final DeletePurchaseService deletePurchaseService;
+    private final GetAllByClientIdService  getAllByClientIdService;
 
 
     @GetMapping
@@ -33,6 +34,12 @@ public class PurchaseController {
     @ResponseStatus(HttpStatus.OK)
     public PurchaseDTO find(@PathVariable UUID purchaseId) throws EntityNotFoundException {
         return PurchaseDTO.from(getPurchaseService.getByUuid(purchaseId));
+    }
+
+    @GetMapping("/byClient/{clientId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PurchaseDTO> findAllByClientId(@PathVariable UUID clientId) {
+        return PurchaseDTO.fromAll(getAllByClientIdService.findAllByClientId(clientId));
     }
 
     @PostMapping
