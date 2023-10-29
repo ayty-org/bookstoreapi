@@ -36,6 +36,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
         this.mockMvc = MockMvcBuilders.standaloneSetup(clientController).build();
     }
 
+    //CT-GERAL-004
     @Test
     void saveTest() throws Exception {
         Client c1 = ClientBuilder.clientJenipapo1();
@@ -53,6 +54,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$.gender", is("Male")));
     }
 
+    //CT-GERAL-005
     @Test
     void saveWhenClientIsInvalidTest() throws Exception {
         String json1 = mapper.writeValueAsString(ClientBuilder.clientInvalid());
@@ -63,6 +65,7 @@ public class ClientControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(status().isBadRequest());
     }
 
+    //CT-GERAL-006
     @Test
     void getAllTest() throws Exception{
         mockMvc.perform(get(url))

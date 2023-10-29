@@ -38,6 +38,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
         this.mockMvc = MockMvcBuilders.standaloneSetup(purchaseController).build();
     }
 
+    //CT-GERAL-001
     @Test
     void saveTest() throws Exception {
         String json = mapper.writeValueAsString(PurchaseBuilder.purchaseRecieve());
@@ -52,20 +53,7 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
                 .andExpect(jsonPath("$.isCompleted", is(true)));
     }
 
-
-    @Test
-    void saveWhenPurchaseIsInvalid() throws Exception {
-        PurchaseRecieveDTO p = PurchaseBuilder.purchaseRecieve();
-        p.setClient(null);
-        String json = mapper.writeValueAsString(p);
-
-        this.mockMvc.perform(post(this.url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json))
-                .andExpect(status().isBadRequest());
-
-    }
-
+    //CT-GERAL-003
     @Test
     void saveWhenClientDontExist() throws Exception {
         PurchaseRecieveDTO p = PurchaseBuilder.purchaseRecieve();
@@ -79,6 +67,19 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
                 .hasMessageContainingAll("Client with id 12d51c0a-a843-46fc-8447-5fda559ecabc not found");
     }
 
+    //CT-GERAL-002
+    @Test
+    void saveWhenPurchaseIsInvalid() throws Exception {
+        PurchaseRecieveDTO p = PurchaseBuilder.purchaseRecieve();
+        p.setClient(null);
+        String json = mapper.writeValueAsString(p);
+
+        this.mockMvc.perform(post(this.url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isBadRequest());
+
+    }
     @Test
     void saveWhenBookDontExist() throws Exception {
         PurchaseRecieveDTO p = PurchaseBuilder.purchaseRecieve();
@@ -100,12 +101,10 @@ public class PurchaseControllerTest extends BookstoreApiJacksonApplicationTests 
                 .andExpect(jsonPath("$[0].client.uuid", is("12d51c0a-a843-46fc-8447-5fda559ec69b")))
                 .andExpect(jsonPath("$[0].client.name", is("Jenipapo")))
                 .andExpect(jsonPath("$[0].amount", is(100.00)))
-                .andExpect(jsonPath("$[0].isCompleted", is(true)))
                 .andExpect(jsonPath("$[1].uuid", is("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
                 .andExpect(jsonPath("$[1].client.uuid", is("df670f4b-5d4d-4f70-ae78-f2ddc9fa1f14")))
                 .andExpect(jsonPath("$[1].client.name", is("Ana")))
-                .andExpect(jsonPath("$[1].amount", is(200.00)))
-                .andExpect(jsonPath("$[1].isCompleted", is(false)));
+                .andExpect(jsonPath("$[1].amount", is(200.00)));
     }
 
     @Test

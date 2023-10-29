@@ -34,6 +34,7 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
         this.mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
     }
 
+    //CT-GERAL-007
     @Test
     void saveTest() throws Exception{
         String json = mapper.writeValueAsString(BookBuilder.book1LBookRecieve());
@@ -51,6 +52,7 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$.authorName", is("JN Papo")));
     }
 
+    //CT-GERAL-008
     @Test
     void saveWhenBookIsInvalid() throws Exception{
         String json = mapper.writeValueAsString(BookBuilder.bookInvalid());
@@ -59,6 +61,31 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isBadRequest());
+    }
+
+    //CT-GERAL-009
+    @Test
+    void getTest() throws Exception{
+        this.mockMvc.perform(get(url+"/12d51c0a-a843-46fc-8447-5fda559ec69b"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.uuid", is("12d51c0a-a843-46fc-8447-5fda559ec69b")))
+                .andExpect(jsonPath("$.title", is("JavaScript")))
+                .andExpect(jsonPath("$.categories[0].name", is("Romance")))
+                .andExpect(jsonPath("$.synopsis", is("Aprenda JavaScript")))
+                .andExpect(jsonPath("$.isbn", is("9788533302273")))
+                .andExpect(jsonPath("$.price", is(50.00)))
+                .andExpect(jsonPath("$.quantityInStock", is(23)))
+                .andExpect(jsonPath("$.authorName", is("JN Papo")));
+    }
+
+    //CT-GERAL-010
+    @Test
+    void deleteTest() throws Exception{
+        mockMvc.perform(delete(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e62"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e62"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound()));
     }
 
     @Test
@@ -82,20 +109,6 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
                 .andExpect(jsonPath("$[1].price", is(80.00)))
                 .andExpect(jsonPath("$[1].quantityInStock", is(4)))
                 .andExpect(jsonPath("$[1].authorName", is("Gu Gou")));
-    }
-
-    @Test
-    void getTest() throws Exception{
-        this.mockMvc.perform(get(url+"/12d51c0a-a843-46fc-8447-5fda559ec69b"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.uuid", is("12d51c0a-a843-46fc-8447-5fda559ec69b")))
-                .andExpect(jsonPath("$.title", is("JavaScript")))
-                .andExpect(jsonPath("$.categories[0].name", is("Romance")))
-                .andExpect(jsonPath("$.synopsis", is("Aprenda JavaScript")))
-                .andExpect(jsonPath("$.isbn", is("9788533302273")))
-                .andExpect(jsonPath("$.price", is(50.00)))
-                .andExpect(jsonPath("$.quantityInStock", is(23)))
-                .andExpect(jsonPath("$.authorName", is("JN Papo")));
     }
 
     @Test
@@ -153,15 +166,6 @@ public class BookControllerTest extends BookstoreApiJacksonApplicationTests {
                         .content(json))
                 .andExpect(status().isBadRequest()))
                 .hasMessageContaining("Book with id 27eaa649-e8fa-4889-bd5a-ea6825b71e4b not found");
-    }
-
-    @Test
-    void deleteTest() throws Exception{
-        mockMvc.perform(delete(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e62"))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
-
-        Assertions.assertThatThrownBy(() -> mockMvc.perform(get(url+"/27eaa649-e8fa-4889-bd5a-ea6825b71e62"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound()));
     }
 
     @Test
